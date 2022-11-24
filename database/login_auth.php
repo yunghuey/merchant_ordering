@@ -1,4 +1,7 @@
 <?php
+	/*
+		purpose: this php is to check the authentication of 
+	*/
 // get connection to database
 require_once "connect_db.php";
 // to initialize the error
@@ -20,7 +23,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST")
         // if both variable has value
 		if($username && $password)
 		{
-            // query to check the name
+            // query to check in CUSTOMER
 			$sql = "SELECT * FROM customer WHERE (username = '$username' OR email = '$username') AND password = '$password'";
 			$result = mysqli_query($conn, $sql);
 			$rowCount = mysqli_num_rows($result);
@@ -37,7 +40,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST")
 				// continue to the welcome page
                 header("location: customer/index.php");
 			}
-            // if no result, wrong value
+            // query to check in STAFF
 			else
 			{
                 // check variable only

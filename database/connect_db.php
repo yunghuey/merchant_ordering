@@ -1,4 +1,7 @@
 <?php
+    /*
+        purpose: connecting to localhost database server 
+    */
     $host = 'localHost';
     $user = 'root';
     $pass = '';

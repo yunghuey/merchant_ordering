@@ -1,4 +1,7 @@
 <?php
+    /*
+        purpose: this is the first main page of customer after login
+    */
 require_once "../database/connect_db.php";
 
 // this is to prevent uninitialized data

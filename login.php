@@ -1,4 +1,9 @@
-<?php require_once "./database/login_auth.php" ?>
+<?php 
+  /* 
+    purpose: login page for customer and staff, FORGOT PASSWORD can lead to reset password
+  */
+require_once "./database/login_auth.php" 
+?>
 <!doctype html>
 <html lang="en">
 <head>
