@@ -13,5 +13,5 @@ if (empty($_SESSION["username"])){
 
 echo "Hello ".$_SESSION["username"];
 
-echo "<a href='../logout.php'>Logout</a>";
+echo "<a href='../auth/logout.php'>Logout</a>";
 ?>
