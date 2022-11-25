@@ -1,8 +1,8 @@
 <?php 
   /* 
     purpose: login page for customer and staff, FORGOT PASSWORD can lead to reset password
-    testing acc: customer:yhuey@gmail.com, yhuey, 123456
-                 staff: staffhuey@gmail.com, staffhuey, staff123
+    testing acc: customer:yhuey@gmail.com, yhuey, 123$hueY
+                 staff: staffhuey@gmail.com, staffhuey, Staff@123
   */
 require_once "./auth/login_auth.php"
 ?>

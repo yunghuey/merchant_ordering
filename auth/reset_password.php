@@ -11,29 +11,31 @@
     $password2 = "";
     $updatePwd = "";
 
-    if ($_SERVER['REQUEST_METHOD'] === "POST"){
+    if ($_SERVER['REQUEST_METHOD'] === "POST"){        
         if (isset($_POST['resetPassword'])){
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
-            $password = trim($_POST['password']);
-            $password2 = trim($_POST['password2']);
+            $username = trimInput($_POST['username']);
+            $email = trimInput($_POST['email']);
+            $password = trimInput($_POST['password']);
+            $password2 = trimInput($_POST['password2']);
 
             if ($password == $password2){
-                // correct sql
+                $hash_password = passwordValidation($password);
+                if ($hash_password == ""){
+                    $error['password'] = "Please follow the password rules";
+                    return;
+                }               
                 $ssc = "SELECT customerID FROM customer WHERE username = '".$username."' AND email = '".$email."'";
-                $rssc = mysqli_query($conn, $ssc);
-                $rwsc = mysqli_fetch_array($rssc);          
+                $rwsc = executeQuery($conn,$ssc);          
                 if ($rwsc){
                     // is customer
-                        $updatePwd = "UPDATE customer SET password = '".$password."' WHERE customerID = ".$rwsc['customerID'];
+                        $updatePwd = "UPDATE customer SET password = '".$hash_password."' WHERE customerID = ".$rwsc['customerID'];
                 } else{
                     // check if is STAFF
                     $sss = "SELECT staffID FROM staff WHERE username = '".$username."' AND email = '".$email."'";
-                    $rsss = mysqli_query($conn, $ssc);
-                    $rwss = mysqli_fetch_array($rsss);
+                    $rwss = executeQuery($conn,$sss);
                     if ($rwss){
                         // confirm is staff
-                        $updatePwd = "UPDATE staff SET password = '".$password."' WHERE staffID = ".$rwss['staffID'];
+                        $updatePwd = "UPDATE staff SET password = '".$hash_password."' WHERE staffID = ".$rwss['staffID'];
                     } else{
                         // wrong error
                         $error['username'] = "Username does not exist";
@@ -53,11 +55,34 @@
             }
         }   
     }
-    if ($updatePwd != null){
+    if ($updatePwd != null && !empty($hash_password)){
         if(mysqli_query($conn,$updatePwd)){
             header("location:login.php");
         }else{
         }
-    }    
+    } 
+    function executeQuery($conn,$sql){
+        $row = mysqli_fetch_array(mysqli_query($conn, $sql));
+        return $row;
+    }
+
+    function trimInput($input){
+        return trim($input);
+    }
+
+    function passwordValidation($pwd){
+        $uppercase = preg_match('@[A-Z]@', $pwd);
+        $lowercase = preg_match('@[a-z]@', $pwd);
+        $number    = preg_match('@[0-9]@', $pwd);
+        $specialChars = preg_match('@[^\w]@', $pwd);
+
+        if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($pwd) < 8) {
+            return;
+        }
+
+        return password_hash($pwd,PASSWORD_DEFAULT);
+    }
+    
+    
 
 ?>     

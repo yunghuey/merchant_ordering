@@ -27,14 +27,17 @@
             </div>
             <div class="card-body">
               <form action="" method="post">
+              <div class="alert alert-primary" role="alert">
+                Password should include at least 8 characters, 1 number, 1 special characters except $, 1 uppercase letter
+              </div> 
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?> " placeholder="Username" name="username" required>
+                  <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?> " placeholder="Username" name="username" value="<?php echo $username;?>" required>
                   <label for="floatingInput">Username</label>
                   <div class="invalid-feedback"><?php echo $error['username'] ?? '';?></div>
                 </div>
 
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control <?php echo isset($error['email']) ? 'is-invalid' : '';?>" placeholder="Email"  name="email" required>
+                  <input type="email" class="form-control <?php echo isset($error['email']) ? 'is-invalid' : '';?>" placeholder="Email"  name="email" value="<?php echo $email;?>" required>
                   <label for="floatingEmail">Email</label>
                   <div class="invalid-feedback"><?php echo $error['email'] ?? '';?></div>
                 </div>

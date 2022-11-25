@@ -22,72 +22,62 @@
         // if both variable has value
 			if($username && $password)
 			{
-				// query to check in CUSTOMER
-				$ssc = "SELECT * FROM customer WHERE (username = '$username' OR email = '$username') AND password = '$password'";
-				$rssc = mysqli_query($conn, $ssc);
+				$getPwd = "SELECT * FROM customer WHERE (username = '$username' OR email = '$username')";
+				$rssc = mysqli_query($conn, $getPwd);
 				$rwsc = mysqli_num_rows($rssc);
-
-				// if got result, is true
-				if($rwsc > 0) // one basically
-				{
-					// take the attribute
+				// is customer
+				if($rwsc > 0){ // check password
 					$row = mysqli_fetch_array($rssc);
-					session_start();
-					// put value into session to hold
-					$_SESSION['customerID'] = $row['customerID'];
-					$_SESSION['username'] = $row['username'];
-					// continue to the welcome page
-					header("location: customer/index.php");
-				}
-				// query to check in STAFF
-				else
-				{
-					$sss = "SELECT * FROM staff WHERE username = '$username' OR email = '$username'";
-					// check variable only
-					$rsss = mysqli_query($conn, $sss);
-					$rwss = mysqli_num_rows($rsss);
-				
-					// user is staff
-					if ($rwss > 0){
-						// take the attribute
-						$row = mysqli_fetch_array($rsss);
+					$real_password = $row['password'];	
+					$check_password = password_verify($password, $real_password);
+					if(password_verify($password, $real_password)){
 						session_start();
 						// put value into session to hold
-						$_SESSION['staffID'] = $row['staffID'];
+						$_SESSION['customerID'] = $row['customerID'];
 						$_SESSION['username'] = $row['username'];
 						// continue to the welcome page
-						header("location: staff/index.php");
+						header("location: customer/index.php");
+					} else{
+						// wrong password
+						$error['password'] = "Wrong password";
 					}
-					// not customer nor staff - need to check if is username or password problem
+				} 
+				// check if staff
+				else {
+					$getPwd = "SELECT * FROM staff WHERE (username = '$username' OR email = '$username')";
+					$rsss = mysqli_query($conn, $getPwd);
+					$rwss = mysqli_num_rows($rsss);
+					if ($rwss > 0){
+						$row = mysqli_fetch_array($rsss);
+						$real_password = $row['password'];
+						if(password_verify($password, $real_password)){
+							// it is staff, check password
+							session_start();
+							// put value into session to hold
+							$_SESSION['staffID'] = $row['staffID'];
+							$_SESSION['username'] = $row['username'];
+							// continue to the welcome page
+							header("location: staff/index.php");
+						} else{
+							// wrong password
+							$error['password'] = "Wrong password";
+						}
+					}
 					else{
-						$ssc = "SELECT * FROM customer WHERE username = '$username' OR email = '$username'";
-						$rssc = mysqli_query($conn, $ssc);
-						$rwsc += mysqli_num_rows($rssc);
-							
-						if($rwsc > 0)
-						{
-							$error['password'] = "Wrong password";
-						}
-						else
-						{
-							$error['username'] = "Wrong username/email address";
-						}
-
-						$sss = "SELECT * FROM staff WHERE username = '$username' OR email = '$username'";
-						$rsss = mysqli_query($conn, $sss);
-						$rwss += mysqli_num_rows($rsss);
-							
-						if($rwss > 0)
-						{
-							$error['password'] = "Wrong password";
-						}
-						else
-						{
-							$error['username'] = "Wrong username/email address";
-						}
+						$error['username'] = "Wrong username/email";
 					}
 				}
 			}
 		}
 	}
+/*
+				// to view php variable in console
+				?>
+					<script>
+						console.log(<?= json_encode($password); ?>);
+						console.log(<?= json_encode($real_password); ?>);
+						console.log(<?= json_encode($check_password); ?>);
+					</script>
+					<?php 
+				*/
 ?>
