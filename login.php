@@ -4,7 +4,7 @@
     testing acc: customer:yhuey@gmail.com, yhuey, 123456
                  staff: staffhuey@gmail.com, staffhuey, staff123
   */
-require_once "./database/login_auth.php" 
+require_once "./auth/login_auth.php"
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,9 +12,9 @@ require_once "./database/login_auth.php"
   <!-- required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
+
   <!-- bootstrap css -->
-  <title>Login</title>
+  <title>Sign Up</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="style/auth.css">
 </head>
@@ -28,7 +28,7 @@ require_once "./database/login_auth.php"
     ?>
   </div>
   <?php endif; ?>
-  
+
   <div class="container mt-5 pt-5">
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6 m-auto">
@@ -41,21 +41,21 @@ require_once "./database/login_auth.php"
               <form action="" method="post">
                 <!-- input field -->
                 <div class="form-floating mb-3">
-                  <div class="invalid-feedback"><?php echo $error['username'] ?? '';?></div>
                   <input type="text" class="form-control my-3 py-2 <?php echo isset($error['username']) ? 'is-invalid' : '';?>" name="username" placeholder="Username/Email" value="<?php echo $username;?>" placeholder="Username" name="username" id="floatingInput" required>
                   <label for="floatingInput">Username/Email address</label>
+                  <div class="invalid-feedback"><?php echo $error['username'] ?? '';?></div>
                 </div>
 
                 <div class="form-floating mb-3">
-                  <div class="invalid-feedback"><?php echo $error['password'] ?? '';?></div>
                   <input type="password" class="form-control <?php echo isset($error['password']) ? 'is-invalid' : '';?>" id="floatingPassword" placeholder="Password" name="password" required>
                   <label for="floatingPassword">Password</label>
+                  <div class="invalid-feedback"><?php echo $error['password'] ?? '';?></div>
                 </div>
 
                 <!-- submit button -->
                 <div class="text-center mb-3">
                   <button type="submit" class="btn btn-primary mb-2" name="userLogin" id="submit_btn">Login now</button>
-                  <a href="#" class="nav-link">Forgot password?</a>
+                  <a href="./forgotpassword.php" class="nav-link">Forgot password?</a>
                 </div>         
               </form>
             </div>
