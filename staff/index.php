@@ -10,7 +10,7 @@ if (isset($_SESSION['username'])){
 } else{
     echo "<p> nothing here</p>";
 }
-echo "<a href='../logout.php'>Logout</a>";
+echo "<a href='../auth/logout.php'>Logout</a>";
 
 
 ?>
