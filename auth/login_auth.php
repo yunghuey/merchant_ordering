@@ -5,7 +5,8 @@
 		rsst - result script select transaction
 		rwst - row script transaction
 	*/
-	require_once "connect_db.php";
+	require_once "./database/connect_db.php";
+	
 	$error = [];
 	$username = $password = "";
 
