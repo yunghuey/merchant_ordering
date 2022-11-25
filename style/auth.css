@@ -13,3 +13,7 @@ body{
 .nav-link{
     text-decoration: underline;
 }
+div.alert-primary{
+    background-color: #C5CBE3;
+    color: black;
+}
