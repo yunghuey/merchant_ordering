@@ -2,7 +2,8 @@
     /*
         purpose: to let user change password if they forgot
     */
-    require_once "./auth/reset_password.php"
+    session_start();
+    require_once "./auth/reset_password.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -29,18 +30,27 @@
               <form action="" method="post">
               <div class="alert alert-primary" role="alert">
                 Password should include at least 8 characters, 1 number, 1 special characters except $, 1 uppercase letter
-              </div> 
+              </div>
+                <?php if(!isset($_SESSION['username'])) :?>
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?> " placeholder="Username" name="username" value="<?php echo $username;?>" required>
+                  <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?> " placeholder="Username" name="username" value="<?php $username ?>" required> 
                   <label for="floatingInput">Username</label>
                   <div class="invalid-feedback"><?php echo $error['username'] ?? '';?></div>
                 </div>
 
                 <div class="form-floating mb-3">
-                  <input type="email" class="form-control <?php echo isset($error['email']) ? 'is-invalid' : '';?>" placeholder="Email"  name="email" value="<?php echo $email;?>" required>
+                  <input type="email" class="form-control <?php echo isset($error['email']) ? 'is-invalid' : '';?>" placeholder="Email"  name="email" value="<?php echo $email ?>" required >
                   <label for="floatingEmail">Email</label>
                   <div class="invalid-feedback"><?php echo $error['email'] ?? '';?></div>
                 </div>
+                <?php endif; ?>
+                <?php if(isset($_SESSION['username'])) :?>
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control <?php echo isset($error['current_password']) ? 'is-invalid' : '';?>" placeholder="Current Password" name="current_password" required>
+                    <label for="floatingPassword">Current password</label>
+                    <div class="invalid-feedback"><?php echo $error['current_password'] ?? '';?></div>
+                  </div>
+                <?php endif; ?>
 
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control <?php echo isset($error['password']) ? 'is-invalid' : '';?>" placeholder="Password" name="password" required>
@@ -53,11 +63,14 @@
                   <label for="floatingPassword2">Confirm Password</label>
                   <div class="invalid-feedback"><?php echo $error['password2'] ?? '';?></div>
                 </div>
-
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary mb-2" name="resetPassword" id="submit_btn">Change password</button>
+                  <?php if(!isset($_SESSION['username'])) :?>
                   <br>Already have account? <a href="./login.php" class="nav-link">Login here</a>
-                </div>         
+                  <?php else: ?>    
+                    <a href="staff/index.php" type="button" class="btn btn-primary mb-2" id="submit_btn">Back</a>
+                  <?php endif; ?>
+                </div>
               </form>
             </div>
           </div>
