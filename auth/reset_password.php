@@ -10,11 +10,10 @@
     $password = "";
     $password2 = "";
     $updatePwd = "";
+    $current_password = "";
 
     if ($_SERVER['REQUEST_METHOD'] === "POST"){        
         if (isset($_POST['resetPassword'])){
-            $username = trimInput($_POST['username']);
-            $email = trimInput($_POST['email']);
             $password = trimInput($_POST['password']);
             $password2 = trimInput($_POST['password2']);
 
@@ -23,44 +22,70 @@
                 if ($hash_password == ""){
                     $error['password'] = "Please follow the password rules";
                     return;
-                }               
-                $ssc = "SELECT customerID FROM customer WHERE username = '".$username."' AND email = '".$email."'";
-                $rwsc = executeQuery($conn,$ssc);          
-                if ($rwsc){
-                    // is customer
-                        $updatePwd = "UPDATE customer SET password = '".$hash_password."' WHERE customerID = ".$rwsc['customerID'];
-                } else{
-                    // check if is STAFF
-                    $sss = "SELECT staffID FROM staff WHERE username = '".$username."' AND email = '".$email."'";
-                    $rwss = executeQuery($conn,$sss);
-                    if ($rwss){
-                        // confirm is staff
-                        $updatePwd = "UPDATE staff SET password = '".$hash_password."' WHERE staffID = ".$rwss['staffID'];
-                    } else{
-                        // wrong error
-                        $error['username'] = "Username does not exist";
-                        $error['email'] = "Email does not exist";
-                    }
                 }
-               
-                
-                // query check if username and email are same in database
-                // if true then proceed to alter data
-                // if false then proceeed to error message.
-    
-                
-            } else{
+                // from index
+                if (isset($_SESSION['username'])){
+                    $current_password = trimInput($_POST['current_password']);
+
+                    if(password_verify($current_password, $_SESSION['password'])){
+                        $updatePwd = "UPDATE ".$_SESSION['usertype']." SET password = '".$hash_password."' WHERE username = '".$_SESSION['username']."'";   
+                    } else{
+                        $error['current_password'] = "Current password is incorrect";
+                        return;
+                    }
+                    if(mysqli_query($conn,$updatePwd)){
+                        $_SESSION['message'] = "Password reset successfully";
+                        if ($_SESSION['usertype'] == "customer"){
+                            header("location:customer/index.php");
+                        }
+                        else{
+                            header("location:staff/index.php");
+                        }
+                    } 
+                }
+                // from login
+                else {
+                    $username = trimInput($_POST['username']);
+                    $email = trimInput($_POST['email']);
+
+                    $ssc = "SELECT id FROM customer WHERE username = '".$username."' AND email = '".$email."'";
+                    $rwsc = executeQuery($conn,$ssc);
+                    if ($rwsc){
+                        $table = "customer";
+                        $user_id = $rwsc['id'];
+                    } else{
+                        // check if is STAFF
+                        $sss = "SELECT id FROM staff WHERE username = '".$username."' AND email = '".$email."'";
+                        $rwss = executeQuery($conn,$sss);
+                        if ($rwss){
+                            $table = "staff";
+                            $row = mysqli_fetch_array($rwss);
+                            $user_id = $rwss['id'];
+                        } else{
+                            // wrong error
+                            $error['username'] = "Username does not exist";
+                            $error['email'] = "Email does not exist";
+                        }
+                    }
+                    $updatePwd = "UPDATE `".$table."` SET password = '".$hash_password."' WHERE id = ".$user_id;
+                    if ($updatePwd != null){
+                        if(mysqli_query($conn,$updatePwd)){
+                            session_start();
+                            $_SESSION['reset_password'] = "Password reset successfully";
+                            header("location:login.php");
+                        }else{
+                        }
+                    } 
+                }
+            } 
+            else{
                 $error['password'] = "Password does not match";
                 $error['password2'] = "Password does not match";
+                return;
             }
-        }   
+        }    
     }
-    if ($updatePwd != null && !empty($hash_password)){
-        if(mysqli_query($conn,$updatePwd)){
-            header("location:login.php");
-        }else{
-        }
-    } 
+    
     function executeQuery($conn,$sql){
         $row = mysqli_fetch_array(mysqli_query($conn, $sql));
         return $row;
@@ -82,7 +107,4 @@
 
         return password_hash($pwd,PASSWORD_DEFAULT);
     }
-    
-    
-
 ?>     

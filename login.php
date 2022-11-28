@@ -1,8 +1,8 @@
 <?php 
   /* 
     purpose: login page for customer and staff, FORGOT PASSWORD can lead to reset password
-    testing acc: customer:yhuey@gmail.com, yhuey, 123$hueY
-                 staff: staffhuey@gmail.com, staffhuey, Staff@123
+    testing acc: customer:yhuey@gmail.com, yhuey, 123$hueY, ---- Tong$888
+                 staff: staffhuey@gmail.com, staffhuey, Staff@123 --- stafF@999
   */
 require_once "./auth/login_auth.php"
 ?>
@@ -20,10 +20,11 @@ require_once "./auth/login_auth.php"
 </head>
 <body>
 
-  <?php if(isset($_SESSION['message'])) :?>
+ <!-- not functioning -->
+  <?php if(isset($_SESSION['reset_password'])) :?>
   <div class="alert alert-success" role="alert">
     <?php
-      echo $_SESSION['message']."<br>";
+      echo $_SESSION['reset_password']."<br>";
       session_destroy();
     ?>
   </div>

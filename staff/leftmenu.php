@@ -44,7 +44,7 @@
             </ul>
         </div></li>
         <li>
-            <a href="#" class="side-nav">
+            <a href="../forgotpassword.php" class="side-nav">
                 <i class="fas fa-lock"></i>
                 <span class="nav-item">Reset password</span>
             </a>

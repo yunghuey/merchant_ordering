@@ -29,12 +29,14 @@
 				if($rwsc > 0){ // check password
 					$row = mysqli_fetch_array($rssc);
 					$real_password = $row['password'];	
-					$check_password = password_verify($password, $real_password);
 					if(password_verify($password, $real_password)){
 						session_start();
 						// put value into session to hold
-						$_SESSION['customerID'] = $row['customerID'];
+						$_SESSION['id'] = $row['id'];
 						$_SESSION['username'] = $row['username'];
+						$_SESSION['email'] = $row['email'];
+						$_SESSION['password'] = $row['password'];
+						$_SESSION['usertype'] = "customer";
 						// continue to the welcome page
 						header("location: customer/index.php");
 					} else{
@@ -54,8 +56,11 @@
 							// it is staff, check password
 							session_start();
 							// put value into session to hold
-							$_SESSION['staffID'] = $row['staffID'];
+							$_SESSION['id'] = $row['staffID'];
 							$_SESSION['username'] = $row['username'];
+							$_SESSION['email'] = $row['email'];
+							$_SESSION['password'] = $row['password'];
+							$_SESSION['usertype'] = "staff";
 							// continue to the welcome page
 							header("location: staff/index.php");
 						} else{
