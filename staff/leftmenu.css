@@ -18,10 +18,10 @@ nav{
    height: 100%;
    left:0;
    background: #EDF5E1;
-   width: 90px;
+   width: 100px;
    overflow: hidden;
    transition: width 0.2s linear;
-   box-shadow: 0 20px 35px rgba(0,0,0,0.1); 
+   box-shadow: 0 30px 35px rgba(0,0,0,0.3); 
 }
 div.logo{
   text-align: left;
@@ -34,14 +34,14 @@ a.logo span{
   position: relative;
   left: 0;
   padding: 10px 0;
-  font-size: 18px;
+  font-size: 20px;
   text-transform: uppercase;
   margin-left: 10px;
 }
 a.side-nav{
   position: relative;
   color: rgb(85, 83, 83);
-  font-size: 14px;
+  font-size: 15px;
   display: table;
   width:130px;
   padding: 10px;
