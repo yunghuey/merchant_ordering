@@ -96,3 +96,10 @@ ul.dropdown-menu{
   background: #EDF5E1; 
   font-size: 14px;
 }
+.top-bar{
+  box-shadow: 0 30px 35px rgba(0,0,0,0.3); 
+}
+a.dropdown-item:hover{
+  background:#AC3B61;
+  color:#EDF5E1;
+}

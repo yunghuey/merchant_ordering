@@ -23,10 +23,10 @@ if (isset($_SESSION['username'])){}
   <body>
     <?php include("leftmenu.php"); ?>
     <script>
-        console.log(<?= json_encode($_SESSION['id']); ?>);
-            </script>
+      console.log(<?= json_encode($_SESSION['id']); ?>);
+    </script>
 
-     <?php if(isset($_SESSION['message'])) :?>
+    <?php if(isset($_SESSION['message'])) :?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
       <?php
         echo $_SESSION['message']."<br>";
@@ -34,9 +34,7 @@ if (isset($_SESSION['username'])){}
       ?>
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    
-  </div>
-  <?php endif; ?>
+    <?php endif; ?>
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
