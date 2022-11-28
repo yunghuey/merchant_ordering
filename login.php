@@ -20,7 +20,7 @@ require_once "./auth/login_auth.php"
 </head>
 <body>
 
-// not functioning
+ <!-- not functioning -->
   <?php if(isset($_SESSION['reset_password'])) :?>
   <div class="alert alert-success" role="alert">
     <?php

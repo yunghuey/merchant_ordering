@@ -29,7 +29,7 @@
             <div class="card-body">
               <form action="" method="post">
               <div class="alert alert-primary" role="alert">
-                Password should include at least 8 characters, 1 number, 1 special characters except $, 1 uppercase letter
+                Password should include at least 8 characters, 1 number, 1 special character and 1 uppercase letter
               </div>
                 <?php if(!isset($_SESSION['username'])) :?>
                 <div class="form-floating mb-3">
