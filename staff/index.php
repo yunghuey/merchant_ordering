@@ -3,8 +3,6 @@
         purpose: main page after login if user is staff
     */
 session_start();
-
-if (isset($_SESSION['username'])){}
 ?>
 <!doctype html>
 <html lang="en">
