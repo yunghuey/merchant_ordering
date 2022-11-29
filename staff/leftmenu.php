@@ -30,7 +30,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="./newstaff.php">Create New</a></li>
-                <li><a class="dropdown-item" href="#">View All</a></li>
+                <li><a class="dropdown-item" href="./stafflist.php">View All</a></li>
             </ul>
         </div></li>
         <li><div class="dropdown">
