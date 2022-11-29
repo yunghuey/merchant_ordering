@@ -61,8 +61,10 @@
 							$_SESSION['email'] = $row['email'];
 							$_SESSION['password'] = $row['password'];
 							$_SESSION['usertype'] = "staff";
-							// continue to the welcome page
-							header("location: staff/index.php");
+							if($row['password_check'] == 0 )
+								header("location: forgotpassword.php");
+							else
+								header("location: staff/index.php");
 						} else{
 							// wrong password
 							$error['password'] = "Wrong password";
