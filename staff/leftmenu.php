@@ -2,7 +2,7 @@
     <ul>
         <li>
             <a href="index.php" class="side-nav logo">
-                <span class="nav-item">Admin</span>
+                <span class="nav-item">staff</span>
             </a>
         </li>
         <li>
@@ -29,7 +29,7 @@
                 <span class="nav-item">Staff</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Create New</a></li>
+                <li><a class="dropdown-item" href="./newstaff.php">Create New</a></li>
                 <li><a class="dropdown-item" href="#">View All</a></li>
             </ul>
         </div></li>
