@@ -3,6 +3,7 @@
     purpose: login page for customer and staff, FORGOT PASSWORD can lead to reset password
     testing acc: customer:yhuey@gmail.com, yhuey, 123$hueY, ---- Tong$888
                  staff: staffhuey@gmail.com, staffhuey, Staff@123 --- stafF@999
+                 staff: tintin, Hello4$7
   */
 require_once "./auth/login_auth.php"
 ?>

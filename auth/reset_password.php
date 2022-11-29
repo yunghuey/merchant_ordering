@@ -28,7 +28,7 @@
                     $current_password = trimInput($_POST['current_password']);
 
                     if(password_verify($current_password, $_SESSION['password'])){
-                        $updatePwd = "UPDATE ".$_SESSION['usertype']." SET password = '".$hash_password."' WHERE username = '".$_SESSION['username']."'";   
+                        $updatePwd = "UPDATE ".$_SESSION['usertype']." SET password = '".$hash_password."', password_check = 1 WHERE username = '".$_SESSION['username']."'";   
                     } else{
                         $error['current_password'] = "Current password is incorrect";
                         return;
@@ -59,7 +59,6 @@
                         $rwss = executeQuery($conn,$sss);
                         if ($rwss){
                             $table = "staff";
-                            $row = mysqli_fetch_array($rwss);
                             $user_id = $rwss['id'];
                         } else{
                             // wrong error
