@@ -22,6 +22,7 @@ nav{
    overflow: hidden;
    transition: width 0.2s linear;
    box-shadow: 0 30px 35px rgba(0,0,0,0.3); 
+   z-index: 1;
 }
 div.logo{
   text-align: left;
@@ -102,4 +103,12 @@ ul.dropdown-menu{
 a.dropdown-item:hover{
   background:#AC3B61;
   color:#EDF5E1;
+}
+div.content{
+  padding: 1%;
+  position: relative;
+  /* top right bottom left */
+  margin: 2% 2% 2% 130px ; 
+  background: #C5CBE3;
+  box-shadow: 0 30px 35px rgba(0,0,0,0.1); 
 }
