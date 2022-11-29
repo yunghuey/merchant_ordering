@@ -24,7 +24,7 @@ div.btn-group{
     transform: translateX(-50%);
 }
 
-button.back-btn{
+a.back-btn{
     color: #4056A1;
     border-color:#EDF5E1;
     background: #EDF5E1;
@@ -34,10 +34,11 @@ input.submit-btn{
     border-color: #4056A1;
     color: #EDF5E1;
 }
-button.back-btn:hover, input.submit-btn:hover{
-    background: rgba(var(--color-highlight), 1);
+a.back-btn:hover, input.submit-btn:hover{
+    background: #C5CBE3;
     color:  #4056A1;
     border: none;
+    font-weight: bolder;
 }
 .form-label{
     font-size: 20px;
