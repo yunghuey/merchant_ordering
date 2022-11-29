@@ -29,23 +29,23 @@
       <section class="container-fluid">
         <form action="create_staff.php" method="post">
           <div class="row">
-            <div class="col">
-              <label class="form-label">Full name</label>
-              <input type="text" class="form-control" placeholder="Enter full name" required>
+            <div class="col input-group mb-3">
+              <span class="input-group-text" id="addon-name">Full name</span>
+              <input type="text" class="form-control" placeholder="Enter full name" aria-describedby="addon-name" required>
             </div>
-            <div class="col">
-              <label class="form-label">Username</label>
-              <input type="text" class="form-control" placeholder="Enter username" required>
+            <div class="col input-group mb-3">
+              <span class="input-group-text" id="addon-username">Username</span>
+              <input type="text" class="form-control" placeholder="Enter username" aria-describedby="addon-usernames" required>
             </div>
           </div>
           <div class="row">
-            <div class="col">
-                <label class="form-label">Email</label>
-                <input type="email" class="form-control" placeholder="Enter email" required>
+            <div class="col input-group mb-3">
+              <span class="input-group-text" id="addon-email">Email</span>
+              <input type="email" class="form-control" placeholder="Enter email" aria-describedby="addon-email" required>
             </div>
-            <div class="col">
-              <label class="form-label">Department</label>
-              <select class="form-select" required>
+            <div class="col input-group mb-3">
+              <span class="input-group-text" id="addon-department">Department</span>
+              <select class="form-select" aria-describedby="addon-department" required>
                 <option value="admin">Admin</option>
                 <option value="management">Management</option>
                 <option value="courier">Courier</option>
@@ -53,25 +53,19 @@
               </select>
             </div>
           </div>
-          <div class="col-12">
-            <label class="form-label">Gender</label>
-          </div>
           <div class="row">
-            <div class="col-1">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gender" id="radioMale" required>
-                <label class="form-check-label" for="radioMale">Male</label>
-              </div>
+            <span class="col-1 form-label">Gender:</span>
+            <div class="form-check col-2">
+              <input class="form-check-input" type="radio" name="gender" id="radio_male">
+              <label class="form-check-label" for="radio_male">Male</label>
             </div>
-            <div class="col-1">
-              <div class="form-check">
-                  <input class="form-check-input" type="radio" name="gender" id="radioFemale" required>
-                  <label class="form-check-label" for="radioFemale">Female</label>
-              </div>
-            </div> 
+            <div class="form-check col-2">
+              <input class="form-check-input" type="radio" name="gender" id="radio_female" checked>
+              <label class="form-check-label" for="radio_female">Female</label>
+            </div>
           </div>
           <div class="row">
-            <div class="btn-group col-2" role="group" aria-label="">
+            <div class="btn-group col-2" role="group">
               <input class="btn btn-primary submit-btn" value="Create" type="submit" >
               <button class="btn btn-outline-primary back-btn">Back</button>
             </div>

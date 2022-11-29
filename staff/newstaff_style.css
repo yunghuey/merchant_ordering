@@ -39,7 +39,6 @@ button.back-btn:hover, input.submit-btn:hover{
     color:  #4056A1;
     border: none;
 }
-label.form-label{
-    font-family: "Poppins", sans-serif;
+.form-label{
     font-size: 20px;
 }
