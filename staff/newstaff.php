@@ -49,10 +49,10 @@
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-department">Department</span>
               <select class="form-select" name="dept" aria-describedby="addon-department" required>
-                <option value="admin" <?php if ($dept== 'admin') echo "selected" ?> >Admin</option>
-                <option value="management" <?php if ($dept== 'management') echo "selected" ?>>Management</option>
-                <option value="courier" <?php if ($dept== 'courier') echo "selected" ?>>Courier</option>
-                <option value="stock" <?php if ($dept== 'stock') echo "selected" ?>>Stock</option>
+                <option value="Admin" <?php if ($dept== 'Admin') echo "selected" ?> >Admin</option>
+                <option value="Management" <?php if ($dept== 'Management') echo "selected" ?>>Management</option>
+                <option value="Courier" <?php if ($dept== 'Courier') echo "selected" ?>>Courier</option>
+                <option value="Stock" <?php if ($dept== 'Stock') echo "selected" ?>>Stock</option>
               </select>
             </div>
           </div>
