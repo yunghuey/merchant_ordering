@@ -4,7 +4,10 @@
     */
     session_start();
     require_once "../database/connect_db.php";
-
+    $sss = "SELECT username, id FROM staff";
+    $rsss = mysqli_query($conn,$sss);
+    $rwss = mysqli_num_rows($rsss);
+    $count = 1;
 ?>
 <!doctype html>
 <html lang="en">
@@ -24,6 +27,17 @@
   <body>
     <!-- navigation -->
     <?php include("leftmenu.php"); ?>
+
+    <?php if(isset($_SESSION['message'])) :?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
+      <?php
+        echo $_SESSION['message']."<br>";
+        unset($_SESSION['message']);
+      ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php endif; ?>
+
     <div class="content">
         <header><h2>view all staff</h2></header>
         <section class="container-fluid">
@@ -41,23 +55,18 @@
                     <th>Archive</th>
                     <th>Delete</th>
                 </thead>
-                <?php 
-                    // query to get data
-                    $sss = "SELECT username, id FROM staff";
-                    $rsss = mysqli_query($conn,$sss);
-                    $rwss = mysqli_num_rows($rsss);
-                    $count = 1;
+                <?php                   
                     if ($rwss > 0):
                         while($row = mysqli_fetch_assoc($rsss)): 
                 ?>
                 <tr> 
-                        <td><?php echo $count++; ?></td>
-                        <td style="display:none;"><?php echo $row['id']; ?></td>
-                        <td><?php echo $row['username']; ?></td>
-                        <td><a href="./staffdetails.php?id=<?php echo $row['id'] ?>" class="btn"><i class="far fa-eye"></i></a></td>
-                        <td><a class="btn"><i class="fas fa-edit"></i></a></td>
-                        <td><a class="btn"><i class="far fa-file-archive"></i></a></td>
-                        <td><a class="btn"><i class="fas fa-trash-alt"></i></a></td>
+                    <td><?php echo $count++; ?></td>
+                    <td style="display:none;"><?php echo $row['id']; ?></td>
+                    <td><?php echo $row['username']; ?></td>
+                    <td><a href="./staffdetails.php?id=<?php echo $row['id'] ?>" class="btn btn-outline-dark"><i class="far fa-eye"></i></a></td>
+                    <td><a href="./editstaff.php?id=<?php echo $row['id'] ?>" class="btn btn-outline-dark"><i class="fas fa-edit"></i></a></td>
+                    <td><a class="btn btn-outline-dark"><i class="far fa-file-archive"></i></a></td>
+                    <td><a class="btn btn-outline-dark"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
                 <?php endwhile;?>
                 <?php endif;?>

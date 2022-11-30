@@ -41,3 +41,11 @@ a.back-btn:hover, .submit-btn:hover{
 .form-label{
     font-size: 20px;
 }
+.btn-outline-dark{
+    color: rgb(70, 67, 67);
+    border-color:rgb(70, 67, 67);
+}
+.btn-outline-dark:hover{
+    background:rgb(70, 67, 67);
+    color:#EDF5E1
+}
