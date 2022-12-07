@@ -1,5 +1,5 @@
 <nav>
-    <ul>
+    <ul class="navigate">
         <li>
             <a href="index.php" class="side-nav logo">
                 <span class="nav-item">staff</span>
