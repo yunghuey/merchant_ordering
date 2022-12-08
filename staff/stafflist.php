@@ -59,15 +59,17 @@
                     <th>Archive</th>
                     <th>Delete</th>
                 </thead>
+                <script>
+                    console.log(<?= json_encode($_SESSION['username']); ?>);
+                </script>
                 <?php  
                     unset($rsss);
-                    $sss = "SELECT username, id, archive FROM staff";
+                    $sss = "SELECT username, id FROM staff WHERE username NOT IN ('".$_SESSION['username']."') AND archive = 0";
                     $rsss = mysqli_query($conn,$sss);
                     $rwss = mysqli_num_rows($rsss);
                     $count = 1;                 
                     if ($rwss > 0):
                         while($row = mysqli_fetch_assoc($rsss)):
-                            if ($row['archive'] == 0): 
                 ?>
                 <tr> 
                     <td><?php echo $count++; ?></td>
@@ -78,7 +80,6 @@
                     <td><a class="btn btn-outline-dark archivebtn" data-bs-toggle="modal" data-bs-target="#archiveModal"><i class="far fa-file-archive"></i></a></td>
                     <td><a class="btn btn-outline-dark deletebtn" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
-                        <?php endif;?>
                     <?php endwhile;?>
                 <?php endif;?>
             </table>
@@ -97,7 +98,10 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <form action="" method="post">
+                        <input type="hidden" name="archive_id" id="archive_id">
+                        <button type="submit" class="btn btn-primary" name="archivestaff">Yes, archive</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -114,8 +118,7 @@
                 <div class="modal-body" id="delete-modal-body">
                 </div>
                 <div class="modal-footer">
-                
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <form action="" method="post">
                         <input type="hidden" name="delete_id" id="delete_id">
                         <button type="submit" class="btn btn-primary" name="deletestaff">Yes</button>
@@ -140,6 +143,18 @@
                 echo "<script> alert('Error occur'); </script>";
             }
         }
+
+        if(isset($_POST['archivestaff'])){
+            $id = $_POST['archive_id'];
+            $archive_sql = "UPDATE staff SET archive = 1 WHERE username = '".$id."'"; 
+            echo "<script> console.log('".$archive_sql."')</script>"; 
+            if (mysqli_query($conn,$archive_sql)){
+                echo "<script> alert('Staff is archived'); </script>";
+                echo "<script>window.location.href='./stafflist.php'</script>"; 
+            } else{
+                echo "<script> alert('Error occur'); </script>";
+            }
+        }
     }  
 ?>
 <script type="text/javascript">
@@ -158,6 +173,7 @@
             var username = currentRow.find("td:eq(2)").text();
             var str = "Are you sure to archive "+username+" ?";
             $("#archive-modal-body").html(str);
+            $('#archive_id').val(username);
         });
         $("#table-list").DataTable();
     });
