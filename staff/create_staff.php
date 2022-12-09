@@ -31,8 +31,8 @@
                 return;
             }
 
-            if ($error == ""){
-                $insertSQL = "INSERT INTO staff (username,fullname,email,role,gender,password,password_check) VALUES ('$username', '$fullname','$email','$dept','$gender','$hash_password',0)";
+            if (empty($error)){
+                $insertSQL = "INSERT INTO staff (username,fullname,email,role,gender,password,password_check,archive) VALUES ('$username', '$fullname','$email','$dept','$gender','$hash_password',0,0)";
                 if (mysqli_query($conn,$insertSQL)){
                     $_SESSION['message'] = "User ".$fullname." is created successfully";
                     header("location:index.php");

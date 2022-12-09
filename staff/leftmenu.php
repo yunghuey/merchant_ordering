@@ -1,5 +1,5 @@
 <nav>
-    <ul>
+    <ul class="navigate">
         <li>
             <a href="index.php" class="side-nav logo">
                 <span class="nav-item">staff</span>
@@ -30,7 +30,8 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="./newstaff.php">Create New</a></li>
-                <li><a class="dropdown-item" href="#">View All</a></li>
+                <li><a class="dropdown-item" href="./stafflist.php">View All</a></li>
+                <li><a class="dropdown-item" href="./archivelist.php">View archive</a></li>
             </ul>
         </div></li>
         <li><div class="dropdown">

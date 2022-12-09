@@ -18,7 +18,7 @@
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="leftmenu.css" rel="stylesheet">
-    <link href="newstaff_style.css" rel="stylesheet">
+    <link rel="stylesheet" href="template_style.css">
 
   </head>
   <body>
@@ -49,10 +49,10 @@
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-department">Department</span>
               <select class="form-select" name="dept" aria-describedby="addon-department" required>
-                <option value="admin" <?php if ($dept== 'admin') echo "selected" ?> >Admin</option>
-                <option value="management" <?php if ($dept== 'management') echo "selected" ?>>Management</option>
-                <option value="courier" <?php if ($dept== 'courier') echo "selected" ?>>Courier</option>
-                <option value="stock" <?php if ($dept== 'stock') echo "selected" ?>>Stock</option>
+                <option value="Admin" <?php if ($dept== 'Admin') echo "selected" ?> >Admin</option>
+                <option value="Management" <?php if ($dept== 'Management') echo "selected" ?>>Management</option>
+                <option value="Courier" <?php if ($dept== 'Courier') echo "selected" ?>>Courier</option>
+                <option value="Stock" <?php if ($dept== 'Stock') echo "selected" ?>>Stock</option>
               </select>
             </div>
           </div>

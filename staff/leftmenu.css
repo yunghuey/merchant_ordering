@@ -49,7 +49,7 @@ a.side-nav{
   margin-left: 10px;
   text-decoration: none;
 }
-ul{
+ul.navigate{
   padding-left:0%;
   background: #EDF5E1;
 }
