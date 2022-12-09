@@ -4,6 +4,7 @@
     */
     session_start();
     require_once "../database/connect_db.php";
+    require_once "./alter_staff.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,7 +65,7 @@
                 </script>
                 <?php  
                     unset($rsss);
-                    $sss = "SELECT username, id FROM staff WHERE username NOT IN ('".$_SESSION['username']."') AND archive = 0";
+                    $sss = "SELECT username, id FROM staff WHERE archive = 0";
                     $rsss = mysqli_query($conn,$sss);
                     $rwss = mysqli_num_rows($rsss);
                     $count = 1;                 
@@ -130,33 +131,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
 </html>
-<?php 
-    if ($_SERVER['REQUEST_METHOD'] === "POST"){
-        if(isset($_POST['deletestaff'])){
-            $id = $_POST['delete_id'];
-            $delete_sql = "DELETE FROM staff WHERE username = '".$id."'"; 
-            echo "<script> console.log('".$delete_sql."')</script>"; 
-            if (mysqli_query($conn,$delete_sql)){
-                echo "<script> alert('Staff is deleted'); </script>";
-                echo "<script>window.location.href='./stafflist.php'</script>"; 
-            } else{
-                echo "<script> alert('Error occur'); </script>";
-            }
-        }
 
-        if(isset($_POST['archivestaff'])){
-            $id = $_POST['archive_id'];
-            $archive_sql = "UPDATE staff SET archive = 1 WHERE username = '".$id."'"; 
-            echo "<script> console.log('".$archive_sql."')</script>"; 
-            if (mysqli_query($conn,$archive_sql)){
-                echo "<script> alert('Staff is archived'); </script>";
-                echo "<script>window.location.href='./stafflist.php'</script>"; 
-            } else{
-                echo "<script> alert('Error occur'); </script>";
-            }
-        }
-    }  
-?>
 <script type="text/javascript">
     $(document).ready(function(){
         $("#table-list").on('click','.deletebtn', function(){
