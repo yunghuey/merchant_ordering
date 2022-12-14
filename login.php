@@ -32,7 +32,10 @@ require_once "./auth/login_auth.php"
   </div>
   <?php endif; ?>
 
-  <div class="container mt-5 pt-5">
+  <div class="container mt-5 pt-4">
+    <div class="row mb-2">
+      <div class=" text-center"><h1>MERCHANT ORDERING SYSTEM</h1></div>
+    </div>
     <div class="row">
         <div class="col-12 col-sm-8 col-md-6 m-auto">
           <div class="card border-0 shadow-lg">

@@ -59,7 +59,7 @@
           <div class="row">
             <span class="col-1 form-label">Gender:</span>
             <div class="form-check col-2">
-              <input class="form-check-input" type="radio" name="gender" id="radio_male" value="male" <?php if ($gender == 'male') echo "checked"?>>
+              <input class="form-check-input" type="radio" name="gender" id="radio_male" value="male" <?php if ($gender == 'male') echo "checked"?> required>
               <label class="form-check-label" for="radio_male">Male</label>
             </div>
             <div class="form-check col-2">
