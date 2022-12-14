@@ -5,12 +5,16 @@
                 <span class="nav-item">staff</span>
             </a>
         </li>
-        <li>
-            <a href="#" class="side-nav">
+        <li><div class="dropdown">
+            <a href="#" class="dropdown-toggle side-nav" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-box"></i>
                 <span class="nav-item">Product</span>
             </a>
-        </li>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="../product/newproduct.php">Add Product</a></li>
+                <li><a class="dropdown-item" href="">View All Product</a></li>
+            </ul>
+        </div></li>
         <li>
             <a href="#" class="side-nav">
                 <i class="fas fa-chart-line"></i>

@@ -3,7 +3,7 @@
         purpose: frontend to create new staff account
     */
     session_start();
-    require_once "create_staff.php";
+    
 ?>
 <!doctype html>
 <html lang="en">
