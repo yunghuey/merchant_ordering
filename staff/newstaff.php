@@ -3,7 +3,7 @@
         purpose: frontend to create new staff account
     */
     session_start();
-    
+    require_once "create_staff.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -32,7 +32,7 @@
           <div class="row">
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-name">Full name</span>
-              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php (!empty($fullname)) ? $fullname : '' ?>" required>
+              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php echo $fullname ?>" required>
             </div>
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-username">Username</span>
