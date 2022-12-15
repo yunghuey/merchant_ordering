@@ -19,60 +19,75 @@
     <!-- font awesome v5 -->
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
     
+    <!-- masking JQuery -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery.maskMoney.js" type="text/javascript"></script>
+
   </head>
   <body>
     <!-- navigation -->
     <?php include("../staff/leftmenu.php"); ?>
+    <?php if(isset($_SESSION['message'])) :?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
+      <?php
+        echo $_SESSION['message']."<br>";
+        unset($_SESSION['message']);
+      ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <?php endif; ?>
+
     <div class="content">
-      <header><h2>add new product</h2></header>
+      <header><h2>add new product</h2></header>   
 
       <section class="container-fluid">
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="prodname">Product Name</label>
-              <input type="text" class="form-control " name="productName" id="prodname">
+              <label for="prodname" class="form-label">Product Name</label>
+              <input type="text" class="form-control " name="productName" id="prodname" value="<?php echo $productName;?>" required>
             </div>
             <div class="col-md-6">
-              <label for="prodRM">Product Price</label>
+              <label for="prodRM" class="form-label">Product Price</label>
               <div class="input-group">
                 <span class="input-group-text">RM</span>
-                <!-- jquery or ajax masking like shopee got dot -->
-                <input type="text" class="form-control" name="productPrice" id="prodRM">
+                 <!-- jquery or ajax masking like shopee got dot  -->
+                <input type="text" class="form-control" name="productPrice" id="prodRM" value="<?php echo $productPrice;?>" required>
               </div>
             </div>
           </div>
 
-          <!-- quantity - spinner -->
+         <!-- quantity - spinner  -->
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="prodqty">Product Current Quantity</label>
+              <label for="prodqty" class="form-label">Product Current Quantity</label>
               <div class="stepper row g-3">
-                <div class="btn col-lg-2" id="decrement" onclick="stepper(this)"> - </div>
-                <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="prodqty" min="1" max="1000" step="1" value="1" ></div>
-                <div class="btn col-lg-2" id="increment" onclick="stepper(this)"> + </div>
+                <div class="btn col-lg-2" id="decrement" onclick="stepper(this)"><strong>-</strong></div>
+                <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="prodqty" min="1" max="1000" step="1" value="<?php if($productCurrentQty) echo $productCurrentQty; else echo '1';?>" required></div>
+                <div class="btn col-lg-2" id="increment" onclick="stepper(this)"><strong>+</strong></div>
               </div>
             </div>
             <div class="col-md-6">
-              <label for="prodCat">Product Category</label>
-              <select class="form-select mb-3">
+              <label for="prodCat" class="form-label">Product Category</label>
+              <select class="form-select mb-3" name="prodCat" required>
                 <option selected>Choose a category</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="milk" <?php if ($productCat== 'milk') echo "selected" ?>>Milk</option>
+                <option value="cheese" <?php if ($productCat== 'cheese') echo "selected" ?>>Cheese</option>
+                <option value="yogurt" <?php if ($productCat== 'yogurt') echo "selected" ?>>Yogurt</option>
+                <option value="butter" <?php if ($productCat== 'butter') echo "selected" ?>>Butter</option>
               </select>
             </div>
           </div>
-        
+
           <div class="row mb-3">
             <div class="col-md-6">
-              <label for="prodDesc">Product Description</label>
-              <textarea class="form-control" id="prodDesc" rows="4"></textarea>         
+              <label for="prodDesc" class="form-label">Product Description</label>
+              <textarea class="form-control" name="productDesc" id="prodDesc" rows="4" required><?= $productDesc; ?></textarea>         
             </div>
             <div class="col-md-6">
-              <label for="prodPic">Product Picture</label>
-              <div class="btn">Click to insert</div>
-              <!-- insert button -->
+              <label for="prodPic" class="form-label">Product Picture</label>
+              <input type="file" class="form-control <?php echo isset($error['image']) ? 'is-invalid' : '';?>" name="prod_img" accept="image/*" required>
+              <div class="invalid-feedback"><?php echo $error['image'] ?? '';?></div>
             </div>
           </div>
 
@@ -89,18 +104,25 @@
   </body>
 </html>
 <script>
-      function stepper(btn){
-        const prodqty = document.getElementById("prodqty");
-        let id = btn.getAttribute("id");
-        let min = prodqty.getAttribute("min");
-        let max = prodqty.getAttribute("max");
-        let step = prodqty.getAttribute("step");
-        let val = prodqty.getAttribute("value");
-        let calcStep = (id == "increment") ? (step*1): (step * -1);
-        let newValue = parseInt(val) + calcStep;
-        console.log(id,calcStep,newValue);
-        if(newValue >= min && newValue <= max){
-          prodqty.setAttribute("value", newValue);
-        }
-      }
+
+      
+  function stepper(btn){
+    const prodqty = document.getElementById("prodqty");
+    let id = btn.getAttribute("id");
+    let min = prodqty.getAttribute("min");
+    let max = prodqty.getAttribute("max");
+    let step = prodqty.getAttribute("step");
+    let val = prodqty.getAttribute("value");
+    let calcStep = (id == "increment") ? (step*1): (step * -1);
+    let newValue = parseInt(val) + calcStep;
+    console.log(id,calcStep,newValue);
+    if(newValue >= min && newValue <= max){
+      prodqty.setAttribute("value", newValue);
+    }
+  }
+
+  $(function(){
+    $('#prodRM').maskMoney();
+  })
+  
 </script>

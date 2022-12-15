@@ -111,7 +111,7 @@ div.content{
   position: relative;
   /* top right bottom left */
   margin: 2% 2% 2% 130px ; 
-  background: #C5CBE3;
+  background: #dadff7;
   box-shadow: 0 30px 35px rgba(0,0,0,0.1);
   z-index:0;
   /* z-index must come with position */
