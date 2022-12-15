@@ -115,7 +115,6 @@
     let val = prodqty.getAttribute("value");
     let calcStep = (id == "increment") ? (step*1): (step * -1);
     let newValue = parseInt(val) + calcStep;
-    console.log(id,calcStep,newValue);
     if(newValue >= min && newValue <= max){
       prodqty.setAttribute("value", newValue);
     }
