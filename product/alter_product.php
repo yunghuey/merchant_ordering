@@ -10,8 +10,9 @@
             $delete_sql = "DELETE FROM product WHERE productID = ".$id;
             if (mysqli_query($conn,$delete_sql)){
                 // session cannot work
-                $_SESSION['message'] = "Product is deleted";
-                header("location:../staff/index.php");
+                $_SESSION['product'] = "Product is deleted";
+                // rethink
+                header("location:productlist.php");
             } else{
                 echo "<script> alert('Error occur'); </script>";
             }
