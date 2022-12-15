@@ -32,11 +32,11 @@
           <div class="row">
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-name">Full name</span>
-              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php echo $fullname ?>" required>
+              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php (!empty($fullname)) ? $fullname : '' ?>" required>
             </div>
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-username">Username</span>
-              <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?>" placeholder="Enter username" name="username" aria-describedby="addon-usernames" value="<?php echo $username?>" required>
+              <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?>" placeholder="Enter username" name="username" aria-describedby="addon-usernames" value="<?php echo $username; ?>" required>
               <div class="col-3 badge bg-warning text-wrap text-dark fs-6 my-auto"><?php echo $error['username'] ?? '';?></div>
             </div>
           </div>
