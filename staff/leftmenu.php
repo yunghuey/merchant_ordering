@@ -1,7 +1,7 @@
 <nav>
     <ul class="navigate">
         <li>
-            <a href="index.php" class="side-nav logo">
+            <a href="http://localhost/merchant_ordering/staff/index.php" class="side-nav logo">
                 <span class="nav-item">staff</span>
             </a>
         </li>
@@ -33,9 +33,9 @@
                 <span class="nav-item">Staff</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="./newstaff.php">Create New</a></li>
-                <li><a class="dropdown-item" href="./stafflist.php">View All</a></li>
-                <li><a class="dropdown-item" href="./archivelist.php">View archive</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/newstaff.php">Create New</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/stafflist.php">View All</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/archivelist.php">View archive</a></li>
             </ul>
         </div></li>
         <li><div class="dropdown">
