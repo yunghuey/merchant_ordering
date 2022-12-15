@@ -21,7 +21,7 @@ session_start();
   <body>
     <?php include("leftmenu.php"); ?>
     <script>
-      console.log(<?= json_encode($_SESSION['id']); ?>);
+      console.log(<?= json_encode($_SESSION['message']); ?>);
     </script>
 
     <?php if(isset($_SESSION['message'])) :?>
