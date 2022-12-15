@@ -9,9 +9,9 @@
 
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
         if(isset($_POST['updatestaff'])){
-            $fullname = $_POST['fullname'];
-            $username = $_POST['username'];
-            $email = $_POST['email'];
+            $fullname = trim($_POST['fullname']);
+            $username = trim($_POST['username']);
+            $email = trim($_POST['email']);
             $dept = $_POST['dept'];
             $gender = $_POST['gender'];
             $id = $_POST['id'];
