@@ -27,15 +27,6 @@
   <body>
     <!-- navigation -->
     <?php include("../staff/leftmenu.php"); ?>
-    <?php if(isset($_SESSION['message'])) :?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
-      <?php
-        echo $_SESSION['message']."<br>";
-        unset($_SESSION['message']);
-      ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <?php endif; ?>
 
     <div class="content">
       <header><h2>add new product</h2></header>   
