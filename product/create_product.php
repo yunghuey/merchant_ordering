@@ -26,11 +26,8 @@
                 
             $insertSQL = "INSERT INTO product (productName,productPrice,productCurrentQty,productDesc,productCategory,productPicture) VALUES ('$productName','$productPrice','$productCurrentQty','$productDesc','$productCat','$new_img_name')";
             if (mysqli_query($conn,$insertSQL)){
-                echo "<script type='text/javascript'>
-                window.onload = function () { alert('Product is added successfully'); } 
-         </script>";
-                $_SESSION['message'] = "Product is added successfully";
-                header("location:../staff/index.php");
+                $_SESSION['message'] = "Product ".$productName." is added successfully";
+                header("location:http://localhost/merchant_ordering/staff/index.php");
             }            
         }
     }

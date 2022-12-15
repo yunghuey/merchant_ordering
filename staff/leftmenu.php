@@ -11,7 +11,7 @@
                 <span class="nav-item">Product</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="../product/newproduct.php">Add Product</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/product/newproduct.php">Add Product</a></li>
                 <li><a class="dropdown-item" href="">View All Product</a></li>
             </ul>
         </div></li>
