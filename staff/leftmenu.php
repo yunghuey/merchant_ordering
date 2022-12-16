@@ -44,8 +44,8 @@
                 <span class="nav-item">Customer</span>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Create New</a></li>
-                <li><a class="dropdown-item" href="#">View All</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/newcustomer.php">Create New</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/customerlist.php">View All</a></li>
             </ul>
         </div></li>
         <li>
