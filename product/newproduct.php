@@ -27,15 +27,6 @@
   <body>
     <!-- navigation -->
     <?php include("../staff/leftmenu.php"); ?>
-    <?php if(isset($_SESSION['message'])) :?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
-      <?php
-        echo $_SESSION['message']."<br>";
-        unset($_SESSION['message']);
-      ?>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <?php endif; ?>
 
     <div class="content">
       <header><h2>add new product</h2></header>   
@@ -51,7 +42,6 @@
               <label for="prodRM" class="form-label">Product Price</label>
               <div class="input-group">
                 <span class="input-group-text">RM</span>
-                 <!-- jquery or ajax masking like shopee got dot  -->
                 <input type="text" class="form-control" name="productPrice" id="prodRM" value="<?php echo $productPrice;?>" required>
               </div>
             </div>
@@ -87,7 +77,6 @@
             <div class="col-md-6">
               <label for="prodPic" class="form-label">Product Picture</label>
               <input type="file" class="form-control <?php echo isset($error['image']) ? 'is-invalid' : '';?>" name="prod_img" accept="image/*" required>
-              <div class="invalid-feedback"><?php echo $error['image'] ?? '';?></div>
             </div>
           </div>
 
@@ -103,9 +92,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
 </html>
-<script>
-
-      
+<script>  
   function stepper(btn){
     const prodqty = document.getElementById("prodqty");
     let id = btn.getAttribute("id");
@@ -123,5 +110,4 @@
   $(function(){
     $('#prodRM').maskMoney();
   })
-  
 </script>
