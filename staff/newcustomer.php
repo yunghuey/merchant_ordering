@@ -33,30 +33,43 @@
 
       <section class="container-fluid">
         <form action="" method="post">
-          <div class="row">
-            <div class="col input-group mb-3">
-              <span class="input-group-text" id="addon-name">Full name</span>
-              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php echo $fullname ?>" required>
-            </div>
-            <div class="col input-group mb-3">
+          <div class="col-md-8">
+            <div class="input-group mb-3">
               <span class="input-group-text" id="addon-username">Username</span>
               <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?>" placeholder="Enter username" name="username" aria-describedby="addon-usernames" value="<?php echo $username; ?>" required>
               <div class="col-3 badge bg-warning text-wrap text-dark fs-6 my-auto"><?php echo $error['username'] ?? '';?></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col input-group mb-3">
+          <div class="col-md-8">
+            <div class="input-group mb-3">
               <span class="input-group-text" id="addon-email">Email</span>
               <input type="email" class="form-control <?php echo isset($error['email']) ? 'is-invalid' : '';?>" placeholder="Enter email" name="email" aria-describedby="addon-email" value="<?php echo $email?>" required>
               <div class="col-3 badge bg-warning text-wrap text-dark fs-6 text-center"><?php echo $error['email'] ?? '';?></div>
             </div>
-            <div class="col input-group mb-3">
+          </div>
+          <div class="col-md-8">
+            <div class="input-group mb-3">
               <span class="input-group-text" id="addon-phone">Phone number</span>
               <input type="text" class="form-control <?php echo isset($error['phoneNum']) ? 'is-invalid' : '';?>" placeholder="Enter phone number" name="phoneNum" aria-describedby="addon-phone" id="phone-num" value="<?php echo $phoneNum?>" required>
               <div class="col-3 badge bg-warning text-wrap text-dark fs-6 my-auto" ><?php echo $error['phoneNum'] ?? '';?></div>
             </div>
           </div>
           <div class="row">
+            <div class="btn-group col-2" role="group">
+              <input class="btn btn-primary submit-btn" name="createcustomer" value="Create" type="submit" >
+              <a href="index.php" class="btn btn-outline-primary back-btn">Back</a>
+            </div>
+          </div>
+        </form>
+      </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+       <!-- <div class="col input-group mb-3">
+              <span class="input-group-text" id="addon-name">Full name</span>
+              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php echo $fullname ?>" required>
+            </div> -->
+          <!-- <div class="row">
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-address">Shipping Address</span>
               <textarea class="form-control" name="shippingAddress" placeholder="Enter shipping address" rows="3" area-describedby="addon-address" required><?php echo $address; ?></textarea>
@@ -72,19 +85,8 @@
                     <label class="form-check-label" for="radio_female">Female</label>
                 </div>
             </div>
-          <div class="row">
-            <div class="btn-group col-2" role="group">
-              <input class="btn btn-primary submit-btn" name="createcustomer" value="Create" type="submit" >
-              <a href="index.php" class="btn btn-outline-primary back-btn">Back</a>
-            </div>
-          </div>
-        </form>
-      </section>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
+          </div> -->
 </html>
 <script>
-    $('#phone-num').inputmask('999-99999999',{"placeholder": ""});
+    $('#phone-num').inputmask('999-9999 9999',{"placeholder": ""});
 </script>
