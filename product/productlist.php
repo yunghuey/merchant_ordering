@@ -4,7 +4,7 @@
     */
     session_start();
     require_once "../database/connect_db.php";
-    require_once "./alter_product.php";
+    require_once "./update_product.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -58,7 +58,6 @@
                     <th>Quantity</th>
                     <th>Detail</th>
                     <th>Edit</th>
-                    <!-- <th>Archive</th> -->
                     <th>Delete</th>
                 </thead>
                 <?php  
@@ -75,7 +74,6 @@
                     <td><?php echo $row['productCurrentQty']; ?></td>
                     <td><a href="./productdetails.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-dark"><i class="far fa-eye"></i></a></td>
                     <td><a href="./editproduct.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-dark"><i class="fas fa-edit"></i></a></td>
-                    <!-- <td><a class="btn btn-outline-dark archivebtn" data-bs-toggle="modal" data-bs-target="#archiveModal"><i class="far fa-file-archive"></i></a></td> -->
                     <td><a class="btn btn-outline-dark deletebtn" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash-alt"></i></a></td>
                 </tr>
                     <?php endwhile;?>
@@ -119,14 +117,6 @@
             console.log(productid);
             $('#delete_id').val(productid);
         });
-
-        // $("#table-list").on('click','.archivebtn', function(){
-        //     var currentRow = $(this).closest("tr");
-        //     var username = currentRow.find("td:eq(2)").text();
-        //     var str = "Are you sure to archive "+username+" ?";
-        //     $("#archive-modal-body").html(str);
-        //     $('#archive_id').val(username);
-        // });
         $("#table-list").DataTable();
     });
 </script>
