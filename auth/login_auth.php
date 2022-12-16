@@ -37,13 +37,15 @@
 						$_SESSION['email'] = $row['email'];
 						$_SESSION['password'] = $row['password'];
 						$_SESSION['usertype'] = "customer";
-						// continue to the welcome page
-						header("location: customer/index.php");
+						if($row['password_check'] == 0 )
+							header("location: customer/registration.php");
+						else
+							header("location: customer/index.php");
 					} else{
 						// wrong password
 						$error['password'] = "Wrong password";
 					}
-				} 
+				}
 				// check if staff
 				else {
 					$getPwd = "SELECT * FROM staff WHERE (username = '$username' OR email = '$username')";
@@ -77,14 +79,4 @@
 			}
 		}
 	}
-/*
-				// to view php variable in console
-				?>
-					<script>
-						console.log(<?= json_encode($password); ?>);
-						console.log(<?= json_encode($real_password); ?>);
-						console.log(<?= json_encode($check_password); ?>);
-					</script>
-					<?php 
-				*/
 ?>
