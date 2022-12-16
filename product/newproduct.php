@@ -1,6 +1,6 @@
 <?php
     /*
-        purpose: frontend to create new product
+        purpose: frontend php to create new product
     */
     session_start();
     require_once "create_product.php";

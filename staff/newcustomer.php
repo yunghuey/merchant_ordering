@@ -1,6 +1,6 @@
 <?php
     /*
-        purpose: frontend to create new account for customer use
+        purpose: frontend php to create new account for customer user
     */
     session_start();
     require_once "create_customer.php";

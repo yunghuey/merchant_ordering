@@ -1,6 +1,6 @@
 <?php
     /*
-        purpose: backend process to update the edited product data into database
+        purpose: backend php to update the edited product data into database and delete product
     */
     require_once "../database/connect_db.php";
 

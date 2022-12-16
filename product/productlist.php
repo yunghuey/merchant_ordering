@@ -1,6 +1,6 @@
 <?php 
     /*
-        purpose: frontend to display the product list
+        purpose: frontend to display the product list and button to delete product
     */
     session_start();
     require_once "../database/connect_db.php";

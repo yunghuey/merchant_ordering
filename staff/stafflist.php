@@ -1,6 +1,6 @@
 <?php 
     /*
-        purpose: frontend php page to display staff list and show the three buttons: view details, edit, archive, delete
+        purpose: frontend php page to display staff list and show the four buttons: view details, edit, archive, delete
     */
     session_start();
     require_once "../database/connect_db.php";

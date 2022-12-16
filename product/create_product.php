@@ -1,6 +1,6 @@
 <?php
     /*
-        purpose: to create new row in database product, including validation
+        purpose: backend php to create new row in database product, including validation
     */
     require_once "../database/connect_db.php";
     $productName = $productPrice = $productCurrentQty = $productCat = 

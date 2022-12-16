@@ -1,6 +1,6 @@
 <?php 
     /*
-        purpose: backend process for updating staff details into database
+        purpose: backend php process for updating staff details into database
     */
     require_once "../database/connect_db.php";
     $error = [];
@@ -22,12 +22,12 @@
             $username_result = mysqli_query($conn,$username_check_SQL);
             $email_result = mysqli_query($conn,$email_check_SQL);
 
-            if (mysqli_num_rows($username_result) > 0){
+            if (mysqli_num_rows($username_result) > 0)
                 $error['username'] = "Username already existed";
-            }
-            if (mysqli_num_rows($email_result) > 0){
+            
+            if (mysqli_num_rows($email_result) > 0)
                 $error['email'] = "Email already existed";
-            }
+            
             if (empty($error)){
                 $update_sql = "UPDATE staff SET fullname = '".$fullname."', username = '".$username."',
                                email = '".$email."', role = '".$dept."', gender = '".$gender."' WHERE id = ".$id;

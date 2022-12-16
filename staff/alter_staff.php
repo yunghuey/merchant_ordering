@@ -1,6 +1,7 @@
 <?php 
     /*
         purpose: backend php for stafflist.php and archivelist.php
+        function: can delete, archive, and unarchive staff
     */
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
         if(isset($_POST['deletestaff'])){
