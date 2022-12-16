@@ -47,7 +47,7 @@ require_once "./auth/login_auth.php"
               <form action="" method="post">
                 <!-- input field -->
                 <div class="form-floating mb-3">
-                  <input type="text" class="form-control my-3 py-2 <?php echo isset($error['username']) ? 'is-invalid' : '';?>" name="username" placeholder="Username/Email" value="<?php echo $username;?>" placeholder="Username" name="username" id="floatingInput" required>
+                  <input type="text" class="form-control my-3 py-2 <?php echo isset($error['username']) ? 'is-invalid' : '';?>" name="username" placeholder="Username/Email" value="<?php echo $username;?>" id="floatingInput" required>
                   <label for="floatingInput">Username/Email address</label>
                   <div class="invalid-feedback"><?php echo $error['username'] ?? '';?></div>
                 </div>
