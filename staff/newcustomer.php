@@ -56,7 +56,7 @@
           </div>
           <div class="row">
             <div class="btn-group col-2" role="group">
-              <input class="btn btn-primary submit-btn" name="createcustomer" value="Create" type="submit" >
+              <input class="btn btn-primary submit-btn" name="createcustomer" value="Create" type="submit">
               <a href="index.php" class="btn btn-outline-primary back-btn">Back</a>
             </div>
           </div>
@@ -64,28 +64,7 @@
       </section>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
-       <!-- <div class="col input-group mb-3">
-              <span class="input-group-text" id="addon-name">Full name</span>
-              <input type="text" class="form-control" placeholder="Enter full name" name="fullname" aria-describedby="addon-name" value="<?php echo $fullname ?>" required>
-            </div> -->
-          <!-- <div class="row">
-            <div class="col input-group mb-3">
-              <span class="input-group-text" id="addon-address">Shipping Address</span>
-              <textarea class="form-control" name="shippingAddress" placeholder="Enter shipping address" rows="3" area-describedby="addon-address" required><?php echo $address; ?></textarea>
-            </div>
-            <div class="col mb-3">
-                <span class="col">Gender:</span>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="radio_male" value="male" <?php if ($gender == 'male') echo "checked"?> required>
-                    <label class="form-check-label" for="radio_male">Male</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gender" id="radio_female" value="female" <?php if ($gender== 'female') echo "checked"?>>
-                    <label class="form-check-label" for="radio_female">Female</label>
-                </div>
-            </div>
-          </div> -->
+</body>       
 </html>
 <script>
     $('#phone-num').inputmask('999-9999 9999',{"placeholder": ""});

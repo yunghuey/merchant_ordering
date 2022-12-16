@@ -38,7 +38,7 @@
 						$_SESSION['password'] = $row['password'];
 						$_SESSION['usertype'] = "customer";
 						if($row['password_check'] == 0 )
-							header("location: customer/registration.php");
+							header("location: forgotpassword.php");
 						else
 							header("location: customer/index.php");
 					} else{
