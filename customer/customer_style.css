@@ -1,8 +1,52 @@
 body{
-    background-color: #EDF5E1;
+    background-color: #dbd2cd;
 }
-button#submit_btn{
+button.submit-btn,
+a.back-btn:hover{
     background: #4056A1;
     border-color: #4056A1;
-    color: #EDF5E1;
+    color: #eef3e7;
+}
+button.submit-btn:hover,
+a.back-btn{
+    background:#eef3e7;
+    border-color:#4056A1;
+    color: #4056A1;
+}
+
+/* navigation bar */
+div.top-bar{
+    width:100%;
+    background: #487626;
+    box-shadow: 0 30px 35px rgba(0,0,0,0.2); 
+    color: #fbebb3;
+}
+div.top-bar div.test,
+div.top-bar div.company{
+    margin: 0 15px 0 15px;
+}
+a.side-nav{
+    display: table;
+    padding: 10px;
+    text-decoration: none;
+}
+a.nav-link,
+a.side-nav{
+    color: #fbebb3;
+    font-size: 18px;
+    transition: 0.5s ease-in-out;
+}
+li.dropdown{
+    position: relative;
+    margin-left: 80%;
+}
+a.nav-link:hover{
+    color:#E85A4F;
+    text-decoration:wavy;
+}
+li.nav-item{
+    margin-left: 25px;
+}
+a.dropdown-item:active{
+    background-color: #487626;
 }
