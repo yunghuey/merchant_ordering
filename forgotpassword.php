@@ -68,7 +68,11 @@
                   <?php if(!isset($_SESSION['username'])) :?>
                   <br>Already have account? <a href="./login.php" class="nav-link">Login here</a>
                   <?php else: ?>    
-                    <a href="staff/index.php" type="button" class="btn btn-primary mb-2" id="submit_btn">Back</a>
+                    <?php if($_SESSION['usertype'] == 'customer') :?>
+                      <a href="customer/index.php" type="button" class="btn btn-primary mb-2" id="submit_btn">Back</a>
+                    <?php else: ?>  
+                      <a href="staff/index.php" type="button" class="btn btn-primary mb-2" id="submit_btn">Back</a>
+                    <?php endif; ?>
                   <?php endif; ?>
                 </div>
               </form>
