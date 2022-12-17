@@ -36,7 +36,7 @@
                     if(mysqli_query($conn,$updatePwd)){
                         $_SESSION['message'] = "Password reset successfully";
                         if ($_SESSION['usertype'] == "customer"){
-                            header("location:customer/registration.php");
+                            header("location:customer/index.php");
                         }
                         else{
                             header("location:staff/index.php");

@@ -37,6 +37,9 @@
 						$_SESSION['email'] = $row['email'];
 						$_SESSION['password'] = $row['password'];
 						$_SESSION['usertype'] = "customer";
+						// $_SESSION['fullname'] = $row['fullname'];
+						// $_SESSION['shippingAddress'] = $row['shippingAddress'];
+						// $_SESSION['gender'] = $row['gender'];
 						if($row['password_check'] == 0 )
 							header("location: forgotpassword.php");
 						else

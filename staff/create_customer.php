@@ -5,7 +5,6 @@
     require_once "../database/connect_db.php";
     $error = [];
     $username = $email = $phoneNum = "";
-    //  $fullname = $address = $gender = "";
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if(isset($_POST['createcustomer'])){
@@ -13,9 +12,6 @@
             $email = trim($_POST['email']);
             $phoneNum = $_POST['phoneNum'];
             $hash_password = password_hash("abc1234",PASSWORD_DEFAULT);
-            // $address = trim($_POST['shippingAddress']);
-            // $gender = $_POST['gender'];
-            // $fullname = trim($_POST['fullname']);
 
             $username_check_SQL = "SELECT username FROM customer WHERE username = '".$username."'";
             $email_check_SQL = "SELECT email FROM customer WHERE email = '".$email."'";
@@ -37,7 +33,6 @@
             }
             if (empty($error)){
                 $insertSQL = "INSERT INTO customer (email,username,password,phoneNumber,password_check) VALUES ('$email', '$username','$hash_password','$phoneNum',0)";
-                // $insertSQL = "INSERT INTO customer (email,username,password,shippingAddress,phoneNumber,fullname,gender,password_check) VALUES ('$email', '$username','$hash_password','$address','$phoneNum','$fullname','$gender',0)";
                 if (mysqli_query($conn,$insertSQL)){
                     $_SESSION['message'] = "Customer ".$username." is created successfully";
                     header("location:index.php");
