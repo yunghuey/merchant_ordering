@@ -63,7 +63,32 @@ footer{
     background-color: #487626;
     color:#fbebb3;
 }
-img{
-    max-height:500px;
-    width: auto;
+img.card-img-top{
+    height: 250px;
+}
+.buy-btn,
+.btn-close-modal:hover{
+    background-color:#d59db0;
+    color:#40360c;
+    border:#40360c;
+}
+.buy-btn:hover,
+.btn-close-modal{
+    color:#d59db0;
+    background-color:#40360c;
+    border:#d59db0;
+}
+div.card{
+    box-shadow: rgba(0,0,0,0.2);
+}
+.modalbutton{
+    text-decoration: none;
+    transition:0.2s ease-in;
+    color:#487626;
+    font-weight:500;
+}
+.modalbutton:hover{
+    font-weight: 600;
+    text-decoration: underline;
+    color:#487626;
 }
