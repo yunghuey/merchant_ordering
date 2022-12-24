@@ -37,6 +37,7 @@
 						$_SESSION['email'] = $row['email'];
 						$_SESSION['password'] = $row['password'];
 						$_SESSION['usertype'] = "customer";
+						$_SESSION['password_check'] = $row['password_check'];
 						// $_SESSION['fullname'] = $row['fullname'];
 						// $_SESSION['shippingAddress'] = $row['shippingAddress'];
 						// $_SESSION['gender'] = $row['gender'];
