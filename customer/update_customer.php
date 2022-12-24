@@ -15,6 +15,7 @@
             $updateSQL = "UPDATE customer set shippingAddress = '$shippingAddress',fullname='$fullname',gender='$gender' WHERE id =".$_SESSION['id'];
             if(mysqli_query($conn,$updateSQL)){
                 $_SESSION['message'] = "Profile is successfully registered";
+                $_SESSION['password_check'] = 1;
                 header("location:index.php");
             }
         }

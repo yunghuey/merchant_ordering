@@ -37,7 +37,7 @@
             <div class="col-12 col-sm-8 m-auto">
             <div class="card border-0 shadow-lg">
                 <div class="card-header text-center">
-                    <?php if(!isset($_SESSION['id'])) :?>
+                    <?php if($_SESSION['password_check'] == 0) :?>
                     <h2>First Time Login</h2>
                     <h6>Please complete your registration first before proceeding</h6>
                     <?php else: ?>
@@ -69,7 +69,7 @@
                     </div>
 
                     <!-- to update -->
-                    <?php if(isset($_SESSION['id'])) :?>
+                    <?php if($_SESSION['password_check'] == 1) :?>
                     <div class="col input-group mb-3">
                         <span class="input-group-text" id="addon-username">Username</span>
                         <input type="text" class="form-control <?php echo isset($error['username']) ? 'is-invalid' : ''; ?>" placeholder="Enter username" name="username" aria-describedby="addon-usernames" value="<?php if (empty($username)) echo $rwsc['username']; echo $username; ?>" required>
@@ -89,7 +89,7 @@
 
                     <!-- submit button -->
                     <div class="col mb-3">
-                    <?php if(!isset($_SESSION['id'])) :?>
+                    <?php if($_SESSION['password_check'] == 0) :?>
                     <button type="submit" class="btn btn-primary mb-2 float-end submit-btn" name="custRegister">Register</button>
                     <?php else: ?>
                         <button type="submit" class="btn mb-2 float-end submit-btn" name="custUpdate">Update</button>

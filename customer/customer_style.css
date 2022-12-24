@@ -1,5 +1,7 @@
 body{
     background-color: #dbd2cd;
+    padding:0;
+    margin: 0;
 }
 button.submit-btn,
 a.back-btn:hover{
@@ -19,7 +21,6 @@ div.top-bar{
     width:100%;
     background: #487626;
     box-shadow: 0 30px 35px rgba(0,0,0,0.2); 
-    color: #fbebb3;
 }
 div.top-bar div.test,
 div.top-bar div.company{
@@ -49,4 +50,45 @@ li.nav-item{
 }
 a.dropdown-item:active{
     background-color: #487626;
+}
+a.logo{
+    text-decoration: none;
+    color: #fbebb3;
+}
+a.logo:hover{
+    color:#fbebb3;
+}
+footer{
+    width:100%;
+    background-color: #487626;
+    color:#fbebb3;
+}
+img.card-img-top{
+    height: 250px;
+}
+.buy-btn,
+.btn-close-modal:hover{
+    background-color:#d59db0;
+    color:#40360c;
+    border:#40360c;
+}
+.buy-btn:hover,
+.btn-close-modal{
+    color:#d59db0;
+    background-color:#40360c;
+    border:#d59db0;
+}
+div.card{
+    box-shadow: rgba(0,0,0,0.2);
+}
+.modalbutton{
+    text-decoration: none;
+    transition:0.2s ease-in;
+    color:#487626;
+    font-weight:500;
+}
+.modalbutton:hover{
+    font-weight: 600;
+    text-decoration: underline;
+    color:#487626;
 }

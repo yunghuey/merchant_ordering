@@ -1,6 +1,6 @@
 <div class="top-bar">
-    <div class="row">
-        <div class="text-center mt-3"><h2>FARM TREASURE</h2></div>
+    <div class="container">
+        <div class="text-center pt-3"><h2><a href="index.php" class="logo">FARM TREASURE</a></h2></div>
     </div>
     <div class="float-end mx-4">
         <div class="dropdown">
@@ -22,8 +22,8 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" aria-current="page" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Product</a></li>
+                    <li class="nav-item"><a class="nav-link" aria-current="page" href="http://localhost/merchant_ordering/customer/index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="http://localhost/merchant_ordering/customer/product_display.php">Product</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Order</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">History</a></li>
                 </ul>

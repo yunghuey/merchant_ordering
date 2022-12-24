@@ -24,17 +24,19 @@
             $productCat = trim($_POST['productCat']);
             $productDesc = trim($_POST['productDesc']);
             $id =  $_POST['id'];
+            $img_ex = pathinfo($product_img_name, PATHINFO_EXTENSION);
+
             $condition = "WHERE productID = ".$id;
 
             $update_product = "UPDATE product SET productName = '".$productName."',productPrice = '"
                                 .$productPrice."', productCurrentQty = '".$productCurrentQty."',productDesc = '"
                                 .$productDesc."',productCategory = '".$productCat."'";
             
-            if (isset($_FILES['prod_img'])){
+            if (!empty($img_ex)){
                 delete_ori_prod_pic($conn,$id);
                 $product_img_name = $_FILES['prod_img']['name'];
                 $tmp_name = $_FILES['prod_img']['tmp_name'];
-                $img_ex = pathinfo($product_img_name, PATHINFO_EXTENSION);
+                
                 $img_new_filename = preg_replace('/\s+/', '_', $productName);                
                 $new_img_name = uniqid("", true).'_'.$img_new_filename.'.'.$img_ex;
                 $img_upload_path = 'product_images/'.$new_img_name;

@@ -11,6 +11,8 @@
 testing acc: 
 customer:yhuey@gmail.com, yhuey, 123$hueY, ---- Tong$888
 customer: cust1, password - 5*gj3Jaac ------ Hjsn5@rr
+customer: jessica, password - 667Jn3#uk
+customer: daniel, password - 667Jn3#uk ----- hdo4*J33
 staff: staffhuey@gmail.com, staffhuey, Staff@123 --- stafF@999
 staff: tintin, Hello4$7
 staff: maymay, pwd: Maymay8)
