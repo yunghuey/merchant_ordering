@@ -47,9 +47,9 @@
                     <h4 class="card-title"><?= $row['productName']?></h4>
                     <div class="d-flex justify-content-between">
                         <p class="card-text"><?= $row['productCategory']?></p>
-                        <p class="card-text mr-4 text-success">RM<?= $row['productPrice']?></p>
+                        <p class="card-text mr-4 text-success">RM<?= number_format($row['productPrice'],2);?></p>
                     </div>
-                    <a href="#" class="card-link modalbutton" data-bs-toggle="modal" data-bs-target="#modalproduct" data-id="<?= $row['productID']?>" data-name="<?= $row['productName']?>" data-img="<?= $row['productPicture']?>" data-desc="<?= $row['productDesc']?>" data-price="<?= $row['productPrice']?>">See Details</a>
+                    <a href="#" class="card-link modalbutton" data-bs-toggle="modal" data-bs-target="#modalproduct" data-id="<?= $row['productID']?>" data-name="<?= $row['productName']?>" data-img="<?= $row['productPicture']?>" data-desc="<?= $row['productDesc']?>" data-price="<?= number_format($row['productPrice'],2); ?>">See Details</a>
                 </div>
             </div>    
         <?php 
