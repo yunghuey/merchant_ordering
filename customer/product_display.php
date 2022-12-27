@@ -15,6 +15,7 @@
     <title>Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" href="customer_style.css">
+    <link rel="stylesheet" href="../product/product_style.css">
 
     <!-- jquery link -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity= "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -64,60 +65,84 @@
     
         <!-- Modal -->
         <div class="modal fade" id="modalproduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Product details</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Product details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
                     <center><img src="" id="productImg" height="200" width="200"></center>
-                    <div class="form-group">
-                        <label for="productName">Name:</label>
-                        <input type="text" class="form-control" id="productName" readonly>
+                    <div class="row mb-1">
+                    <form action="orderconfirmation.php" method="post">
+
+                        <div class="col-6 form-group">
+                            <label for="productName">Name:</label>
+                            <input type="text" class="form-control" id="productName" name="productName" readonly>
+                        </div>
+                        <div class="col-6 form-group mb-1">
+                            <label for="productPrice">Price:</label>
+                            <input type="text" class="form-control" id="productPrice" name="productPrice" readonly>
+                        </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-1">
                         <label for="productDescription">Description:</label>
-                        <textarea class="form-control" id="productDescription" rows="3" readonly></textarea>
+                        <textarea class="form-control" id="productDescription" rows="2" readonly></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="productPrice">Price:</label>
-                        <input type="text" class="form-control" id="productPrice" readonly>
+                    
+                    <div class="col-6 form-group mb-1">
+                        <label for="orderQty">Quantity:</label>
+                        <div class="stepper row g-3">
+                            <div class="btn col-lg-2" id="decrement" onclick="stepper(this)"><strong>-</strong></div>
+                            <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="orderQty" min="1" max="1000" step="1" value="<?= '1';?>" required></div>
+                            <div class="btn col-lg-2" id="increment" onclick="stepper(this)"><strong>+</strong></div>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" id="productID" hidden>
+                    <input type="text" class="form-control" id="productID" name="productID" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn buy-btn" name="makeorder">Buy Now</button>
+                </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn buy-btn" name="buyproduct">Buy Now</button>
-            </div>
-            </div>
         </div>
-        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
   </body>
 </html>
 <script type="text/javascript">
     $(document).ready(function(){
+        $('.card').on('click','.modalbutton', function(){
+            var picture = "http://localhost/merchant_ordering/product/product_images/";
+            var name = $(this).attr('data-name');
+            var id = $(this).attr('data-id');
+            var price = $(this).attr('data-price');
+            var desc = $(this).attr('data-desc');
+            var picture_path = $(this).attr('data-img');
+                    
+            picture += picture_path;
+            
+            $('.modal').find('#productName').val(name);
+            $('.modal').find('#productPrice').val(price);
+            $('.modal').find('#productImg').attr("src",picture);
+            $('.modal').find('#productDescription').val(desc);
+            $('.modal').find('#productID').val(id);
 
-    $('.card').on('click','.modalbutton', function(){
-        var picture = "http://localhost/merchant_ordering/product/product_images/";
-        var name = $(this).attr('data-name');
-        var id = $(this).attr('data-id');
-        var price = $(this).attr('data-price');
-        var desc = $(this).attr('data-desc');
-        var picture_path = $(this).attr('data-img');
-                
-        picture += picture_path;
-        
-        $('.modal').find('#productName').val(name);
-        $('.modal').find('#productPrice').val(price);
-        $('.modal').find('#productImg').attr("src",picture);
-        $('.modal').find('#productDescription').val(desc);
-        $('.modal').find('#productID').val(id);
-
+        });
     });
-});
+    function stepper(btn){
+        const orderQty = document.getElementById("orderQty");
+        let id = btn.getAttribute("id");
+        let min = orderQty.getAttribute("min");
+        let max = orderQty.getAttribute("max");
+        let step = orderQty.getAttribute("step");
+        let val = orderQty.getAttribute("value");
+        let calcStep = (id == "increment") ? (step*1): (step * -1);
+        let newValue = parseInt(val) + calcStep;
+        if(newValue >= min && newValue <= max){
+        orderQty.setAttribute("value", newValue);
+        }
+    }
 </script>
