@@ -92,3 +92,27 @@ div.card{
     text-decoration: underline;
     color:#487626;
 }
+/* orderconfirmation.php */
+div.content{
+    margin: auto;
+    margin-top: 5vh;
+    /* border: 1px solid black; */
+}
+div.info-container{
+    background-color: cornsilk;
+    border-radius:15px;
+}
+.btn-order{
+    background-color:#fff;
+    color: #d43b58;
+    border: 1px solid #d43b58;
+}
+.btn-order:hover{
+    background:cornsilk;
+    color: #487626;
+    border: 1px solid #487626;
+}
+table.amount{
+    font-size:20px;
+    text-align: right;
+}
