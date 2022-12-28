@@ -6,6 +6,25 @@
     require_once "../database/connect_db.php";
 
     $ssp = "SELECT * FROM product WHERE productCurrentQty > 0";
+
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+    if (isset($_POST['addcart'])){
+            // get data to display
+            $productid = $_POST['productID'];
+            $quantity = $_POST['productCurrentQty'];
+            $subtotal = $_POST['productPrice'] * $quantity;
+            $custid = $_SESSION['id'];
+            // check if got duplicated
+            $cart_sql = "UPDATE  `ordered_product` SET quantity = quantity + ".$quantity." WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0";
+            if(!mysqli_query($conn,$cart_sql)){
+                $cart_sql = "INSERT INTO ordered_product (productID,quantity,subtotal,customerID,hasOrder) VALUES ('$productid','$quantity','$subtotal','$custid',0) ";
+                mysqli_query($conn,$cart_sql);
+            }
+            // sweet alert
+            echo "<script>alert('Item is added into cart'); window.location.href='productdisplay.php'; </script>";
+            die();
+        }
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -38,7 +57,7 @@
         while($row = mysqli_fetch_assoc($rssp)):   
         
             if($newRow){
-                echo "<div class='row mx-auto'>";
+                echo "<div class='row mx-auto justify-content-between align-items-center'>";
                 $newRow = false;
             }
         ?>
@@ -74,7 +93,7 @@
                 <div class="modal-body">
                     <center><img src="" id="productImg" height="200" width="200"></center>
                     <div class="row mb-1">
-                    <form action="orderconfirmation.php" method="post">
+                    <form action="productdisplay.php" method="post">
 
                         <div class="col-6 form-group">
                             <label for="productName">Name:</label>
@@ -102,7 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn buy-btn" name="makeorder">Buy Now</button>
+                    <button type="submit" class="btn buy-btn" name="addcart">Add to cart</button>
                 </div>
                 </form>
             </div>
