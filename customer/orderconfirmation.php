@@ -7,17 +7,7 @@
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = "";
     define("shipping", 7);
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        if (isset($_POST['makeorder'])){
-            // get data to display
-            $productName = $_POST['productName'];
-            $quantity = $_POST['productCurrentQty'];
-            $price = $_POST['productPrice'];
-            $productid = $_POST['productID'];
-            $subtotal = $price * $quantity;
-            $total = $subtotal + shipping;
-        }
-        
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){        
         if (isset($_POST['confirmorder'])){
             // create order in database
             // to display: orderID, thank you, direct to home (create check order)
