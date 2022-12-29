@@ -3,6 +3,10 @@
         purpose: frontend php for first time login customer to register the details and normal user to update profile
     */
     session_start();
+    if (empty($_SESSION["username"])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "update_customer.php";
 

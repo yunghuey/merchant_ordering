@@ -4,6 +4,10 @@
         then only it will add new row for order table
     */
     session_start();
+    if (empty($_SESSION["username"])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = "";
     define("shipping", 7);

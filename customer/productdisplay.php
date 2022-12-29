@@ -8,7 +8,7 @@
     $ssp = "SELECT * FROM product WHERE productCurrentQty > 0";
 
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-    if (isset($_POST['addcart'])){
+        if (isset($_POST['addcart'])){
             // get data to display
             $productid = $_POST['productID'];
             $quantity = $_POST['productCurrentQty'];
