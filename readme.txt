@@ -45,3 +45,5 @@ make plus minus button functionable
 add ORDER row when customer proceed
 the unprocessed ORDER should be display in admin site, please filter the role
 connect the navigation
+after the `order` is created, please update the orderID into `ordered_product` and update the hasOrder column into 1,
+deduct quantity available in `product` table
