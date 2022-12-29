@@ -10,12 +10,19 @@
     }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = $cart_sql = "";
-    $custid = $_SESSION['id'];
-
-   
+    $custid = $_SESSION['id'];   
     $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, op.orderedProductID, op.quantity FROM product p LEFT JOIN ordered_product op ON p.productID=op.productID WHERE op.customerID =".$custid." AND op.hasOrder = 0";
     $rscart = mysqli_query($conn,$view_cart_sql);
 
+    if($_SERVER['REQUEST_METHOD'] === "POST"){
+        if (isset($_POST['deletecart'])){
+            $orderedProductID = $_POST['orderedProductID'];
+            $delete_cart_sql = "DELETE FROM `ordered_product` WHERE orderedProductID = ".$orderedProductID."";
+            mysqli_query($conn,$delete_cart_sql);
+            echo "<script>alert('Cart item is deleted'); window.location.href='cart.php'; </script>";
+            die();
+        }
+    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -48,7 +55,6 @@
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                        <span id="orderedProductID"><?= $row['orderedProductID']?></span>
                         <!-- product image -->
                         <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70"></div>
                         <!-- product name -->
@@ -57,13 +63,16 @@
                         </div>
                         <!-- product qty -->
                         <div class="d-flex flex-row align-items-center qty">
-                            <i class="fa fa-minus text-danger"></i>
-                            <h5 class="text-grey mt-1 mr-1 ml-1"><?= $row['quantity']?></h5>
-                            <i class="fa fa-plus text-success"></i>
+                            <button class="btn"><i class="fa fa-minus text-danger"></i></button>
+                            <p><h5 class="text-grey mt-1 mr-1 ml-1"><?= $row['quantity']?></h5></p>
+                            <button class="btn"><i class="fa fa-plus text-success"></i></button>
                         </div>
                         <!-- product price -->
                         <div><h5 class="text-grey"><?= $row['productPrice']?></h5></div>
-                        <div class="d-flex align-items-center btn" onclick="deleteProduct(<?= $row['orderedProductID']?>)"><i class="fa fa-trash mb-1 text-danger"></i></div>
+                        <form action="" method="post">
+                            <input type="text" name="orderedProductID" id="" value="<?= $row['orderedProductID']?>" hidden>
+                            <div class="d-flex align-items-center"><button type="submit" class="btn" name="deletecart"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
+                        </form>
                     </div>
                     <?php endwhile; ?>
                     <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button class="btn btn-dark btn-lg ml-2 pay-button" type="submit">Proceed to Pay</button></div>
