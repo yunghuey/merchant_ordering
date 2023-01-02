@@ -41,7 +41,7 @@ Done: restructure ORDER table (insert again using query)
 28 Dec 2022
 cart.php
 done: make delete button functionable
-make plus minus button functionable
+done: make plus minus button functionable
 add ORDER row when customer proceed
 the unprocessed ORDER should be display in admin site, please filter the role
 connect the navigation
