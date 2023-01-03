@@ -15,11 +15,16 @@
             $subtotal = $_POST['productPrice'] * $quantity;
             $custid = $_SESSION['id'];
             // check if got duplicated
-            $cart_sql = "UPDATE  `ordered_product` SET quantity = quantity + ".$quantity." WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0";
-            if(!mysqli_query($conn,$cart_sql)){
+            $sql = "SELECT orderedProductID FROM `ordered_product` WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0 LIMIT 1";
+            $rsql = mysqli_query($conn,$sql);
+            $rwsql = mysqli_fetch_assoc($rsql);
+
+            if($rwsql){
+                $cart_sql = "UPDATE  `ordered_product` SET quantity = quantity + ".$quantity." WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0";
+            } else{
                 $cart_sql = "INSERT INTO ordered_product (productID,quantity,subtotal,customerID,hasOrder) VALUES ('$productid','$quantity','$subtotal','$custid',0) ";
-                mysqli_query($conn,$cart_sql);
             }
+            mysqli_query($conn,$cart_sql);     
             // sweet alert
             echo "<script>alert('Item is added into cart'); window.location.href='productdisplay.php'; </script>";
             die();

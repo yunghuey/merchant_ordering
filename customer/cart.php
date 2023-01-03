@@ -19,7 +19,6 @@
             $orderedProductID = $_POST['orderedProductID'];
             $delete_cart_sql = "DELETE FROM `ordered_product` WHERE orderedProductID = ".$orderedProductID."";
             mysqli_query($conn,$delete_cart_sql);
-            echo "<script>alert('Cart item is deleted'); window.location.href='cart.php'; </script>";
             die();
         } else{
             $update_cart_sql = "UPDATE `ordered_product` SET quantity=".$_POST['quantity']." WHERE orderedProductID=".$_POST['orderedProductID'];
@@ -41,6 +40,7 @@
         
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <style>
             input[type="number"]{
                 text-align: center;
@@ -93,9 +93,23 @@
                 type: 'post',
                 success: function(response){
                     $(input_quantity_element).val(newValue);
-                }
+                    }
                 });
-            }            
+            }
+            function delete_cart_db(cart_id){
+                $.ajax({
+                url: "cart.php",
+                data: "orderedProductID="+cart_id+"&deletecart=1",
+                type: 'post',
+                success: function(response){
+                    swal({
+                        title: "Deleted"
+                        text: "Item has been deleted in cart",
+                        type: "success"
+                    }).then(function(){ location.reload(); });
+                    }
+                });
+            }    
         </script>
     </head>
     <body>
@@ -129,13 +143,13 @@
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
                         <!-- product price -->
                         <div><h5 class="text-grey"><?= $row['productPrice']?></h5></div>
-                        <form action="" method="post">
-                            <input type="text" name="orderedProductID" id="" value="<?= $row['orderedProductID']?>" hidden>
-                            <div class="d-flex align-items-center"><button type="submit" class="btn" name="deletecart"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
+                            <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['orderedProductID']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
                         </form>
                     </div>
                     <?php endwhile; ?>
-                    <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><button class="btn btn-dark btn-lg ml-2 pay-button" type="submit">Proceed to Pay</button></div>
+                    <form action="process_order.php" method="post">
+                    <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><input class="btn btn-dark btn-lg ml-2 pay-button" type="submit" name="makeorder" value="Checkout"></div>
+                    </form>
                 </div>
             </div>
         </div>
