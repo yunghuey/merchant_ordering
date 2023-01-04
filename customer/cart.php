@@ -134,7 +134,7 @@
                             <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['id']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
                     </div>
                     <?php endwhile; ?>
-                    <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><a href="orderconfirmation.php" class="btn btn-outline-success">Checkout</a></div>
+                    <div class="d-flex flex-row align-items-center mt-3 p-2 bg-white rounded"><a href="orderconfirmation.php?c=<?= $cartid?>" class="btn btn-outline-success">Checkout</a></div>
                     </form>
                     <?php else: ?>
                     <div class="alert alert-success text-dark"><h3>Oops, your shopping cart is empty</h3></div>

@@ -39,7 +39,6 @@
         <?php 
         
         while($row = mysqli_fetch_assoc($rssp)):   
-        
             if($newRow){
                 echo "<div class='row mx-auto justify-content-between align-items-center'>";
                 $newRow = false;
@@ -187,11 +186,14 @@
         $rwsql = mysqli_fetch_assoc($rsql);
 
         if($rwsql)
-            $cart_sql = "UPDATE `cart_product` SET quantity = quantity + ".$quantity." WHERE id = ".$rwsql['id'];
+            $cart_sql = "UPDATE `cart_product` SET quantity = quantity + ".$quantity.",subtotal = subtotal + ".$subtotal." WHERE id = ".$rwsql['id'];
         else
             $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID) VALUES ('$productid','$quantity','$subtotal','$cartid') ";
         mysqli_query($conn,$cart_sql);     
         
+        // update total amount in cart
+        $cart_amount_sql = "UPDATE `cart` SET totalAmount = totalAmount + ".$subtotal." WHERE id=".$cartid; 
+        mysqli_query($conn,$cart_amount_sql);
         // sweet alert
         echo '<script type="text/javascript">';
         echo 'add_into_cart();';
