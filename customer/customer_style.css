@@ -104,8 +104,8 @@ div.info-container{
 }
 .btn-order{
     background-color:#fff;
-    color: #d43b58;
-    border: 1px solid #d43b58;
+    color: #487626;
+    border: 1px solid #487626;
 }
 .btn-order:hover{
     background:cornsilk;
@@ -158,4 +158,20 @@ body {
 
 .qty i {
   font-size: 11px;
+}
+
+input[type="number"]{
+    text-align: center;
+    border:none;
+    background-color: #ffffff;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin: 0;
+}
+
+.btn-outline-success:hover{
+    background-color:#487626;
 }

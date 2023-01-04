@@ -6,30 +6,6 @@
     require_once "../database/connect_db.php";
 
     $ssp = "SELECT * FROM product WHERE productCurrentQty > 0";
-
-    if($_SERVER['REQUEST_METHOD'] === "POST"){
-        if (isset($_POST['addcart'])){
-            // get data to display
-            $productid = $_POST['productID'];
-            $quantity = $_POST['productCurrentQty'];
-            $subtotal = $_POST['productPrice'] * $quantity;
-            $custid = $_SESSION['id'];
-            // check if got duplicated
-            $sql = "SELECT orderedProductID FROM `ordered_product` WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0 LIMIT 1";
-            $rsql = mysqli_query($conn,$sql);
-            $rwsql = mysqli_fetch_assoc($rsql);
-
-            if($rwsql){
-                $cart_sql = "UPDATE  `ordered_product` SET quantity = quantity + ".$quantity." WHERE productID = ".$productid." AND customerID = ".$custid." AND hasOrder = 0";
-            } else{
-                $cart_sql = "INSERT INTO ordered_product (productID,quantity,subtotal,customerID,hasOrder) VALUES ('$productid','$quantity','$subtotal','$custid',0) ";
-            }
-            mysqli_query($conn,$cart_sql);     
-            // sweet alert
-            echo "<script>alert('Item is added into cart'); window.location.href='productdisplay.php'; </script>";
-            die();
-        }
-    }
 ?>
 <!doctype html>
 <html lang="en">
@@ -43,6 +19,9 @@
 
     <!-- jquery link -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity= "sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+    <!-- sweet alert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- font awesome v5 -->
     <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
@@ -169,4 +148,55 @@
         orderQty.setAttribute("value", newValue);
         }
     }
+    function add_into_cart(){
+        swal({
+            title: "Product added into cart!",
+            icon: "success",
+        });
+    }
 </script>
+<?php
+  if($_SERVER['REQUEST_METHOD'] === "POST"){
+    if (isset($_POST['addcart'])){
+        // get data to display
+        $productid = $_POST['productID'];
+        $quantity = $_POST['productCurrentQty'];
+        $subtotal = $_POST['productPrice'] * $quantity;
+        $custid = $_SESSION['id'];
+
+        // check if got existing cartid that can use
+        $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
+        $rcartid = mysqli_query($conn,$check_cartid_sql);
+        $rwcartid = mysqli_fetch_assoc($rcartid);
+
+        // get cartid from database
+        if ($rwcartid){
+            $cartid = $rwcartid['id'];
+        } else{
+            $create_cart_sql = "INSERT INTO `cart` (customerID,hasOrder) VALUES (".$_SESSION['id'].",0);";
+            $get_cart = " SELECT LAST_INSERT_ID(); ";
+            $rcreate_cart = mysqli_query($conn,$create_cart_sql); 
+            $rcreate_cart = mysqli_query($conn,$get_cart);
+            $rwcreate_cart = mysqli_fetch_assoc($rcreate_cart);
+            $cartid = $rwcreate_cart['LAST_INSERT_ID()'];
+        }
+
+        // check if got product in cart duplicated
+        $sql = "SELECT id FROM `cart_product` WHERE cartID = ".$cartid." AND productID = ".$productid." LIMIT 1";
+        $rsql = mysqli_query($conn,$sql);
+        $rwsql = mysqli_fetch_assoc($rsql);
+
+        if($rwsql)
+            $cart_sql = "UPDATE `cart_product` SET quantity = quantity + ".$quantity." WHERE id = ".$rwsql['id'];
+        else
+            $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID) VALUES ('$productid','$quantity','$subtotal','$cartid') ";
+        mysqli_query($conn,$cart_sql);     
+        
+        // sweet alert
+        echo '<script type="text/javascript">';
+        echo 'add_into_cart();';
+        echo '</script>';
+        die();
+    }
+}
+?>
