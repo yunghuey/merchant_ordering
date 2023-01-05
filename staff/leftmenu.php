@@ -22,7 +22,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="side-nav">
+            <a href="http://localhost/merchant_ordering/staff/vieworder.php" class="side-nav">
                 <i class="fas fa-sticky-note"></i>
                 <span class="nav-item">Order</span>
             </a>
