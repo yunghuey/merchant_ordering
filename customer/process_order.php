@@ -16,9 +16,10 @@
             $paymentMethod = $_POST['paymentmethod'];
             $bank = $_POST['bank'];
             $cartid = $_POST['cartID'];
+            $transactionID = uniqid('T');
 
             // new `order` row
-            $create_order_sql = "INSERT INTO `order` (orderDate,cartID,paymentMethod,bank,transactionDate,orderStatus) VALUES ('$dateTime','$cartid','$paymentMethod','$bank','$dateTime','$orderStatus')";
+            $create_order_sql = "INSERT INTO `order` (orderDate,cartID,paymentMethod,bank,transactionDate,transactionID,orderStatus) VALUES ('$dateTime','$cartid','$paymentMethod','$bank','$dateTime','$transactionID','$orderStatus')";
             mysqli_query($conn, $create_order_sql);
 
             // update `cart` query - with shipping fee
