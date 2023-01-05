@@ -25,7 +25,7 @@
                     <li class="nav-item"><a class="nav-link" aria-current="page" href="http://localhost/merchant_ordering/customer/index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="http://localhost/merchant_ordering/customer/productdisplay.php">Product</a></li>
                     <li class="nav-item"><a class="nav-link" href="http://localhost/merchant_ordering/customer/cart.php">Cart</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">History</a></li>
+                    <li class="nav-item"><a class="nav-link" href="http://localhost/merchant_ordering/customer/history.php">History</a></li>
                 </ul>
             </div>
         </div>
