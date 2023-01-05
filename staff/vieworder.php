@@ -54,9 +54,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php 
-            include("leftmenu.php"); 
-        ?>
+        <?php include("leftmenu.php"); ?>
         <div class="content">
             <header><h2>Order to settle</h2></header>
             <section class="container-fluid">

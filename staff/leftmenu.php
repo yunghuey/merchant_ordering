@@ -15,12 +15,14 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/product/productlist.php">View All Product</a></li>
             </ul>
         </div></li>
+        <?php if($_SESSION['role'] != "Management"): ?>
         <li>
-            <a href="#" class="side-nav">
+            <a href="http://localhost/merchant_ordering/staff/monitorsales.php" class="side-nav">
                 <i class="fas fa-chart-line"></i>
                 <span class="nav-item">Sales</span>
             </a>
         </li>
+        <?php endif; ?>
         <li>
             <a href="http://localhost/merchant_ordering/staff/vieworder.php" class="side-nav">
                 <i class="fas fa-sticky-note"></i>
