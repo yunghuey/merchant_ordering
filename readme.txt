@@ -50,4 +50,31 @@ the unprocessed ORDER should be display in admin site, please filter the role
 done:connect the navigation for new page
 done:after the `order` is created, please update the orderID into `cart_product` and update the hasOrder column into 1,
 deduct quantity available in `product` table
-orderStatus: paid, processing, packed, shipping, delivered
+orderStatus: paid, processing, shipping, delivered
+
+5 Jan 2023 TODO:
+set the thead and tr for each role, and test the sql for datatable
+show modal when click the button
+make query to update the order column and test run 
+reload the page after admin click approve
+check the cart_product again and again, if all the item in one cart is approved, then only you can upgrade the orderStatus
+
+--calculation part for the management part
+
+/* 
+	if click accept:
+		admin:
+			update orderByStaff column
+			$update_order_sql = "UPDATE `order` SET orderStatus='processing',orderByStaff=".$_SESSION['id'];
+			update orderStatus to Processing
+		stock:
+			$update_order_sql = "UPDATE `order` SET orderStatus='shipping',parcelNumber='$parcelNum',preparedDate='$dateTime',preparedByStaff=".$_SESSION['id'];
+			update orderStatus to Shipping
+			update parcelNumber, preparedByStaff, preparedDate
+		courier:
+			$update_order_sql = "UPDATE `order` SET orderStatus='delivered'";
+			update orderStatus to Delivered
+		management:
+
+		$update_order_sql .= " WHERE orderID=".$orderID;
+*/
