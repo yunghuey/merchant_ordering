@@ -92,3 +92,99 @@ div.card{
     text-decoration: underline;
     color:#487626;
 }
+/* orderconfirmation.php */
+div.content{
+    margin: auto;
+    margin-top: 5vh;
+    /* border: 1px solid black; */
+}
+div.info-container{
+    background-color: cornsilk;
+    border-radius:15px;
+}
+.btn-order{
+    background-color:#fff;
+    color: #487626;
+    border: 1px solid #487626;
+}
+.btn-order:hover{
+    background:cornsilk;
+    color: #487626;
+    border: 1px solid #487626;
+}
+table.amount{
+    font-size:20px;
+    text-align: right;
+}
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background:#eee;
+}
+
+.size span {
+  font-size: 11px;
+}
+
+.color span {
+  font-size: 11px;
+}
+
+.product-deta {
+  margin-right: 70px;
+}
+
+.gift-card:focus {
+  box-shadow: none;
+}
+
+.pay-button {
+  color: #fff;
+}
+
+.pay-button:hover {
+  color: #fff;
+}
+
+.pay-button:focus {
+  color: #fff;
+  box-shadow: none;
+}
+
+.text-grey {
+  color: #a39f9f;
+}
+
+.qty i {
+  font-size: 11px;
+}
+
+input[type="number"]{
+    text-align: center;
+    border:none;
+    background-color: #ffffff;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin: 0;
+}
+
+.btn-outline-success:hover{
+    background-color:#487626;
+}
+
+.popup{
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position: absolute;
+    top:20%;
+    left:50%;
+    transform: translate(-50%,50%) ;
+    text-align: center;
+    padding: 20px 30px 30px;
+    color: #333;
+}
