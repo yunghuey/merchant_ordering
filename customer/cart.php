@@ -10,15 +10,17 @@
     }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = $cart_sql = "";
-
+    $rscart = $cartid = false;
     // check if got existing cartid that can use
     $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
     $rcartid = mysqli_query($conn,$check_cartid_sql);
     $rwcartid = mysqli_fetch_assoc($rcartid);
-    $cartid = $rwcartid['id'];
-
-    $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID=".$cartid;
-    $rscart = mysqli_query($conn,$view_cart_sql);
+    if ($rwcartid = mysqli_fetch_assoc($rcartid)){
+        $cartid = $rwcartid['id'];
+        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID=".$cartid;
+        $rscart = mysqli_query($conn,$view_cart_sql);
+    }
+  
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if (isset($_POST['deletecart'])){
             $id = $_POST['id'];
@@ -110,25 +112,20 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if($rwcount = mysqli_num_rows($rscart)):
+                        if($rscart):
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                        <!-- product image -->
                         <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70"></div>
-                        <!-- product name -->
                         <div class="d-flex flex-column align-items-center product-details">
                             <span class="font-weight-bold"><?= $row['productName']?></span>
                         </div>
-                        <!-- product qty -->
                         <div class="d-flex flex-row align-items-center stepper">
                             <button class="btn" id="decrement" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-minus text-danger"></i></button>
                             <p><h5 class="text-grey mt-1 mr-1 ml-1"><input type="number" class="form-control" value="<?= $row['quantity']?>" id="prodqty-<?= $row['id'] ?>" min="1" max="1000" step="1" readonly></h5></p>
                             <button class="btn" id="increment" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-plus text-success"></i></button>
                         </div>
-                            <!-- current quantity available in database -->
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
-                        <!-- product price -->
                         <div><h5 class="text-grey"><?= number_format($row['productPrice'],2)?></h5></div>
                         <input type="text" id="price" value="<?= number_format($row['productPrice'],2)?>" hidden>
                             <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['id']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>

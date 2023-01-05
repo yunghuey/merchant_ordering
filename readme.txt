@@ -42,8 +42,12 @@ Done: restructure ORDER table (insert again using query)
 cart.php
 done: make delete button functionable
 done: make plus minus button functionable
-add ORDER row when customer proceed
+done:add ORDER row when customer proceed
+	done: add-on: change deletecart into onclick to php, not using form
+	done: add-on: form is for createorder
+	unable to create 
 the unprocessed ORDER should be display in admin site, please filter the role
-connect the navigation
-after the `order` is created, please update the orderID into `ordered_product` and update the hasOrder column into 1,
+done:connect the navigation for new page
+done:after the `order` is created, please update the orderID into `cart_product` and update the hasOrder column into 1,
 deduct quantity available in `product` table
+orderStatus: paid, processing, packing, shipping, delivered

@@ -9,49 +9,22 @@
         exit;
     }
     require_once "../database/connect_db.php";
-    $total = $productid = $quantity = "";
-    define("shipping", 7);
-    if($_SERVER['REQUEST_METHOD'] === 'POST'){        
-        if (isset($_POST['confirmorder'])){
-            // create order in database
-            // to display: orderID, thank you, direct to home (create check order)
-            // orderStatus: created, processing, packing, shipping, delivered
-            $date = date('d-m-y');
-            $custid = $_SESSION['id'];
-            // create order in order
-            $total = $_POST['order_total'];
-            $productid = $_POST['order_productid'];
-            $quantity = $_POST['order_qty'];
-            // $create_order_sql = "INSERT INTO `order` (orderDate,totalAmount,orderStatus,customerID,productID,orderQty) VALUES ('$date','$total','created','$custid','$productid','$quantity')";
-            echo $create_order_sql;
-            mysqli_query($conn,$create_order_sql);
-
-            // update quantity in product
-            $update_sql = "SELECT productCurrentQty FROM product WHERE productID =".$productid;
-            if($result = mysqli_query($conn,$update_sql)){
-                $row = mysqli_fetch_assoc($result);
-                $leftqty = $row['productCurrentQty'];
-                $leftqty -= $quantity;
-                $update_sql2 = "UPDATE product SET productCurrentQty = '".$leftqty."' WHERE productID =".$productid;
-                mysqli_query($conn, $update_sql2);
-            }
-
-            // get orderID in order
-            if($result = mysqli_query($conn, "SELECT orderID FROM order ORDER BY desc LIMIT 1")){
-                $row = mysqli_fetch_assoc($result);
-                $_SESSION['neworderid'] = $row['orderID'];
-                $_SESSION['message'] = "order created";
-                header("location:index.php");
-            }
-
-        } 
-    }
-
-    // get customer details
-    $ssc = "SELECT * FROM customer WHERE id =".$_SESSION['id'];
+    $grandtotal = 7;
+    $subtotal = 0;
+    $product_cart = [];
+    
+    $ssc = "SELECT * FROM customer WHERE id =".$_SESSION['id']." LIMIT 1";
     $rssc = mysqli_query($conn,$ssc);
     $row = mysqli_fetch_assoc($rssc);
     $_SESSION['from_order'] = true;
+    $cartid = $_GET['c'];
+    $get_carts_sql =  "SELECT p.productName, p.productPrice, op.subtotal, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID = ".$cartid;
+    $rget_cart = mysqli_query($conn,$get_carts_sql);
+    while ($rwget_cart = mysqli_fetch_assoc($rget_cart)){
+        $subtotal += $rwget_cart['subtotal'];
+        $product_cart[] = $rwget_cart;
+    }
+    $grandtotal += $subtotal; 
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,22 +33,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Order Confirmation</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    
+        <link rel="stylesheet" href="customer_style.css">
+
         <!-- font awesome v5 -->
         <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
-
-        <!-- custom css -->
-        <link rel="stylesheet" href="customer_style.css">
     </head>
     <body>
+        <form action="process_order.php" method="post">
         <div class="container content">
             <span class="text-start fs-3"><strong>Order Confirmation</strong></span>
-            <span class="float-end">Order Total: RM<span class="fs-2"><?= number_format($total,2) ?></span></span>
-    
+            <span class="float-end">Order Total: RM<span class="fs-2"><?= number_format($grandtotal,2) ?></span></span>
         </div>
         <br>
-
         <div class="container info-container">
+            <!-- customer details -->
             <div class="row">
                 <div class="col-md-6 py-2">
                     <div class="head">
@@ -99,57 +70,92 @@
                     </div>
                 </div>
             </div>
+            <!-- payment -->
+            <div class="row">
+                <div class="col-md-6 py-3">
+                    <div class="head">
+                        <span class="fs-5">Payment Option</span> 
+                    </div>
+                    <hr>
+                    <div class="body">
+                        <select class="form-select" name="paymentmethod">
+                            <option value="banking">Online banking</option>
+                            <option value="card">Debit card/Credit card</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 py-2">
+                    <div class="head">
+                        <span class="fs-5">Payment Details</span> 
+                    </div>
+                    <hr>
+                    <div class="body">
+                        <select class="form-select" name="bank">
+                            <option value="Maybank">Maybank</option>
+                            <option value="CIMB Group Holding">CIMB Group Holding</option>
+                            <option value="Public Bank">Public Bank Berhad</option>
+                            <option value="RHB Bank">RHB Bank</option>
+                            <option value="Hong Leong Bank">Hong Leong Bank</option>
+                            <option value="AmBank">AmBank</option>
+                            <option value="UOB Malaysia">UOB Malaysia</option>
+                            <option value="Bank Rakyat">Bank Rakyat</option>
+                            <option value="OCBC Bank Malaysia">OCBC Bank Malaysia</option>
+                            <option value="HCBC Bank Malaysia">HCBC Bank Malaysia</option>
+                            <option value="Bank Islam Malaysia">Bank Islam Malaysia</option>
+                            <option value="Affin Bank">Affin Bank</option>
+                            <option value="Alliance Bank">Alliance Bank Malaysia Berhad</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <!-- show product -->
         <div class="container prod-container mt-3">
             <table class="table">
                 <tr>
                     <th>Name</th>
                     <th>Quantity</th>
                     <th>Price/unit (RM)</th>
+                    <th>Total (RM)</th>
                 </tr>
+                <?php foreach($product_cart as $cart): ?> 
                 <tr>
-                    <td id="prodName"><?= $productName ?></td>
-                    <td><?= $quantity ?></td>
-                    <td><?= $price ?></td>
+                    <td><?= $cart['productName'] ?></td>
+                    <td><?= $cart['quantity'] ?></td>
+                    <td><?= number_format($cart['productPrice'],2) ?></td>
+                    <td><?= number_format($cart['subtotal'],2) ?></td>
                 </tr>
+                <?php endforeach; ?>
             </table>
         </div>
 
-        <form action="" method="post">
-        <input type="text" name="order_productid" value="<?= $productid ?>" hidden>
-        <input type="text" name="order_qty" value="<?= $quantity ?>" hidden>
-        <input type="text" name="order_total" value="<?= number_format($total,2) ?>" hidden>
-
+        <!-- final price -->
         <div class="container total-container">
-            <div class="head float-start">
-                <a href="product_display.php" class="btn btn-light back-btn">Back</a>
-
-            </div>
-            <div class="tail float-end">
+            <div class="head float-start"><a href="cart.php" class="btn btn-light back-btn">Back</a></div>
+            <div class="tail float-end mb-4">
                 <table class="amount">
                     <tr>
-                        <td>Subtotal: RM   </td>
+                        <td>Subtotal: RM</td>
                         <td><?= number_format($subtotal,2) ?></td>
                     </tr>
                     <tr>
-                        <td>Shipping: RM   </td>
-                        <td><?= number_format(shipping,2) ?></td>
+                        <td>Shipping: RM</td>
+                        <td><?= number_format(7,2) ?></td>
                     </tr>
                     <tr>
-                        <td>Total: RM   </td>
-                        <td><?= number_format($total,2) ?></td>
+                        <td>Total: RM</td>
+                        <td><?= number_format($grandtotal,2) ?></td>
                     </tr>
                     <tr>            
-                        <td><button class="btn btn-order" type="submit" name="confirmorder">Place order</button></td>
+                        <td colspan="2"><button class="btn btn-order" type="submit" name="confirmorder">Place order and pay</button></td>
+                        <input type="number" name="totalAmount" value="<?= number_format($grandtotal,2) ?>" hidden>
+                        <input type="number" name="cartID" value="<?= $cartid ?>" hidden>
                         </form>
                     </tr>
                 </table>
-
             </div>
         </div>
-
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     </body>
 </html>

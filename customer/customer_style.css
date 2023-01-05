@@ -175,3 +175,16 @@ input::-webkit-inner-spin-button{
 .btn-outline-success:hover{
     background-color:#487626;
 }
+
+.popup{
+    width: 400px;
+    background: #fff;
+    border-radius: 6px;
+    position: absolute;
+    top:20%;
+    left:50%;
+    transform: translate(-50%,50%) ;
+    text-align: center;
+    padding: 20px 30px 30px;
+    color: #333;
+}
