@@ -13,7 +13,6 @@
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if (isset($_POST['approve_order'])){
             $sql = "UPDATE `order` SET orderStatus='processing',orderByStaff=".$_SESSION['id'];
-            // ." WHERE orderID=".$_POST['orderID'];           
         }
         else if (isset($_POST['pack_order'])){
             $parcelNum = "parcel".$_POST['orderID'];
@@ -21,7 +20,6 @@
             $dateTime = date("Y/m/d H:i:s");
             $sql = "UPDATE `order` "
                 ."SET orderStatus='shipping',parcelNumber='$parcelNum',preparedDate='$dateTime',preparedByStaff=".$_SESSION['id'];
-                // ." WHERE orderID=".$_POST['orderID'];
         }
         else if (isset($_POST['deliver_order'])){
             $sql = "UPDATE `order` SET orderStatus='delivered'";
@@ -64,7 +62,7 @@
             <section class="container-fluid">
             <table class="table table-hover" id="table-list" style="width:100%">
             <?php
-            $_SESSION['role'] = "Courier";
+            $_SESSION['role'] = "Admin";
                 unset($rget_order);
                 // header of table for each role
                 echo "<thead>";
@@ -92,22 +90,32 @@
                 } else if ($_SESSION['role'] == "Courier"){
                     echo "    <th>Parcel Number</th>";
                     echo "    <th>Delivered</th>";
-                    $get_order_sql = "SELECT orderID, parcelNumber FROM `order` WHERE orderStatus='shipping'";
+                    $get_order_sql = "SELECT orderID, parcelNumber "
+                                    ."FROM `order` WHERE orderStatus='shipping'";
                 } else if ($_SESSION['role'] == "Management"){
-                    $get_order_sql = "SELECT * FROM `order` WHERE orderStatus='delivered'";
+                    echo "    <th>Order Date</th>";
+                    echo "    <th>Order by staff</th>";
+                    echo "    <th>Pack by staff</th>";
+                    echo "    <th>Prepared Date</th>";
+                    echo "    <th>Order Status</th>";
+                    echo "    <th>Parcel Number</th>";
+                    $get_order_sql = "SELECT o.orderID,o.orderDate, o.preparedDate, o.orderStatus,o.parcelNumber,so.fullname AS staffOrder, sp.fullname AS staffPrepare "
+                                    ."FROM `order` o "
+                                    ."LEFT JOIN `staff` so ON so.id=o.orderByStaff "
+                                    ."LEFT JOIN `staff` sp ON sp.id=o.preparedByStaff "
+                                    ."WHERE orderStatus='delivered'";
                 }
                 echo "</thead>";
                 if($rssp = mysqli_query($conn,$get_order_sql)):
                     while($row = mysqli_fetch_assoc($rssp)):
                         echo "<tr>"; 
+                        echo "    <td>".$row['orderID']."</td>";
                         if ($_SESSION['role'] == "Admin"){
-                            echo "    <td id='".$row['orderID']."'>".$row['orderID']."</td>";
                             echo "<td>".$row['orderDate']."</td>";
                             echo "<td>".$row['cartID']."</td>";
                             echo "<td><div class='btn viewcartbtn' data-bs-toggle='modal' data-bs-target='#admin_viewcart' data-id='".$row['cartID']."'><i class='fas fa-eye fa-2x'></i></td>";
                             echo "<td><div class='btn approvebtn' data-bs-toggle='modal' data-bs-target='#admin_approve'><i class='fas fa-check-circle fa-2x'></i></div></td>";
                         } else if ($_SESSION['role'] == "Stock"){
-                            echo "    <td id='".$row['orderID']."'>".$row['orderID']."</td>";
                             echo "<td>".$row['fullname']."</td>";
                             echo "<td>".$row['shippingAddress']."</td>";
                             echo "<td>".$row['phoneNumber']."</td>";
@@ -115,11 +123,15 @@
                             echo "<td><div class='btn viewcartbtn' data-bs-toggle='modal' data-bs-target='#admin_viewcart' data-id='".$row['cartID']."'><i class='fas fa-eye fa-2x'></i></td>";
                             echo "<td><div class='btn packbtn' data-bs-toggle='modal' data-bs-target='#stock_pack'><i class='fas fa-check-circle fa-2x'></i></div></td>";
                         } else if ($_SESSION['role'] == "Courier"){
-                            echo "    <td>".$row['orderID']."</td>";
                             echo "<td>".$row['parcelNumber']."</td>";
                             echo "<td><div class='btn deliverbtn' data-bs-toggle='modal' data-bs-target='#courier_deliver'><i class='fas fa-check-circle fa-2x'></i></div></td>";
                         } else if ($_SESSION['role'] == "Management"){
-                            
+                            echo "<td>".$row['orderDate']."</td>";
+                            echo "<td>".$row['staffOrder']."</td>";
+                            echo "<td>".$row['staffPrepare']."</td>";
+                            echo "<td>".$row['preparedDate']."</td>";
+                            echo "<td>".$row['orderStatus']."</td>";
+                            echo "<td>".$row['parcelNumber']."</td>";
                         }
                         echo "</tr>";
                     endwhile;
