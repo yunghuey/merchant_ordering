@@ -10,11 +10,10 @@
     }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = $cart_sql = "";
-    $rscart = $cartid = false;
+    $rscart = $cartid = "";
     // check if got existing cartid that can use
     $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
     $rcartid = mysqli_query($conn,$check_cartid_sql);
-    $rwcartid = mysqli_fetch_assoc($rcartid);
     if ($rwcartid = mysqli_fetch_assoc($rcartid)){
         $cartid = $rwcartid['id'];
         $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID=".$cartid;
@@ -112,7 +111,7 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if($rscart):
+                        if(!empty($rscart)):
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
