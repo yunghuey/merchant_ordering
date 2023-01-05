@@ -38,9 +38,6 @@
 						$_SESSION['password'] = $row['password'];
 						$_SESSION['usertype'] = "customer";
 						$_SESSION['password_check'] = $row['password_check'];
-						// $_SESSION['fullname'] = $row['fullname'];
-						// $_SESSION['shippingAddress'] = $row['shippingAddress'];
-						// $_SESSION['gender'] = $row['gender'];
 						if($row['password_check'] == 0 )
 							header("location: forgotpassword.php");
 						else
@@ -62,11 +59,12 @@
 							// it is staff, check password
 							session_start();
 							// put value into session to hold
-							$_SESSION['id'] = $row['staffID'];
+							$_SESSION['id'] = $row['id'];
 							$_SESSION['username'] = $row['username'];
 							$_SESSION['email'] = $row['email'];
 							$_SESSION['password'] = $row['password'];
 							$_SESSION['usertype'] = "staff";
+							$_SESSION['role'] = $row['role'];
 							if($row['password_check'] == 0 )
 								header("location: forgotpassword.php");
 							else
