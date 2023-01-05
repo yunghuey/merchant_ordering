@@ -50,4 +50,4 @@ the unprocessed ORDER should be display in admin site, please filter the role
 done:connect the navigation for new page
 done:after the `order` is created, please update the orderID into `cart_product` and update the hasOrder column into 1,
 deduct quantity available in `product` table
-orderStatus: paid, processing, packing, shipping, delivered
+orderStatus: paid, processing, packed, shipping, delivered
