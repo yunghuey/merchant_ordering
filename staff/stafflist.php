@@ -151,9 +151,6 @@
             $('#archive_id').val(username);
         });
         $("#table-list").DataTable({
-            // scrollY: '800px',
-            // scrollCollapse: true,
-            // paging: false,
         });
     });
 </script>
