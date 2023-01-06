@@ -3,7 +3,7 @@
         purpose: frontend to view sales
     */
     session_start();
-    if (empty($_SESSION["username"]) || $_SESSION['role'] == "Management"){
+    if (empty($_SESSION["username"]) || $_SESSION['role'] != "Management"){
         header("location:index.php");
         exit;
     }
@@ -13,7 +13,7 @@
 <html lang="en">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Bootstrap demo</title>
+        <title>Sales Record</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
         <!-- custom -->
@@ -33,10 +33,11 @@
                 <tr>
                     <th>Image</th>
                     <th>Name</th>
+                    <th>Price (RM)</th>
                     <th>Total sold quantity</th>
                 </tr>
                 <?php 
-                    $get_sales_sql = "SELECT p.productPicture, p.productName, SUM(cp.quantity) AS totalqty "
+                    $get_sales_sql = "SELECT p.productPrice, p.productPicture, p.productName, SUM(cp.quantity) AS totalqty "
                                     ."FROM `product` p "
                                     ."LEFT JOIN  `cart_product` cp ON cp.productID=p.productID "
                                     ."LEFT JOIN `order` o ON o.cartID=cp.cartID "
@@ -49,6 +50,7 @@
                 <tr>
                     <td><img src="<?= $img_src ?>" alt="" style="height:80px;"></td>
                     <td><?= $row['productName']?></td>
+                    <td><?= $row['productPrice']?></td>
                     <td><?= $row['totalqty']?></td>
                 </tr>
                 <?php
