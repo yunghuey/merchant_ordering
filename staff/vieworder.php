@@ -60,7 +60,6 @@
             <section class="container-fluid">
             <table class="table table-hover" id="table-list" style="width:100%">
             <?php
-            $_SESSION['role'] = "Admin";
                 unset($rget_order);
                 // header of table for each role
                 echo "<thead>";
@@ -95,7 +94,7 @@
                     echo "    <th>Order by staff</th>";
                     echo "    <th>Pack by staff</th>";
                     echo "    <th>Prepared Date</th>";
-                    echo "    <th>Order Status</th>";
+                    echo "    <th>Status</th>";
                     echo "    <th>Parcel Number</th>";
                     $get_order_sql = "SELECT o.orderID,o.orderDate, o.preparedDate, o.orderStatus,o.parcelNumber,so.fullname AS staffOrder, sp.fullname AS staffPrepare "
                                     ."FROM `order` o "
@@ -135,6 +134,17 @@
                     endwhile;
                 endif;
                 ?>
+            </table>
+            <?php 
+                if ($_SESSION['role'] == "Courier"):
+                    $count_undelivered_sql = "SELECT COUNT(orderID)as undelivered FROM `order` WHERE orderStatus='shipping'";
+                    $rcount = mysqli_query($conn,$count_undelivered_sql);
+                    $rwcount = mysqli_fetch_assoc($rcount);
+                    echo "<div>";
+                    echo "    <h5><strong>Number of parcel pending to be delivered: </strong>".$rwcount['undelivered']."</h5>";
+                    echo "</div>";
+                endif;
+            ?>
             </table>
         </section>
         </div>
