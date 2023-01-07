@@ -5,6 +5,7 @@
                 <span class="nav-item">staff</span>
             </a>
         </li>
+        <?php if($_SESSION['role'] != "Courier"): ?>
         <li><div class="dropdown">
             <a href="#" class="dropdown-toggle side-nav" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-box"></i>
@@ -15,6 +16,7 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/product/productlist.php">View All Product</a></li>
             </ul>
         </div></li>
+        <?php endif; ?>
         <?php if($_SESSION['role'] == "Management"): ?>
         <li>
             <a href="http://localhost/merchant_ordering/staff/monitorsales.php" class="side-nav">
@@ -29,6 +31,7 @@
                 <span class="nav-item">Order</span>
             </a>
         </li>
+        <?php if($_SESSION['role'] == "Management" || $_SESSION['role'] == "Admin"): ?>
         <li><div class="dropdown">
             <a href="#" class="dropdown-toggle side-nav" data-bs-toggle="dropdown" aria-expanded="false"> 
                 <i class="fas fa-briefcase"></i>
@@ -40,6 +43,8 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/archivelist.php">View archive</a></li>
             </ul>
         </div></li>
+        <?php endif; 
+        if($_SESSION['role'] == "Admin"): ?>
         <li><div class="dropdown">
             <a href="#" class="dropdown-toggle side-nav" data-bs-toggle="dropdown" aria-expanded="false"> 
                 <i class="fas fa-user-friends"></i>
@@ -50,6 +55,7 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/customerlist.php">View All</a></li>
             </ul>
         </div></li>
+        <?php endif; ?>
         <li>
             <a href="../forgotpassword.php" class="side-nav">
                 <i class="fas fa-lock"></i>

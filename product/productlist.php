@@ -3,6 +3,10 @@
         purpose: frontend to display the product list and button to delete product
     */
     session_start();
+    if (empty($_SESSION["id"]) || $_SESSION['role'] == "Courier"){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "./update_product.php";
 ?>

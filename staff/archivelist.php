@@ -4,6 +4,10 @@
         with function to unarchive it. 
     */
     session_start();
+    if($_SESSION['role'] != "Management" && $_SESSION['role'] != "Admin"){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "./alter_staff.php";  
 ?>

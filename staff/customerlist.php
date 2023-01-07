@@ -3,6 +3,10 @@
         purpose: frontend php page to display customer list and show the buttons: view details, delete
     */
     session_start();
+    if ($_SESSION['role'] != "Admin"){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "./alter_customer.php";
 ?>

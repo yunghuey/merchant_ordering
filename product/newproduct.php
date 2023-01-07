@@ -3,6 +3,10 @@
         purpose: frontend php to create new product
     */
     session_start();
+    if (empty($_SESSION["id"]) || $_SESSION['role'] == "Courier"){
+      header("location:index.php");
+      exit;
+  }
     require_once "create_product.php";
 ?>
 <!doctype html>
