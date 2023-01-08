@@ -122,8 +122,7 @@
                 {
                 label: '',
                 data: <?= json_encode($sales);?>,
-                backgroundColor: <?= json_encode($bgcolor); ?>,
-                barThickness:150.0
+                backgroundColor: <?= json_encode($bgcolor); ?>
                 }
             ]
         },

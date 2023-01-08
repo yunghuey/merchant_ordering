@@ -115,8 +115,7 @@
                     $get_order_sql = "SELECT o.orderID,o.orderDate, o.preparedDate, o.orderStatus,o.parcelNumber,so.fullname AS staffOrder, sp.fullname AS staffPrepare "
                                     ."FROM `order` o "
                                     ."LEFT JOIN `staff` so ON so.id=o.orderByStaff "
-                                    ."LEFT JOIN `staff` sp ON sp.id=o.preparedByStaff "
-                                    ."WHERE orderStatus='delivered'";
+                                    ."LEFT JOIN `staff` sp ON sp.id=o.preparedByStaff ";
                 }
                 echo "</thead>";
                 if($rssp = mysqli_query($conn,$get_order_sql)):

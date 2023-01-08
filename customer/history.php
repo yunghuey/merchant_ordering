@@ -36,7 +36,7 @@
                 <thead>
                     <th style="display:none;">Order Id</th>
                     <th>Product Name</th>
-                    <th>Total Amount</th>
+                    <th>Total Amount (RM)</th>
                     <th>Quantity</th>
                     <th>Order Date</th>
                     <th>Payment Method</th>

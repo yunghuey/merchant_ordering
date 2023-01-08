@@ -125,7 +125,7 @@
                             <button class="btn" id="increment" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-plus text-success"></i></button>
                         </div>
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
-                        <div><h5 class="text-grey"><?= number_format($row['productPrice'],2)?></h5></div>
+                        <div><h5 class="text-grey">RM<?= number_format($row['productPrice'],2)?></h5></div>
                         <input type="text" id="price" value="<?= number_format($row['productPrice'],2)?>" hidden>
                             <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['id']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
                     </div>

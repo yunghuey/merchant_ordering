@@ -75,7 +75,21 @@
                     <td><?php echo $count++; ?></td>
                     <td style="display:none;"><?php echo $row['productID']; ?></td>
                     <td><?php echo $row['productName']; ?></td>
-                    <td><?php echo $row['productCurrentQty']; ?></td>
+                    <td>
+                        <?php 
+                            echo "<h4>";
+                            if($row['productCurrentQty'] < 50):
+                                echo "<span class='badge text-bg-danger'>";
+                            elseif($row['productCurrentQty'] >= 50 && $row['productCurrentQty'] < 150):
+                                echo "<span class='badge text-bg-warning' style='background-color: #FFA500'>";
+                            elseif($row['productCurrentQty'] >= 150 && $row['productCurrentQty'] < 400):
+                                echo "<span class='badge text-bg-warning'>";
+                            elseif($row['productCurrentQty'] >= 400):
+                                echo "<span class='badge text-bg-success'>";
+                            endif;
+                            echo $row['productCurrentQty']."</span></h4>";
+                        ?>
+                    </td>
                     <td><a href="./productdetails.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-dark"><i class="far fa-eye"></i></a></td>
                     <td><a href="./editproduct.php?id=<?php echo $row['productID'] ?>" class="btn btn-outline-dark"><i class="fas fa-edit"></i></a></td>
                     <td><a class="btn btn-outline-dark deletebtn" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash-alt"></i></a></td>
@@ -97,7 +111,7 @@
                 <div class="modal-body" id="delete-modal-body">
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <form action="" method="post">
                         <input type="hidden" name="delete_id" id="delete_id">
                         <button type="submit" class="btn btn-primary" name="deleteproduct">Yes</button>
