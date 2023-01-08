@@ -3,6 +3,10 @@
         purpose: frontend php page to display staff list and show the four buttons: view details, edit, archive, delete
     */
     session_start();
+    if (empty($_SESSION['id'])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "update_staff.php";
 
