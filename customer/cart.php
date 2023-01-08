@@ -4,8 +4,8 @@
         have the function to delete product in cart(delete in db too), add quantity needed(update in db too), minimum number is 1
     */
     session_start();
-    if (empty($_SESSION["username"])){
-        header("location:index.php");
+    if (empty($_SESSION['id'])){
+        header("location:../login.php");
         exit;
     }
     require_once "../database/connect_db.php";

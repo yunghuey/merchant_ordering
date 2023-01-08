@@ -3,7 +3,7 @@
         purpose: frontend php to create new product
     */
     session_start();
-    if (empty($_SESSION["id"]) || $_SESSION['role'] == "Courier"){
+    if (empty($_SESSION["id"])){
       header("location:index.php");
       exit;
   }

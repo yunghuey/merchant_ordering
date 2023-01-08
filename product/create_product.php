@@ -2,6 +2,11 @@
     /*
         purpose: backend php to create new row in database product, including validation
     */
+    session_start();
+    if (empty($_SESSION["username"])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     $productName = $productPrice = $productCurrentQty = $productCat = 
     $productDesc = $new_img_name = $product_img_name = $img_upload_path = ""; 

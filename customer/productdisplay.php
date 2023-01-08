@@ -3,6 +3,10 @@
         purpose: frontend php to display product card
     */
     session_start();
+    if (empty($_SESSION['id'])){
+        header("location:../login.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
 
     $ssp = "SELECT * FROM product WHERE productCurrentQty > 0";

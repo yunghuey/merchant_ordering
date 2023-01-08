@@ -3,7 +3,7 @@
         purpose: frontend to display the product list and button to delete product
     */
     session_start();
-    if (empty($_SESSION["id"]) || $_SESSION['role'] == "Courier"){
+    if (empty($_SESSION["id"])){
         header("location:index.php");
         exit;
     }
