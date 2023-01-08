@@ -5,7 +5,6 @@
                 <span class="nav-item">staff</span>
             </a>
         </li>
-        <?php if($_SESSION['role'] != "Courier"): ?>
         <li><div class="dropdown">
             <a href="#" class="dropdown-toggle side-nav" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fas fa-box"></i>
@@ -16,7 +15,6 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/product/productlist.php">View All Product</a></li>
             </ul>
         </div></li>
-        <?php endif; ?>
         <?php if($_SESSION['role'] == "Management"): ?>
         <li>
             <a href="http://localhost/merchant_ordering/staff/monitorsales.php" class="side-nav">

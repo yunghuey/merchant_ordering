@@ -8,7 +8,7 @@
         exit;
     }
     require_once "../database/connect_db.php";
-    require "generate_report.php";
+    require_once "generate_report.php";
 ?>
 <!doctype html>
 <html lang="en">
@@ -22,8 +22,9 @@
         <link rel="stylesheet" href="template_style.css">
 
         <!-- chart -->
-        <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.2/chart.min.js" integrity="sha512-fYE9wAJg2PYbpJPxyGcuzDSiMuWJiw58rKa9MWQICkAqEO+xeJ5hg5qPihF8kqa7tbgJxsmgY0Yp51+IMrSEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <!-- datepicker -->
         <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
@@ -44,20 +45,17 @@
         <!-- navigation -->
         <?php include("leftmenu.php"); ?>
 
-        <?php 
-           
-        ?>
         <div class="content">
             <header><h2>Product Sales</h2></header>
+            <!-- get duration -->
             <section>
-                <!-- get duration -->
                 <h4>Duration</h4>
                 <div class="card bg-light"><div class="card-body">
                     <form action="monitorsales.php" method="post" class="row">
                         <label for="date" class="col-1 col-form-label">From</label>
                         <div class="col-3">
                             <div class="input-group date" id="date">
-                                <input type="text" class="form-control" id="fromdate" name="fromdate">
+                                <input type="text" class="form-control" id="fromdate" name="fromdate" required>
                                 <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
                             </div>
                         </div>
@@ -68,28 +66,95 @@
                                 <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-dark col-md-1" name="get_date">
+                        <input type="submit" class="btn btn-dark col-md-1" name="get_date" value="Submit" hidden>
                     </form>
                 </div></div>
             </section>
-
-            <h3>From <?= $startdate; ?></h3>
-            <h3>To <?= $enddate; ?></h3>
+            <!-- show report -->
+            <?php if(!empty($sales)):
+                    echo "<section class='mt-3'>";
+                    echo "    <h3 class='page-header text-center'>Sales Quantity </h3>";
+                    if(!empty($startdate)):
+                        echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                    endif;
+                    echo "    <canvas id='chartjs_bar' height='150'></canvas>";
+                    echo "</section>";
+                endif;
+                if(!empty($subtotal)):
+                    echo "<section class='mt-3'>";
+                    echo "    <h3 class='page-header text-center'>Sales Amount</h3>";
+                    if(!empty($startdate)):
+                        echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                    endif;
+                    echo "    <canvas id='amount_bar' height='150'></canvas>";
+                    echo "</section>";
+                endif;
+            ?>                       
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     </body>
 </html>
 <script>
     $(document).ready(function(){
-        var start_date;
         $('#fromdate').datepicker({
             onSelect: function(date) { 
                 $("#todate").prop("disabled",false);
-                $("#todate").datepicker('option','minDate',date);                                        },
+                $("#todate").datepicker('option','minDate',date); 
+            },
             dateFormat: 'yy-mm-dd'
         });
         $('#todate').datepicker({
-            dateFormat: 'yy-mm-dd'
+            onSelect: function(date) {  
+                $(".btn-dark").prop("hidden",false); 
+                $(".btn-dark").prop("required",true); 
+            },
+            dateFormat: 'yy-mm-dd'     
         });
     });
+    var ctx = document.getElementById("chartjs_bar");
+    var ctx1 = document.getElementById("amount_bar");
+
+    var config = {
+        type:'bar',
+        data:{
+            labels: <?= json_encode($productname);?>,
+            datasets: [
+                {
+                label: '',
+                data: <?= json_encode($sales);?>,
+                backgroundColor: <?= json_encode($bgcolor); ?>,
+                barThickness:150.0
+                }
+            ]
+        },
+        options:{
+            legend: {display: false}
+        }
+    }
+    // daily sales
+    var config1 = {
+        type:'line',
+        data:{
+            labels: <?= json_encode($productname_sales);?>,
+            datasets: [
+                {
+                label: '',
+                data: <?= json_encode($subtotal);?> ,
+                backgroundColor: <?= json_encode($bgcolor); ?>
+                }
+            ]
+        },
+        options:{
+            legend: {display: false},
+            scales:{
+                yAxes:[{
+                    ticks:{
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    }
+    var quantitychart = new Chart(ctx,config);
+    var amountchart = new Chart(ctx1,config1);
 </script>
