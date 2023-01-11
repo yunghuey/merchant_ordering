@@ -16,7 +16,7 @@
     $rcartid = mysqli_query($conn,$check_cartid_sql);
     if ($rwcartid = mysqli_fetch_assoc($rcartid)){
         $cartid = $rwcartid['id'];
-        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID=".$cartid;
+        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity FROM `product` p LEFT JOIN `cart_product` cp ON p.productID=cp.productID WHERE cp.cartID=".$cartid." AND (p.productCurrentQty >= cp.quantity)";
         $rscart = mysqli_query($conn,$view_cart_sql);
     }
   
@@ -111,7 +111,7 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if(!empty($rscart)):
+                        if(mysqli_num_rows($rscart) > 0):
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">

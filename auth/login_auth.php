@@ -28,7 +28,7 @@
 				// is customer
 				if($rwsc > 0){ // check password
 					$row = mysqli_fetch_array($rssc);
-					$real_password = $row['password'];	
+					$real_password = $row['password'];
 					if(password_verify($password, $real_password)){
 						session_start();
 						// put value into session to hold

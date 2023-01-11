@@ -3,10 +3,6 @@
         purpose: to let user change password if they forgot
     */
     session_start();
-    if (empty($_SESSION['id'])){
-      header("location:index.php");
-      exit;
-  }
     require_once "./auth/reset_password.php";
 ?>
 <!doctype html>
