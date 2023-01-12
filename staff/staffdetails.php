@@ -57,7 +57,7 @@
           <div class="row">
             <div class="btn-group col-2" role="group">
               <a href="editstaff.php?id=<?php echo $_GET['id']?>" class="btn btn-primary submit-btn">Edit</a>
-              <a href="index.php" class="btn btn-outline-primary back-btn">Back</a>
+              <a href="stafflist.php" class="btn btn-outline-primary back-btn">Back</a>
             </div>
           </div>
       </section>

@@ -24,6 +24,7 @@
             $productCat = trim($_POST['productCat']);
             $productDesc = trim($_POST['productDesc']);
             $id =  $_POST['id'];
+            $product_img_name = $_FILES['prod_img']['name'];
             $img_ex = pathinfo($product_img_name, PATHINFO_EXTENSION);
 
             $condition = "WHERE productID = ".$id;
@@ -31,10 +32,9 @@
             $update_product = "UPDATE product SET productName = '".$productName."',productPrice = '"
                                 .$productPrice."', productCurrentQty = '".$productCurrentQty."',productDesc = '"
                                 .$productDesc."',productCategory = '".$productCat."'";
-            
+
             if (!empty($img_ex)){
                 delete_ori_prod_pic($conn,$id);
-                $product_img_name = $_FILES['prod_img']['name'];
                 $tmp_name = $_FILES['prod_img']['tmp_name'];
                 
                 $img_new_filename = preg_replace('/\s+/', '_', $productName);                
