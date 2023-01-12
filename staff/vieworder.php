@@ -335,24 +335,51 @@
             labels: <?= json_encode($date);?>,
             datasets: [
                 {
-                label: '',
-                data: <?= json_encode($parcelNum);?>,
-                backgroundColor: <?= json_encode($bgcolor_parcel); ?>,
-                barThickness:150.0
+                    label: 'Number of parcel',
+                    data: <?= json_encode($parcelNum);?>,
+                    backgroundColor: <?= json_encode($bgcolor_parcel); ?>,
                 }
             ]
         },
         options:{
-            legend: {display: false},
             scales: {
                 y: {
                     beginAtZero: true,
                     ticks: {
-                        stepSize: 1
+                        stepSize: 4
+                    },
+                    title:{
+                        display:true,
+                        text: "Number of parcel (unit)"
+                    }
+                },
+                x:{
+                    title: {
+                        display:true,
+                        text: "Date"
+                    }
+                }
+            },
+            plugins:{
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        // beforeTitle: function(context){
+                        //     return 'before the title';
+                        // },
+                        // title: function(context){
+                        //     return 'hi';
+                        // },
+                        // afterTitle: function(context){
+                        //     return 'Number of parcel in unit';
+                        // }
                     }
                 }
             }
         }
     }
+    Chart.defaults.font.size = 15;
     var cookieChart = new Chart(ctx,config);
 </script>
