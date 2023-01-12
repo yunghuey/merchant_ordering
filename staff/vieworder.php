@@ -343,7 +343,15 @@
             ]
         },
         options:{
-            legend: {display: false}
+            legend: {display: false},
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
         }
     }
     var cookieChart = new Chart(ctx,config);
