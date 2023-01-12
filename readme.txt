@@ -15,8 +15,10 @@ customer: jessica, password - 667Jn3#uk
 customer: daniel, password - 667Jn3#uk ----- hdo4*J33
 ADMIN - staff: staffhuey@gmail.com, staffhuey, Staff@123 --- stafF@999
 STOCK - staff:micole, pwd: 667Jn3#uk
+
 COURIER - staff:christ, pwd: 667Jn3#uk
 MANAGEMENT - staff: maymay, pwd: Maymay8)
+
 default password:abc1234
 
 16 Dec 2022
