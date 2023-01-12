@@ -36,7 +36,7 @@
                 <thead>
                     <th style="display:none;">Order Id</th>
                     <th>Product Name</th>
-                    <th>Total Amount</th>
+                    <th>Total Amount (RM)</th>
                     <th>Quantity</th>
                     <th>Order Date</th>
                     <th>Payment Method</th>
@@ -46,10 +46,9 @@
                 <?php  
                     unset($rssp);
                     $ssp = "SELECT o.orderID,o.orderStatus,o.orderDate,o.paymentMethod,o.bank,"
-                            ."p.productID,p.productName,cp.subtotal,cp.quantity "
+                            ."cp.subtotal,cp.quantity,cp.productName "
                             ."FROM `cart` c "
                             ."LEFT JOIN `cart_product` cp ON cp.cartID=c.id "
-                            ."LEFT JOIN `product` p ON p.productID=cp.productID "
                             ."LEFT JOIN `order` o ON o.cartID=c.id "
                             ."WHERE c.customerID=".$_SESSION['id'];
                     if($rssp = mysqli_query($conn,$ssp)):

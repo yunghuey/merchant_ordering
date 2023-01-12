@@ -3,6 +3,10 @@
         purpose: frontend php page to display product list and show the three buttons: view details, edit, delete
     */
     session_start();
+    if (empty($_SESSION['id'])){
+      header("location:index.php");
+      exit;
+    }
     require_once "../database/connect_db.php";
 
     $ssp = "SELECT * FROM product WHERE productID = ".$_GET['id'];

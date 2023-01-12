@@ -3,6 +3,10 @@
         purpose: frontend php page to display staff list and show the three buttons: view details, edit, archive, delete
     */
     session_start();
+    if (empty($_SESSION['id'])){
+      header("location:index.php");
+      exit;
+  }
     require_once "../database/connect_db.php";
 
     $sss = "SELECT * FROM staff WHERE id = ".$_GET['id'];
@@ -53,7 +57,7 @@
           <div class="row">
             <div class="btn-group col-2" role="group">
               <a href="editstaff.php?id=<?php echo $_GET['id']?>" class="btn btn-primary submit-btn">Edit</a>
-              <a href="index.php" class="btn btn-outline-primary back-btn">Back</a>
+              <a href="stafflist.php" class="btn btn-outline-primary back-btn">Back</a>
             </div>
           </div>
       </section>

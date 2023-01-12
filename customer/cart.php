@@ -4,8 +4,8 @@
         have the function to delete product in cart(delete in db too), add quantity needed(update in db too), minimum number is 1
     */
     session_start();
-    if (empty($_SESSION["username"])){
-        header("location:index.php");
+    if (empty($_SESSION['id'])){
+        header("location:../login.php");
         exit;
     }
     require_once "../database/connect_db.php";
@@ -16,7 +16,7 @@
     $rcartid = mysqli_query($conn,$check_cartid_sql);
     if ($rwcartid = mysqli_fetch_assoc($rcartid)){
         $cartid = $rwcartid['id'];
-        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, op.id, op.quantity FROM `product` p LEFT JOIN `cart_product` op ON p.productID=op.productID WHERE op.cartID=".$cartid;
+        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity FROM `product` p LEFT JOIN `cart_product` cp ON p.productID=cp.productID WHERE cp.cartID=".$cartid." AND (p.productCurrentQty >= cp.quantity)";
         $rscart = mysqli_query($conn,$view_cart_sql);
     }
   
@@ -111,7 +111,7 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if(!empty($rscart)):
+                        if(mysqli_num_rows($rscart) > 0):
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
@@ -125,7 +125,7 @@
                             <button class="btn" id="increment" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-plus text-success"></i></button>
                         </div>
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
-                        <div><h5 class="text-grey"><?= number_format($row['productPrice'],2)?></h5></div>
+                        <div><h5 class="text-grey">RM<?= number_format($row['productPrice'],2)?></h5></div>
                         <input type="text" id="price" value="<?= number_format($row['productPrice'],2)?>" hidden>
                             <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['id']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
                     </div>

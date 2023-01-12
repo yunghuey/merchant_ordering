@@ -3,6 +3,10 @@
         purpose: frontend php page to display staff list and show the four buttons: view details, edit, archive, delete
     */
     session_start();
+    if($_SESSION['role'] != "Management" && $_SESSION['role'] != "Admin"){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "./alter_staff.php";
 ?>

@@ -3,6 +3,10 @@
         purpose: frontend php to create new account for customer user
     */
     session_start();
+    if ($_SESSION['role'] != "Admin"){
+      header("location:index.php");
+      exit;
+    }
     require_once "create_customer.php";
 ?>
 <!doctype html>

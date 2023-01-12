@@ -5,29 +5,34 @@
         orderStatus: paid, processing, packing, shipping, delivered
     */
     session_start();
-    if (empty($_SESSION["username"])){
+    if (empty($_SESSION['id'])){
         header("location:index.php");
         exit;
     }
     require_once "../database/connect_db.php";
+    require_once "generate_report.php";
+
     if($_SERVER['REQUEST_METHOD'] === "POST"){
-        if (isset($_POST['approve_order'])){
-            $sql = "UPDATE `order` SET orderStatus='processing',orderByStaff=".$_SESSION['id'];
+        if(isset($_POST['approve_order']) || isset($_POST['deliver_order']) || isset($_POST['pack_order'])){
+            if (isset($_POST['approve_order'])){
+                $sql = "UPDATE `order` SET orderStatus='processing',orderByStaff=".$_SESSION['id'];
+            }
+            else if (isset($_POST['pack_order'])){
+                $parcelNum = "parcel".$_POST['orderID'];
+                date_default_timezone_set("Asia/Kuala_Lumpur");
+                $dateTime = date("Y/m/d H:i:s");
+                $sql = "UPDATE `order` "
+                    ."SET orderStatus='shipping',parcelNumber='$parcelNum',preparedDate='$dateTime',preparedByStaff=".$_SESSION['id'];
+            }
+            else if (isset($_POST['deliver_order'])){
+                $sql = "UPDATE `order` SET orderStatus='delivered'";
+            }
+            $sql .=" WHERE orderID=".$_POST['orderID'];
+            mysqli_query($conn, $sql);
+            header("location:vieworder.php");
+            unset($_POST['approve_order']);
+            die();
         }
-        else if (isset($_POST['pack_order'])){
-            $parcelNum = "parcel".$_POST['orderID'];
-            date_default_timezone_set("Asia/Kuala_Lumpur");
-            $dateTime = date("Y/m/d H:i:s");
-            $sql = "UPDATE `order` "
-                ."SET orderStatus='shipping',parcelNumber='$parcelNum',preparedDate='$dateTime',preparedByStaff=".$_SESSION['id'];
-        }
-        else if (isset($_POST['deliver_order'])){
-            $sql = "UPDATE `order` SET orderStatus='delivered'";
-        }
-        $sql .=" WHERE orderID=".$_POST['orderID'];
-        mysqli_query($conn, $sql);
-        header("location:vieworder.php");
-        die();
     }
 ?>
 <!doctype html>
@@ -38,10 +43,21 @@
         <title>Order Record</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 
+        <!-- chart -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.2/chart.min.js" integrity="sha512-fYE9wAJg2PYbpJPxyGcuzDSiMuWJiw58rKa9MWQICkAqEO+xeJ5hg5qPihF8kqa7tbgJxsmgY0Yp51+IMrSEVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        <!-- datepicker -->
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
         <!-- for Datatable -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
         <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
 
@@ -99,8 +115,7 @@
                     $get_order_sql = "SELECT o.orderID,o.orderDate, o.preparedDate, o.orderStatus,o.parcelNumber,so.fullname AS staffOrder, sp.fullname AS staffPrepare "
                                     ."FROM `order` o "
                                     ."LEFT JOIN `staff` so ON so.id=o.orderByStaff "
-                                    ."LEFT JOIN `staff` sp ON sp.id=o.preparedByStaff "
-                                    ."WHERE orderStatus='delivered'";
+                                    ."LEFT JOIN `staff` sp ON sp.id=o.preparedByStaff ";
                 }
                 echo "</thead>";
                 if($rssp = mysqli_query($conn,$get_order_sql)):
@@ -135,18 +150,45 @@
                 endif;
                 ?>
             </table>
+            </section>
             <?php 
                 if ($_SESSION['role'] == "Courier"):
-                    $count_undelivered_sql = "SELECT COUNT(orderID)as undelivered FROM `order` WHERE orderStatus='shipping'";
+                    $count_undelivered_sql = "SELECT COUNT(orderID) as undelivered FROM `order` WHERE orderStatus='shipping'";
                     $rcount = mysqli_query($conn,$count_undelivered_sql);
                     $rwcount = mysqli_fetch_assoc($rcount);
                     echo "<div>";
                     echo "    <h5><strong>Number of parcel pending to be delivered: </strong>".$rwcount['undelivered']."</h5>";
                     echo "</div>";
-                endif;
             ?>
-            </table>
-        </section>
+                    <!-- get duration -->
+                    <section>
+                        <h4>Duration</h4>
+                        <div class="card bg-light"><div class="card-body">
+                            <form action="vieworder.php" method="post" class="row">
+                                <label for="date" class="col-1 col-form-label">From</label>
+                                <div class="col-3">
+                                    <div class="input-group date" id="date">
+                                        <input type="text" class="form-control" id="fromdate" name="fromdate" required>
+                                        <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
+                                    </div>
+                                </div>
+                                <label for="date" class="col-1 col-form-label">To</label>
+                                <div class="col-3">
+                                    <div class="input-group date" id="date">
+                                        <input type="text" class="form-control" id="todate" name="todate" disabled>
+                                        <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-dark col-md-2" name="get_parcel" hidden>Submit</button>
+                            </form>
+                        </div></div>
+                    </section>
+                    <!-- <pre><?= $get_parcel_sql;?></pre> -->
+                    <h3 class='page-header text-center mt-3'>Parcel delivered Reports </h3>
+                    <div class="container p-3" width="200" >
+                        <canvas id='parcel_chart' height='150' width='200'></canvas>
+                    </div>
+            <?php endif; ?>
         </div>
         
         <!-- ADMIN approve order -->
@@ -168,7 +210,8 @@
                 </div>
             </div>
         </div>
-        <!-- ADMIN view inside cart fail -->
+
+        <!-- ADMIN view inside cart -->
         <div class="modal modal-lg fade" id="admin_viewcart" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">    
                 <div class="modal-content">
@@ -267,5 +310,76 @@
         });
 
         $("#table-list").DataTable();
+
+        $('#fromdate').datepicker({
+            onSelect: function(date) { 
+                $("#todate").prop("disabled",false);
+                $("#todate").datepicker('option','minDate',date); 
+            },
+            dateFormat: 'yy-mm-dd'
+        });
+
+        $('#todate').datepicker({
+            onSelect: function(date) {  
+                $(".btn-dark").prop("hidden",false); 
+                $(".btn-dark").prop("required",true); 
+            },
+            dateFormat: 'yy-mm-dd'     
+        });
     });
+
+    var ctx = document.getElementById("parcel_chart");
+    var config = {
+        type:'bar',
+        data:{
+            labels: <?= json_encode($date);?>,
+            datasets: [
+                {
+                    label: 'Number of parcel',
+                    data: <?= json_encode($parcelNum);?>,
+                    backgroundColor: <?= json_encode($bgcolor_parcel); ?>,
+                }
+            ]
+        },
+        options:{
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 4
+                    },
+                    title:{
+                        display:true,
+                        text: "Number of parcel (unit)"
+                    }
+                },
+                x:{
+                    title: {
+                        display:true,
+                        text: "Date"
+                    }
+                }
+            },
+            plugins:{
+                legend: {
+                    display: false,
+                },
+                tooltip: {
+                    callbacks: {
+                        // beforeTitle: function(context){
+                        //     return 'before the title';
+                        // },
+                        // title: function(context){
+                        //     return 'hi';
+                        // },
+                        // afterTitle: function(context){
+                        //     return 'Number of parcel in unit';
+                        // }
+                    }
+                }
+            }
+        }
+    }
+    Chart.defaults.font.size = 15;
+    var cookieChart = new Chart(ctx,config);
 </script>

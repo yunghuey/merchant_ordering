@@ -2,6 +2,11 @@
     /*
         purpose: backend php to create new row in database product, including validation
     */
+    session_status() === PHP_SESSION_ACTIVE ?: session_start();
+    if (empty($_SESSION["username"])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     $productName = $productPrice = $productCurrentQty = $productCat = 
     $productDesc = $new_img_name = $product_img_name = $img_upload_path = ""; 
@@ -17,6 +22,9 @@
             $product_img_name = $_FILES['prod_img']['name'];
             $tmp_name = $_FILES['prod_img']['tmp_name'];
             $img_ex = pathinfo($product_img_name, PATHINFO_EXTENSION);
+
+            // handle product description special character
+            $productDesc = str_replace("'","\'",$productDesc);
             // create new name
             $img_new_filename = preg_replace('/\s+/', '_', $productName);                
             $new_img_name = uniqid("", true).'_'.$img_new_filename.'.'.$img_ex;

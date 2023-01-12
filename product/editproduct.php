@@ -3,6 +3,10 @@
         purpose: frontend php page to edit one product
     */
     session_start();
+    if (empty($_SESSION["id"])){
+        header("location:index.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
     require_once "update_product.php";
 

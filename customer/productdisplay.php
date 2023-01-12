@@ -3,6 +3,10 @@
         purpose: frontend php to display product card
     */
     session_start();
+    if (empty($_SESSION['id'])){
+        header("location:../login.php");
+        exit;
+    }
     require_once "../database/connect_db.php";
 
     $ssp = "SELECT * FROM product WHERE productCurrentQty > 0";
@@ -162,6 +166,7 @@
         $quantity = $_POST['productCurrentQty'];
         $subtotal = $_POST['productPrice'] * $quantity;
         $custid = $_SESSION['id'];
+        $product_name = $_POST['productName'];
 
         // check if got existing cartid that can use
         $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
@@ -188,7 +193,7 @@
         if($rwsql)
             $cart_sql = "UPDATE `cart_product` SET quantity = quantity + ".$quantity.",subtotal = subtotal + ".$subtotal." WHERE id = ".$rwsql['id'];
         else
-            $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID) VALUES ('$productid','$quantity','$subtotal','$cartid') ";
+            $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID,productName) VALUES ('$productid','$quantity','$subtotal','$cartid','$product_name') ";
         mysqli_query($conn,$cart_sql);     
         
         // update total amount in cart

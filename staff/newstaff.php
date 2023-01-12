@@ -3,6 +3,11 @@
         purpose: frontend php to create new staff account
     */
     session_start();
+    if($_SESSION['role'] != "Management" && $_SESSION['role'] != "Admin"){
+        header("location:index.php");
+        exit;
+    }
+
     require_once "create_staff.php";
 ?>
 <!doctype html>

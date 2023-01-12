@@ -21,9 +21,6 @@ if($_SESSION['usertype'] == 'staff'):
   </head>
   <body>
     <?php include("leftmenu.php"); ?>
-    <script>
-      console.log(<?= json_encode($_SESSION['message']); ?>);
-    </script>
 
     <?php if(isset($_SESSION['message'])) :?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
