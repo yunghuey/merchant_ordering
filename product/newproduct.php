@@ -57,7 +57,7 @@
               <label for="prodqty" class="form-label">Product Current Quantity</label>
               <div class="stepper row g-3">
                 <div class="btn col-lg-2" id="decrement" onclick="stepper(this)"><strong>-</strong></div>
-                <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="prodqty" min="1" max="1000" step="1" value="<?php if($productCurrentQty) echo $productCurrentQty; else echo '1';?>" required></div>
+                <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="prodqty" min="1" max="1000" step="1" value="<?php if($productCurrentQty) echo $productCurrentQty; else echo '100';?>" required></div>
                 <div class="btn col-lg-2" id="increment" onclick="stepper(this)"><strong>+</strong></div>
               </div>
             </div>
