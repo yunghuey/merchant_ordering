@@ -50,6 +50,7 @@
             <!-- get duration -->
             <section>
                 <h4>Duration</h4>
+                <p>Select duration to view the selected result of total quantity sold and total sales amount</p>
                 <div class="card bg-light"><div class="card-body">
                     <form action="monitorsales.php" method="post" class="row">
                         <label for="date" class="col-1 col-form-label">From</label>
@@ -77,7 +78,7 @@
                     if(!empty($startdate)):
                         echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
                     endif;
-                    echo "    <canvas id='chartjs_bar' height='150'></canvas>";
+                    echo "    <div style='position: relative; height:80vh;'><canvas id='chartjs_bar' height='150'></canvas></div>";
                     echo "</section>";
                 endif;
                 if(!empty($subtotal)):
@@ -86,7 +87,7 @@
                     if(!empty($startdate)):
                         echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
                     endif;
-                    echo "    <canvas id='amount_bar' height='150'></canvas>";
+                    echo "    <div style='position: relative; height:80vh;'><canvas id='amount_bar'></canvas></div>";
                     echo "</section>";
                 endif;
             ?>                       
@@ -114,46 +115,83 @@
     var ctx = document.getElementById("chartjs_bar");
     var ctx1 = document.getElementById("amount_bar");
 
-    var config = {
+    var qty_config = {
         type:'bar',
         data:{
             labels: <?= json_encode($productname);?>,
             datasets: [
                 {
-                label: '',
+                label: 'Total quantity',
                 data: <?= json_encode($sales);?>,
                 backgroundColor: <?= json_encode($bgcolor); ?>
                 }
             ]
         },
         options:{
-            legend: {display: false}
+            plugins:{
+                legend: {display: false}
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{
+                        stepSize: 5
+                    },
+                    title:{
+                        display:true,
+                        text: "Total quantity (unit)"
+                    }
+                },
+                x:{
+                    title: {
+                        display:true,
+                        text: "Product Name"
+                    }
+                }
+            }
         }
     }
     // daily sales
-    var config1 = {
+    var sales_config = {
         type:'line',
         data:{
             labels: <?= json_encode($productname_sales);?>,
             datasets: [
                 {
-                label: '',
+                label: 'Amount of sales in RM',
                 data: <?= json_encode($subtotal);?> ,
                 backgroundColor: <?= json_encode($bgcolor); ?>
                 }
             ]
         },
         options:{
-            legend: {display: false},
+            plugins:{
+                legend: {display: false}
+            },    
             scales:{
-                yAxes:[{
+                y:{
+                    beginAtZero:true,
                     ticks:{
-                        beginAtZero: true
+                        stepSize: 15,
+                        callback:function(value, index, ticks) { return value+'.00'; },
+                    },
+                    title:{
+                        display:true,
+                        text: "Total sales amount (RM)"
                     }
-                }]
+                },
+                x:{
+                    title: {
+                        display:true,
+                        text: "Date"
+                    }
+                }
             }
         }
     }
-    var quantitychart = new Chart(ctx,config);
-    var amountchart = new Chart(ctx1,config1);
+    Chart.defaults.font.size = 15;
+    // Chart.canvas.parentNode.style.height = '128px';
+    // Chart.canvas.parentNode.style.width = '128px';
+    var quantitychart = new Chart(ctx,qty_config);
+    var amountchart = new Chart(ctx1,sales_config);
 </script>
