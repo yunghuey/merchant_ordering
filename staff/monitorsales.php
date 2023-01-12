@@ -46,13 +46,17 @@
         <?php include("leftmenu.php"); ?>
 
         <div class="content">
-            <header><h2>Product Sales</h2></header>
-            <!-- get duration -->
-            <section>
-                <h4>Duration</h4>
-                <p>Select duration to view the selected result of total quantity sold and total sales amount</p>
-                <div class="card bg-light"><div class="card-body">
-                    <form action="monitorsales.php" method="post" class="row">
+            <header><h2>Report</h2></header>
+            <!-- overall chart -->
+            <section class="card m-3">
+                <h4 class="card-header p-3"><strong>Overall Sales</strong></h4>
+                <div class="card-body">    
+                    <div class="card-text">
+                        <h5>Duration</h5>
+                        <p>Select duration to view the selected result of total quantity sold and total sales amount</p>
+                    </div>
+                    <div class="card bg-light"><div class="card-body">
+                        <form action="monitorsales.php" method="post" class="row">
                         <label for="date" class="col-1 col-form-label">From</label>
                         <div class="col-3">
                             <div class="input-group date" id="date">
@@ -67,30 +71,108 @@
                                 <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-dark col-md-1" name="get_date" value="Submit" hidden>
-                    </form>
-                </div></div>
+                        <input type="submit" class="btn btn-dark btn-dark col-md-1" name="get_date" value="Submit" hidden>
+                        </form>
+                    </div></div>
+                    <?php 
+                    if(!empty($sales)):
+                        echo "<section class='mt-5'>";
+                        echo "    <h5 class='page-header text-center'>Sales Quantity </h5>";
+                        if(!empty($startdate)):
+                            echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                        endif;
+                        echo "    <div style='position: relative; height:70vh;'><canvas id='chartjs_bar' height='150'></canvas></div>";
+                        echo "</section>";
+                    endif;
+                    if(!empty($subtotal)):
+                        echo "<section class='mt-5'>";
+                        echo "    <h5 class='page-header text-center'>Sales Amount</h5>";
+                        if(!empty($startdate)):
+                            echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                        endif;
+                        echo "    <div style='position: relative; height:60vh;'><canvas id='amount_bar'></canvas></div>";
+                        echo "</section>";
+                    endif;
+                    ?>                    
+                </div> 
             </section>
-            <!-- show report -->
-            <?php if(!empty($sales)):
-                    echo "<section class='mt-3'>";
-                    echo "    <h3 class='page-header text-center'>Sales Quantity </h3>";
-                    if(!empty($startdate)):
-                        echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+
+            <!-- product chart -->
+            <section class="card m-3">
+                <h4 class="card-header p-3"><strong>Product Sales</strong></h4>
+                <div class="card-body">
+                    <form action="monitorsales.php" method="post">
+                        <div class="card-text row">
+                            <h5 class="col-2">Category</h5>
+                            <div class="col-3">
+                                <select class="form-select" name="category">
+                                    <option value="" selected>All</option>
+                                    <option value="butter">Butter</option>
+                                    <option value="milk">Milk</option>
+                                    <option value="cheese">Cheese</option>
+                                    <option value="yogurt">Yogurt</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card bg-light"><div class="card-body row">
+                        <label for="date" class="col-1 col-form-label">From</label>
+                        <div class="col-3">
+                            <div class="input-group date" id="date">
+                                <input type="text" class="form-control" id="fromdate_rank" name="fromdate_rank" >
+                                <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
+                            </div>
+                        </div>
+                        <label for="date" class="col-1 col-form-label">To</label>
+                        <div class="col-3">
+                            <div class="input-group date" id="date">
+                                <input type="text" class="form-control" id="todate_rank" name="todate_rank" disabled>
+                                <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-dark btn-dark2 col-md-1" name="get_ranking" value="Submit" >
+                    </div></div>
+                        
+                    </form>
+                    <?php if(!empty($top_productname)):
+                        echo "<section class='mt-3'>";
+                        echo "<p>".$get_category_top."</p>";
+
+                        echo "    <h5 class='page-header text-center'>Top 5 Product</h5>";
+                        if(!empty($ranking_startdate)):
+                            echo "<center><h5>From ".$ranking_startdate." to ".$ranking_enddate." for ".$productCategory."</h5></center>";
+                        elseif(!empty($productCategory)):
+                            echo "<center><h5>For ".$productCategory." category</h5></center>";
+                        endif;
+                        echo "    <div><canvas id='top_ranking' width='600' height='450'></canvas></div>";
+                        echo "</section>";
                     endif;
-                    echo "    <div style='position: relative; height:80vh;'><canvas id='chartjs_bar' height='150'></canvas></div>";
-                    echo "</section>";
-                endif;
-                if(!empty($subtotal)):
-                    echo "<section class='mt-3'>";
-                    echo "    <h3 class='page-header text-center'>Sales Amount</h3>";
-                    if(!empty($startdate)):
-                        echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                    if(!empty($last_productname)):
+                        echo "<section class='mt-3'>";
+                        echo "    <h5 class='page-header text-center'>Last 5 Product</h5>";
+                        if(!empty($ranking_enddate)):
+                            echo "<center><h5>From ".$ranking_startdate." to ".$ranking_enddate." for ".$productCategory."</h5></center>";
+                        elseif(!empty($productCategory)):
+                            echo "<center><h5>For ".$productCategory." category</h5></center>";
+                        endif;
+                        echo "    <div><canvas id='last_ranking' width='600' height='450'></canvas></div>";
+                        echo "</section>";
                     endif;
-                    echo "    <div style='position: relative; height:80vh;'><canvas id='amount_bar'></canvas></div>";
-                    echo "</section>";
-                endif;
-            ?>                       
+                    ?> 
+                </div>
+            </section>
+
+            <!-- yearly sales chart -->
+            <section class="card m-3">
+                <h4 class="card-header p-3"><strong>Yearly Product Sales</strong></h4>
+                <div class="card-body">
+                    <?php if(!empty($year_ringgit)):
+                        echo "<section class='mt-3'>";
+                        echo "    <h5 class='page-header text-center'>Top 5 Product</h5>";
+                        echo "    <div style='position: relative; height:60vh;'><canvas id='year_sales'></canvas></div>";
+                        echo "</section>";
+                    endif; ?>       
+                </div>
+            </section>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     </body>
@@ -104,16 +186,29 @@
             },
             dateFormat: 'yy-mm-dd'
         });
+        $('#fromdate_rank').datepicker({
+            onSelect: function(date) { 
+                $("#todate_rank").prop("disabled",false);
+                $("#todate_rank").datepicker('option','minDate',date); 
+            },
+            dateFormat: 'yy-mm-dd'
+        });
         $('#todate').datepicker({
             onSelect: function(date) {  
-                $(".btn-dark").prop("hidden",false); 
-                $(".btn-dark").prop("required",true); 
+                $(".btn-dark1").prop("hidden",false); 
+                $(".btn-dark1").prop("required",true); 
             },
             dateFormat: 'yy-mm-dd'     
         });
+        $('#todate_rank').datepicker({
+            dateFormat: 'yy-mm-dd'     
+        });
     });
-    var ctx = document.getElementById("chartjs_bar");
-    var ctx1 = document.getElementById("amount_bar");
+    var ctx1 = document.getElementById("chartjs_bar");
+    var ctx2 = document.getElementById("amount_bar");
+    var ctx3 = document.getElementById("top_ranking");
+    var ctx4 = document.getElementById("last_ranking");
+    var ctx5 = document.getElementById("year_sales");
 
     var qty_config = {
         type:'bar',
@@ -151,7 +246,7 @@
             }
         }
     }
-    // daily sales
+
     var sales_config = {
         type:'line',
         data:{
@@ -189,9 +284,88 @@
             }
         }
     }
+
+    var top_rank_config = {
+        type:'pie',
+        data:{
+            labels: <?= json_encode($top_productname);?>,
+            datasets: [
+                {
+                label: 'Total quantity',
+                data: <?= json_encode($top_qty);?>,
+                backgroundColor: <?= json_encode($rank_bgcolor); ?>
+                }
+            ]
+        },
+        options:{
+            responsive: false,
+            plugins:{
+                legend: {display: true, position:'right'}
+            }
+        }
+    }
+
+    var last_rank_config = {
+        type:'pie',
+        data:{
+            labels: <?= json_encode($last_productname);?>,
+            datasets: [
+                {
+                label: 'Total quantity',
+                data: <?= json_encode($last_qty);?>,
+                backgroundColor: <?= json_encode($rank_bgcolor); ?>
+                }
+            ]
+        },
+        options:{
+            responsive: false,
+            plugins:{
+                legend: {display: true, position:'right'}
+            }
+        }
+    }
+
+    var year_sales_config = {
+        type:'line',
+        data:{
+            labels: <?= json_encode($year_month);?>,
+            datasets: [
+                {
+                label: 'Amount of sales in RM',
+                data: <?= json_encode($year_ringgit);?> ,
+                backgroundColor: <?= json_encode($bgcolor_year); ?>
+                }
+            ]
+        },
+        options:{
+            plugins:{
+                legend: {display: false}
+            },    
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{
+                        stepSize: 20,
+                        callback:function(value, index, ticks) { return value+'.00'; },
+                    },
+                    title:{
+                        display:true,
+                        text: "Total sales amount (RM)"
+                    }
+                },
+                x:{
+                    title: {
+                        display:true,
+                        text: "Month"
+                    }
+                }
+            }
+        }
+    }
     Chart.defaults.font.size = 15;
-    // Chart.canvas.parentNode.style.height = '128px';
-    // Chart.canvas.parentNode.style.width = '128px';
-    var quantitychart = new Chart(ctx,qty_config);
-    var amountchart = new Chart(ctx1,sales_config);
+    var chart1 = new Chart(ctx1,qty_config);
+    var chart2 = new Chart(ctx2,sales_config);
+    var chart3 = new Chart(ctx3,top_rank_config);
+    var chart4 = new Chart(ctx4,last_rank_config);
+    var chart5 = new Chart(ctx5,year_sales_config);
 </script>

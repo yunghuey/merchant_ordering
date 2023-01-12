@@ -39,6 +39,7 @@
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/newstaff.php">Create New</a></li>
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/stafflist.php">View All</a></li>
                 <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/archivelist.php">View archive</a></li>
+                <li><a class="dropdown-item" href="http://localhost/merchant_ordering/staff/staffreport.php">View staff report</a></li>
             </ul>
         </div></li>
         <?php endif; 
