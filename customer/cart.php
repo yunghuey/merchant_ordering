@@ -10,15 +10,16 @@
     }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = $cart_sql = "";
-    $rscart = $cartid = "";
-    // check if got existing cartid that can use
-    $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
-    $rcartid = mysqli_query($conn,$check_cartid_sql);
-    if ($rwcartid = mysqli_fetch_assoc($rcartid)){
-        $cartid = $rwcartid['id'];
-        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity FROM `product` p LEFT JOIN `cart_product` cp ON p.productID=cp.productID WHERE cp.cartID=".$cartid." AND (p.productCurrentQty >= cp.quantity)";
-        $rscart = mysqli_query($conn,$view_cart_sql);
-    }
+    $rscart = "";
+
+    $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity "
+                    ."FROM `product` p "
+                    ."LEFT JOIN `cart_product` cp ON p.productID=cp.productID "
+                    ."LEFT JOIN `cart` c ON c.id = cp.cartID "
+                    ."WHERE c.hasOrder=0 "
+                    ."AND c.customerID=".$_SESSION['id']
+                    ." AND (p.productCurrentQty >= cp.quantity) ";
+    $rscart = mysqli_query($conn,$view_cart_sql);
   
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if (isset($_POST['deletecart'])){
@@ -26,8 +27,7 @@
             $delete_cart_sql = "DELETE FROM `cart_product` WHERE id = ".$id."";
             mysqli_query($conn,$delete_cart_sql);
             die();
-        } else if (isset($_POST['updatecart'])){
-            $update_cart_sql = "UPDATE `cart_product` SET quantity=".$_POST['quantity'].",subtotal=".($_POST['quantity']*$_POST['price'])." WHERE id=".$_POST['id'];        
+             $update_cart_sql = "UPDATE `cart_product` SET quantity=".$_POST['quantity'].",subtotal=".($_POST['quantity']*$_POST['price'])." WHERE id=".$_POST['id'];        
             mysqli_query($conn,$update_cart_sql);
         }
     }
@@ -111,7 +111,7 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if(mysqli_num_rows($rscart) > 0):
+                        if(mysqli_num_rows($rscart) > 0 && !empty($rcartid)):
                         while($row = mysqli_fetch_assoc($rscart)): 
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
@@ -134,7 +134,8 @@
                     </form>
                     <?php else: ?>
                     <div class="alert alert-success text-dark"><h3>Oops, your shopping cart is empty</h3></div>
-                    <?php endif; ?>
+                    <?php endif; 
+                    ?>
                 </div>
             </div>
         </div>
