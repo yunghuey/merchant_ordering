@@ -54,6 +54,7 @@
             <div class="col input-group mb-3">
               <span class="input-group-text" id="addon-department">Department</span>
               <select class="form-select" name="dept" aria-describedby="addon-department" required>
+                <option value="" selected >Select department</option>
                 <option value="Admin" <?php if ($dept== 'Admin') echo "selected" ?> >Admin</option>
                 <option value="Management" <?php if ($dept== 'Management') echo "selected" ?>>Management</option>
                 <option value="Courier" <?php if ($dept== 'Courier') echo "selected" ?>>Courier</option>
