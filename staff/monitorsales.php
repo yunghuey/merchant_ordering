@@ -71,15 +71,15 @@
                                 <span class="input-group-append"><span class="input-group-text bg-light d-block"><i class="far fa-calendar-alt"></i></span></span>
                             </div>
                         </div>
-                        <input type="submit" class="btn btn-dark btn-dark col-md-1" name="get_date" value="Submit" hidden>
+                        <input type="submit" class="btn btn-dark btn-dark1 col-md-1" name="get_date" value="Submit" hidden>
                         </form>
                     </div></div>
                     <?php 
                     if(!empty($sales)):
                         echo "<section class='mt-5'>";
                         echo "    <h5 class='page-header text-center'>Sales Quantity </h5>";
-                        if(!empty($startdate)):
-                            echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                        if(!empty($overall_startdate)):
+                            echo "<center><h5>From ".$overall_startdate." to ".$overall_enddate."</h5></center>";
                         endif;
                         echo "    <div style='position: relative; height:70vh;'><canvas id='chartjs_bar' height='150'></canvas></div>";
                         echo "</section>";
@@ -87,8 +87,8 @@
                     if(!empty($subtotal)):
                         echo "<section class='mt-5'>";
                         echo "    <h5 class='page-header text-center'>Sales Amount</h5>";
-                        if(!empty($startdate)):
-                            echo "<center><h5>From ".$startdate." to ".$enddate."</h5></center>";
+                        if(!empty($overall_startdate)):
+                            echo "<center><h5>From ".$overall_startdate." to ".$overall_enddate."</h5></center>";
                         endif;
                         echo "    <div style='position: relative; height:60vh;'><canvas id='amount_bar'></canvas></div>";
                         echo "</section>";
@@ -107,10 +107,10 @@
                             <div class="col-3">
                                 <select class="form-select" name="category">
                                     <option value="" selected>All</option>
-                                    <option value="butter">Butter</option>
-                                    <option value="milk">Milk</option>
-                                    <option value="cheese">Cheese</option>
-                                    <option value="yogurt">Yogurt</option>
+                                    <option value="butter" <?php if($product_category == 'butter') echo 'selected' ?>>Butter</option>
+                                    <option value="milk" <?php if($product_category == 'milk') echo 'selected' ?>>Milk</option>
+                                    <option value="cheese" <?php if($product_category == 'cheese') echo 'selected' ?>>Cheese</option>
+                                    <option value="yogurt" <?php if($product_category == 'yogurt') echo 'selected' ?>>Yogurt</option>
                                 </select>
                             </div>
                         </div>
@@ -133,41 +133,38 @@
                     </div></div>
                         
                     </form>
-                    <?php if(!empty($top_productname)):
-                        echo "<section class='mt-3'>";
-                        echo "<p>".$get_category_top."</p>";
-
-                        echo "    <h5 class='page-header text-center'>Top 5 Product</h5>";
-                        if(!empty($ranking_startdate)):
-                            echo "<center><h5>From ".$ranking_startdate." to ".$ranking_enddate." for ".$productCategory."</h5></center>";
-                        elseif(!empty($productCategory)):
-                            echo "<center><h5>For ".$productCategory." category</h5></center>";
-                        endif;
-                        echo "    <div><canvas id='top_ranking' width='600' height='450'></canvas></div>";
-                        echo "</section>";
-                    endif;
-                    if(!empty($last_productname)):
-                        echo "<section class='mt-3'>";
-                        echo "    <h5 class='page-header text-center'>Last 5 Product</h5>";
+                    <?php 
                         if(!empty($ranking_enddate)):
-                            echo "<center><h5>From ".$ranking_startdate." to ".$ranking_enddate." for ".$productCategory."</h5></center>";
+                            echo "<center><h5>From ".$ranking_startdate." to ".$ranking_enddate."</h5></center>";
                         elseif(!empty($productCategory)):
                             echo "<center><h5>For ".$productCategory." category</h5></center>";
                         endif;
-                        echo "    <div><canvas id='last_ranking' width='600' height='450'></canvas></div>";
-                        echo "</section>";
-                    endif;
+
+                        echo "<div class='row mt-3'>";
+                        if(!empty($top_productname)):
+                        echo "  <div class='col-6'>";
+                        echo "      <h5 class='page-header text-center '>Top 4 Product</h5>";
+                        echo "      <canvas id='top_ranking' width='600' height='450'></canvas>";
+                        echo "  </div>";
+                        endif;
+
+                        if(!empty($last_productname)):
+                            echo "  <div class='col-6'>";
+                            echo "    <h5 class='page-header text-center'>Last 4 Product</h5>";
+                            echo "    <canvas id='last_ranking' width='600' height='450'></canvas>";
+                            echo "  </div>";
+                        endif;
+                        echo "</div>";
                     ?> 
                 </div>
             </section>
 
             <!-- yearly sales chart -->
             <section class="card m-3">
-                <h4 class="card-header p-3"><strong>Yearly Product Sales</strong></h4>
+                <h4 class="card-header p-3"><strong>Monthly Product Sales</strong></h4>
                 <div class="card-body">
                     <?php if(!empty($year_ringgit)):
                         echo "<section class='mt-3'>";
-                        echo "    <h5 class='page-header text-center'>Top 5 Product</h5>";
                         echo "    <div style='position: relative; height:60vh;'><canvas id='year_sales'></canvas></div>";
                         echo "</section>";
                     endif; ?>       

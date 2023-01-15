@@ -38,18 +38,19 @@
                         ."LEFT JOIN `cart_product` cp ON cp.productID = p.productID "
                         ."GROUP BY p.productName "
                         ."ORDER BY SUM(cp.quantity) "
-                        ."LIMIT 5";
+                        ."LIMIT 4";
     $get_category_top = "SELECT p.productName, SUM(cp.quantity) AS qty "
                        ."FROM `product` p "
                        ."LEFT JOIN `cart_product` cp ON cp.productID = p.productID "
                        ."GROUP BY p.productName HAVING SUM(cp.quantity) > 0 "
                        ."ORDER BY SUM(cp.quantity) desc "
-                       ."LIMIT 5";    
+                       ."LIMIT 4";    
     $get_year_sales = "SELECT DATE_FORMAT(orderDate, '%M %Y') AS month_name, SUM(cp.subtotal) AS ringgit "
                      ."FROM `order` o "
                      ."LEFT JOIN `cart_product` cp ON cp.cartID=o.cartID "
                      ."WHERE o.orderDate BETWEEN '".$year_start." 00:00:00' AND '".$year_end." 23:59:59' "
-                     ."GROUP BY month_name";
+                     ."GROUP BY month_name "
+                     ."ORDER BY year(orderDate),month(orderDate)";
 
     $get_staff_total = "SELECT COUNT(id) AS total FROM staff;";
     $get_dept_list = "SELECT DISTINCT role FROM `staff` WHERE 1;";
@@ -72,24 +73,36 @@
                 "SELECT p.productName, SUM(cp.quantity) AS qty "
                 ."FROM `product` p "
                 ."LEFT JOIN `cart_product` cp ON cp.productID = p.productID "
-                ."LEFT JOIN `order`o ON o.cartID=cp.cartID "
-                ."WHERE p.productCategory='".$product_category."' ";
+                ."LEFT JOIN `order`o ON o.cartID=cp.cartID ";
+            
+            if(!empty($product_category)){
+                $get_category_last .= "WHERE p.productCategory='".$product_category."' ";
+                $get_category_top .= "WHERE p.productCategory='".$product_category."' ";
+            }
 
             if (!empty($_POST['todate_rank'])){
                 $ranking_startdate = $_POST['fromdate_rank'];
                 $ranking_enddate = $_POST['todate_rank'];
-                $get_category_top = "AND (o.orderDate BETWEEN '".$ranking_startdate." 00:00:00' AND '".$ranking_enddate." 00:00:00') ";
-                $get_category_last ="AND (o.orderDate BETWEEN '".$ranking_startdate." 00:00:00' AND '".$ranking_enddate." 00:00:00') ";
+                // check if got other condition
+                if(strpos($get_category_last,"WHERE")){
+                    $get_category_top .= "AND ";
+                    $get_category_last .="AND ";
+                } else{
+                    $get_category_top .= "WHERE ";
+                    $get_category_last .="WHERE ";
+                }
+                $get_category_top .= " (o.orderDate BETWEEN '".$ranking_startdate." 00:00:00' AND '".$ranking_enddate." 23:59:59') ";
+                $get_category_last .=" (o.orderDate BETWEEN '".$ranking_startdate." 00:00:00' AND '".$ranking_enddate." 23:59:59') ";
             }
             $get_category_top .= "GROUP BY p.productName HAVING SUM(cp.quantity) > 0 "
                         ."ORDER BY SUM(cp.quantity) desc "
-                        ."LIMIT 5";
+                        ."LIMIT 4";
             $get_category_last .= "GROUP BY p.productName "
                                  ."ORDER BY SUM(cp.quantity) "
-                                 ."LIMIT 5";       
+                                 ."LIMIT 4";       
         }
-        unset($_POST['get_date']);
-        unset($_POST['get_ranking']);
+        // unset($_POST['get_date']);
+        // unset($_POST['get_ranking']);
     }
     $get_sales_sql .= "GROUP BY p.productName";
     $get_parcel_sql .= "GROUP BY CAST(orderDate AS DATE)";
@@ -121,7 +134,7 @@
             $subtotal[] = $row['subtotal'];
         }
     }
-    
+    // echo $get_category_top;
     if($rget = mysqli_query($conn,$get_category_top)){
         $rownum = mysqli_num_rows($rget);
         while($row = mysqli_fetch_assoc($rget)){
