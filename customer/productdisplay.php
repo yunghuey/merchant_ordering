@@ -56,7 +56,7 @@
                         <p class="card-text"><?= $row['productCategory']?></p>
                         <p class="card-text mr-4 text-success">RM<?= number_format($row['productPrice'],2);?></p>
                     </div>
-                    <a href="#" class="card-link modalbutton" data-bs-toggle="modal" data-bs-target="#modalproduct" data-id="<?= $row['productID']?>" data-name="<?= $row['productName']?>" data-img="<?= $row['productPicture']?>" data-desc="<?= $row['productDesc']?>" data-price="<?= number_format($row['productPrice'],2); ?>">See Details</a>
+                    <a href="#" class="card-link modalbutton" data-bs-toggle="modal" data-bs-target="#modalproduct" data-id="<?= $row['productID']?>" data-name="<?= $row['productName']?>" data-img="<?= $row['productPicture']?>" data-desc="<?= $row['productDesc']?>" data-price="<?= number_format($row['productPrice'],2); ?>" data-quantity="<?= $row['productCurrentQty']?>">See Details</a>
                 </div>
             </div>    
         <?php 
@@ -100,11 +100,12 @@
                         <label for="orderQty">Quantity:</label>
                         <div class="stepper row g-3">
                             <div class="btn col-lg-2" id="decrement" onclick="stepper(this)"><strong>-</strong></div>
-                            <div class="col-lg-4"><input type="number" class="form-control" name="productCurrentQty" id="orderQty" min="1" max="1000" step="1" value="<?= '1';?>" required></div>
+                            <div class="col-lg-4"><input type="number" class="form-control" name="requestquantity" id="orderQty" min="1" step="1" value="<?= '1';?>" required></div>
                             <div class="btn col-lg-2" id="increment" onclick="stepper(this)"><strong>+</strong></div>
                         </div>
                     </div>
-                    <input type="text" class="form-control" id="productID" name="productID" hidden>
+                    <input type="text" id="productAvailQty" value="" hidden>
+                    <input type="text" id="productID" name="productID" hidden>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-close-modal" data-bs-dismiss="modal">Close</button>
@@ -127,6 +128,7 @@
             var price = $(this).attr('data-price');
             var desc = $(this).attr('data-desc');
             var picture_path = $(this).attr('data-img');
+            var quantity = $(this).attr('data-quantity');
                     
             picture += picture_path;
             
@@ -135,6 +137,8 @@
             $('.modal').find('#productImg').attr("src",picture);
             $('.modal').find('#productDescription').val(desc);
             $('.modal').find('#productID').val(id);
+            $('.modal').find('#productAvailQty').val(quantity);
+            $('.modal').find('#orderQty').attr("max",quantity);
 
         });
     });
@@ -150,6 +154,12 @@
         if(newValue >= min && newValue <= max){
         orderQty.setAttribute("value", newValue);
         }
+
+        if (newValue <= 1) document.getElementById("decrement").disabled = true;
+        else               document.getElementById("decrement").disabled = false;
+
+        if (newValue >= max)  document.getElementById("increment").disabled = true;
+        else                       document.getElementById("increment").disabled = false;
     }
     function add_into_cart(){
         swal({
@@ -163,7 +173,7 @@
     if (isset($_POST['addcart'])){
         // get data to display
         $productid = $_POST['productID'];
-        $quantity = $_POST['productCurrentQty'];
+        $quantity = $_POST['requestquantity'];
         $subtotal = $_POST['productPrice'] * $quantity;
         $custid = $_SESSION['id'];
         $product_name = $_POST['productName'];
