@@ -28,7 +28,8 @@
                     $current_password = trimInput($_POST['current_password']);
 
                     if(password_verify($current_password, $_SESSION['password'])){
-                        $updatePwd = "UPDATE ".$_SESSION['usertype']." SET password = '".$hash_password."', password_check = 1 WHERE username = '".$_SESSION['username']."'";   
+                        $updatePwd = "UPDATE ".$_SESSION['usertype']." SET password = '".$hash_password."', password_check = 1 WHERE username = '".$_SESSION['username']."'"; 
+                        $_SESSION['password'] = $hash_password;
                     } else{
                         $error['current_password'] = "Current password is incorrect";
                         return;
@@ -73,8 +74,8 @@
                     $updatePwd = "UPDATE `".$table."` SET password = '".$hash_password."' WHERE id = ".$user_id;
                     if ($updatePwd != null){
                         if(mysqli_query($conn,$updatePwd)){
-                            session_start();
-                            $_SESSION['reset_password'] = "Password reset successfully";
+                            // session_start();
+                            // $_SESSION['reset_password'] = "Password reset successfully";
                             header("location:login.php");
                         }else{
                         }
