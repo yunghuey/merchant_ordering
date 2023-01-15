@@ -6,12 +6,20 @@
     if ($_SERVER['REQUEST_METHOD'] === "POST"){
         if(isset($_POST['deletestaff'])){
             $id = $_POST['delete_id'];
-            $delete_sql = "DELETE FROM staff WHERE username = '".$id."'"; 
-            if (mysqli_query($conn,$delete_sql)){
-                $_SESSION['message'] = $id." is deleted";
-                header("location:stafflist.php");
-            } else{
-                echo "<script> alert('Error occur'); </script>";
+            if ($id != $_SESSION['id']){
+                $replace_sql = "UPDATE `order` o INNER JOIN `staff` s ON s.id=o.preparedByStaff "
+                              ."SET o.preparedByStaff=".$_SESSION['id']
+                              ." WHERE o.preparedByStaff=".$id;
+                mysqli_query($conn,$replace_sql);
+                $delete_sql = "DELETE FROM staff WHERE id = '".$id."'"; 
+                if (mysqli_query($conn,$delete_sql)){
+                    $_SESSION['message'] = $id." is deleted";
+                    header("location:stafflist.php");
+                } else{
+                    echo "<script> alert('Error occur'); </script>";
+                }
+            }else{
+                echo "<script> alert('You cannot delete your own account') </script>";
             }
         }
 
