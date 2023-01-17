@@ -10,15 +10,17 @@
     }
     require_once "../database/connect_db.php";
     $total = $productid = $quantity = $cart_sql = "";
-    $rscart = $cartid = "";
-    // check if got existing cartid that can use
-    $check_cartid_sql = "SELECT id FROM `cart` WHERE hasOrder=0 AND customerID=".$_SESSION['id']." LIMIT 1";
-    $rcartid = mysqli_query($conn,$check_cartid_sql);
-    if ($rwcartid = mysqli_fetch_assoc($rcartid)){
-        $cartid = $rwcartid['id'];
-        $view_cart_sql = "SELECT p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity FROM `product` p LEFT JOIN `cart_product` cp ON p.productID=cp.productID WHERE cp.cartID=".$cartid." AND (p.productCurrentQty >= cp.quantity)";
-        $rscart = mysqli_query($conn,$view_cart_sql);
-    }
+    $rscart = "";
+    $cartid = 0;
+
+    $view_cart_sql = "SELECT c.id AS CARTID,p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity "
+                    ."FROM `product` p "
+                    ."LEFT JOIN `cart_product` cp ON p.productID=cp.productID "
+                    ."LEFT JOIN `cart` c ON c.id = cp.cartID "
+                    ."WHERE c.hasOrder=0 "
+                    ."AND c.customerID=".$_SESSION['id']
+                    ." AND (p.productCurrentQty >= cp.quantity) ";
+    $rscart = mysqli_query($conn,$view_cart_sql);
   
     if($_SERVER['REQUEST_METHOD'] === "POST"){
         if (isset($_POST['deletecart'])){
@@ -26,7 +28,8 @@
             $delete_cart_sql = "DELETE FROM `cart_product` WHERE id = ".$id."";
             mysqli_query($conn,$delete_cart_sql);
             die();
-        } else if (isset($_POST['updatecart'])){
+        }
+        if (isset($_POST['updatecart'])){
             $update_cart_sql = "UPDATE `cart_product` SET quantity=".$_POST['quantity'].",subtotal=".($_POST['quantity']*$_POST['price'])." WHERE id=".$_POST['id'];        
             mysqli_query($conn,$update_cart_sql);
         }
@@ -98,6 +101,7 @@
                     }
                 });
             }    
+
         </script>
     </head>
     <body>
@@ -111,8 +115,9 @@
                         <h3>Shopping cart</h3>
                     </div>
                     <?php 
-                        if(mysqli_num_rows($rscart) > 0):
-                        while($row = mysqli_fetch_assoc($rscart)): 
+                        if(mysqli_num_rows($rscart) > 0 ):
+                        while($row = mysqli_fetch_assoc($rscart)):
+                            $cartid =  $row['CARTID'];
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
                         <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70"></div>
@@ -121,7 +126,7 @@
                         </div>
                         <div class="d-flex flex-row align-items-center stepper">
                             <button class="btn" id="decrement" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-minus text-danger"></i></button>
-                            <p><h5 class="text-grey mt-1 mr-1 ml-1"><input type="number" class="form-control" value="<?= $row['quantity']?>" id="prodqty-<?= $row['id'] ?>" min="1" max="1000" step="1" readonly></h5></p>
+                            <p><h5 class="text-grey mt-1 mr-1 ml-1"><input type="number" class="form-control" value="<?= $row['quantity']?>" id="prodqty-<?= $row['id'] ?>" min="1" max="<?= $row['productCurrentQty']?>" step="1" readonly></h5></p>
                             <button class="btn" id="increment" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-plus text-success"></i></button>
                         </div>
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
@@ -134,7 +139,8 @@
                     </form>
                     <?php else: ?>
                     <div class="alert alert-success text-dark"><h3>Oops, your shopping cart is empty</h3></div>
-                    <?php endif; ?>
+                    <?php endif; 
+                    ?>
                 </div>
             </div>
         </div>

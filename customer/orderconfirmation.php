@@ -78,7 +78,8 @@
                     </div>
                     <hr>
                     <div class="body">
-                        <select class="form-select" name="paymentmethod">
+                        <select class="form-select" name="paymentmethod" required>
+                            <option value="" selected>Choose payment method</option>
                             <option value="banking">Online banking</option>
                             <option value="card">Debit card/Credit card</option>
                         </select>
@@ -90,7 +91,8 @@
                     </div>
                     <hr>
                     <div class="body">
-                        <select class="form-select" name="bank">
+                        <select class="form-select" name="bank" required>
+                            <option value="" selected>Choose bank</option>
                             <option value="Maybank">Maybank</option>
                             <option value="CIMB Group Holding">CIMB Group Holding</option>
                             <option value="Public Bank">Public Bank Berhad</option>

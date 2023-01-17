@@ -6,8 +6,8 @@ require_once "../database/connect_db.php";
 
 // this is to prevent uninitialized data
 session_start();
-if (empty($_SESSION["username"])){
-    header("location:index.php");
+if (empty($_SESSION["id"])){
+    header("location:../login.php");
     exit;
 }
 if($_SESSION['usertype'] == 'customer'):

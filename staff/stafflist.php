@@ -95,7 +95,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Archive User</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="archive-modal-body">
@@ -141,10 +141,11 @@
         $("#table-list").on('click','.deletebtn', function(){
             var currentRow = $(this).closest("tr");
             var username = currentRow.find("td:eq(2)").text();
+            var id = currentRow.find("td:eq(1)").text();
             var str = "Are you sure to delete "+username+" ?";
             $("#delete-modal-body").html(str);
             console.log("Username is "+ username);
-            $('#delete_id').val(username);
+            $('#delete_id').val(id);
         });
 
         $("#table-list").on('click','.archivebtn', function(){

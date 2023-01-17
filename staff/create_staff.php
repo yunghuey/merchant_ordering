@@ -3,7 +3,6 @@
         purpose: backend process for newstaff.php, create new staff and insert into database
     */
     require_once "../database/connect_db.php";
-    // check if unique - username and email
     $error = [];
     $fullname = $username = $email = $dept = $gender = "";
 

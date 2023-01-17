@@ -19,15 +19,20 @@
             $transactionID = uniqid('T');
 
             // new `order` row
-            $create_order_sql = "INSERT INTO `order` (orderDate,cartID,paymentMethod,bank,transactionDate,transactionID,orderStatus) VALUES ('$dateTime','$cartid','$paymentMethod','$bank','$dateTime','$transactionID','$orderStatus')";
+            $create_order_sql = "INSERT INTO `order` (orderDate,cartID,paymentMethod,bank,transactionDate,transactionID,orderStatus) "
+                               ."VALUES ('$dateTime','$cartid','$paymentMethod','$bank','$dateTime','$transactionID','$orderStatus')";
             mysqli_query($conn, $create_order_sql);
 
             // update `cart` query - with shipping fee
-            $update_cart_sql = "UPDATE `cart` SET totalAmount =".$totalAmount.",hasOrder=1 WHERE id=".$cartid;
+            $update_cart_sql = "UPDATE `cart` SET totalAmount =".$totalAmount.",hasOrder=1 "
+                              ."WHERE id=".$cartid;
             mysqli_query($conn, $update_cart_sql);
          
             // deduct quantity in `product`
-            $update_qty_sql = "UPDATE `product` p INNER JOIN `cart_product` cp ON p.productID = cp.productID SET p.productCurrentQty = (p.productCurrentQty-cp.quantity) WHERE cp.cartID =".$cartid;
+            $update_qty_sql = "UPDATE `product` p "
+                             ."INNER JOIN `cart_product` cp ON p.productID = cp.productID "
+                             ."SET p.productCurrentQty = (p.productCurrentQty-cp.quantity) "
+                             ."WHERE cp.cartID =".$cartid;
             mysqli_query($conn, $update_qty_sql);
             unset($_POST['confirmorder']);
         } else{

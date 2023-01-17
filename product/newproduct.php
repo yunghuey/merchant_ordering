@@ -64,7 +64,7 @@
             <div class="col-md-6">
               <label for="prodCat" class="form-label">Product Category</label>
               <select class="form-select mb-3" name="prodCat" required>
-                <option selected>Choose a category</option>
+                <option value="" selected>Choose a category</option>
                 <option value="milk" <?php if ($productCat== 'milk') echo "selected" ?>>Milk</option>
                 <option value="cheese" <?php if ($productCat== 'cheese') echo "selected" ?>>Cheese</option>
                 <option value="yogurt" <?php if ($productCat== 'yogurt') echo "selected" ?>>Yogurt</option>
