@@ -29,7 +29,7 @@
             mysqli_query($conn,$delete_cart_sql);
             die();
         }
-        if (isset($_POST['updatecart'])){
+        if (isset($_POST['updatecart'])) {
             $update_cart_sql = "UPDATE `cart_product` SET quantity=".$_POST['quantity'].",subtotal=".($_POST['quantity']*$_POST['price'])." WHERE id=".$_POST['id'];        
             mysqli_query($conn,$update_cart_sql);
         }
@@ -120,7 +120,9 @@
                             $cartid =  $row['CARTID'];
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                        <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70" alt=""></div>
+                        <div class="mr-1">
+                            <img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70" alt="">
+                        </div>
                         <div class="d-flex flex-column align-items-center product-details">
                             <span class="font-weight-bold"><?= $row['productName']?></span>
                         </div>
