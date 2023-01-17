@@ -106,7 +106,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("topmenu.php"); ?>
+        <?php include_once("topmenu.php"); ?>
 
         <div class="container mt-5 mb-5">
             <div class="d-flex justify-content-center row">
@@ -120,7 +120,7 @@
                             $cartid =  $row['CARTID'];
                     ?>
                     <div class="d-flex justify-content-between align-items-center p-2 bg-white mt-4 px-3 rounded">
-                        <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70"></div>
+                        <div class="mr-1"><img class="rounded" src="http://localhost/merchant_ordering/product/product_images/<?= $row['productPicture']?>" width="70" alt=""></div>
                         <div class="d-flex flex-column align-items-center product-details">
                             <span class="font-weight-bold"><?= $row['productName']?></span>
                         </div>

@@ -31,7 +31,7 @@
   </head>
   <body>
     <!-- navigation -->
-    <?php include("leftmenu.php"); ?>
+    <?php include_once("leftmenu.php"); ?>
     <div class="content">
       <header><h2>create new customer</h2></header>
 

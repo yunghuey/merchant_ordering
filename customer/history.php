@@ -30,9 +30,9 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("topmenu.php"); ?>
+        <?php include_once("topmenu.php"); ?>
         <section class="container m-5 p-3">
-            <table class="table table-hover" id="table-list" style="width:100%">
+            <table class="table table-hover" id="table-list" style="width:100%" summary="">
                 <thead>
                     <th style="display:none;">Order Id</th>
                     <th>Product Name</th>

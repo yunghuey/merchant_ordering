@@ -29,7 +29,7 @@
 </head>
   <body>
     <!-- navigation -->
-    <?php include("../staff/leftmenu.php"); ?>
+    <?php include_once("../staff/leftmenu.php"); ?>
     <div class="content">
         <header><h2>details of <span style="text-transform: none;"><?php echo $rwsp['productName']; ?></span></h2></header>
         

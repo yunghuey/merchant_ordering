@@ -31,7 +31,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("leftmenu.php"); ?>
+        <?php include_once("leftmenu.php"); ?>
         <div class="content">
             <header><h2>Staff Summary</h2></header>
             <section class="card-group">

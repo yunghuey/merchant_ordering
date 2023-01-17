@@ -25,7 +25,7 @@ if($_SESSION['usertype'] == 'customer'):
   </head>
   <body>
     <!-- navigation -->
-    <?php include("topmenu.php"); ?>
+    <?php include_once("topmenu.php"); ?>
 
     <?php if(isset($_SESSION['message'])) :?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" >

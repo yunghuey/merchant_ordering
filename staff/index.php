@@ -20,7 +20,7 @@ if($_SESSION['usertype'] == 'staff'):
     <link href="leftmenu.css" rel="stylesheet">
   </head>
   <body>
-    <?php include("leftmenu.php"); ?>
+    <?php include_once("leftmenu.php"); ?>
 
     <?php if(isset($_SESSION['message'])) :?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">

@@ -39,7 +39,7 @@
   </head>
   <body>
     <!-- navigation -->
-    <?php include("leftmenu.php"); ?>
+    <?php include_once("leftmenu.php"); ?>
 
     <?php if(isset($_SESSION['message'])) :?>
     <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-left: 100px; width: 500px; ">
@@ -54,7 +54,7 @@
     <div class="content">
         <header><h2>view all staff</h2></header>
         <section class="container-fluid">
-            <table class="table table-hover" id="table-list" style="width:100%">
+            <table class="table table-hover" id="table-list" style="width:100%" summary="">
                 <thead>
                     <th>No.</th>
                     <th style="display:none;">Id</th>

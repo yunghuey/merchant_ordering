@@ -54,7 +54,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("topmenu.php"); ?>
+        <?php include_once("topmenu.php"); ?>
         <div class="popup">
             <i class="fas fa-check fa-4x"></i>
             <h2>Thank you</h2>

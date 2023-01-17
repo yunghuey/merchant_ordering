@@ -114,7 +114,7 @@
 
         <!-- show product -->
         <div class="container prod-container mt-3">
-            <table class="table">
+            <table class="table" summary="">
                 <tr>
                     <th>Name</th>
                     <th>Quantity</th>
@@ -136,21 +136,21 @@
         <div class="container total-container">
             <div class="head float-start"><a href="cart.php" class="btn btn-light back-btn">Back</a></div>
             <div class="tail float-end mb-4">
-                <table class="amount">
+                <table class="amount" summary="">
                     <tr>
-                        <td>Subtotal: RM</td>
+                        <th>Subtotal: RM</th>
                         <td><?= number_format($subtotal,2) ?></td>
                     </tr>
                     <tr>
-                        <td>Shipping: RM</td>
+                        <th>Shipping: RM</th>
                         <td><?= number_format(7,2) ?></td>
                     </tr>
                     <tr>
-                        <td>Total: RM</td>
+                        <th>Total: RM</th>
                         <td><?= number_format($grandtotal,2) ?></td>
                     </tr>
                     <tr>            
-                        <td colspan="2"><button class="btn btn-order" type="submit" name="confirmorder">Place order and pay</button></td>
+                        <th colspan="2"><button class="btn btn-order" type="submit" name="confirmorder">Place order and pay</button></th>
                         <input type="number" name="totalAmount" value="<?= number_format($grandtotal,2) ?>" hidden>
                         <input type="number" name="cartID" value="<?= $cartid ?>" hidden>
                         </form>

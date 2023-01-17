@@ -30,7 +30,7 @@
   </head>
   <body>
     <!-- navigation -->
-    <?php include("../staff/leftmenu.php"); ?>
+    <?php include_once("../staff/leftmenu.php"); ?>
 
     <div class="content">
       <header><h2>add new product</h2></header>   

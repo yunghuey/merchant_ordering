@@ -43,7 +43,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("leftmenu.php"); ?>
+        <?php include_once("leftmenu.php"); ?>
 
         <div class="content">
             <header><h2>Report</h2></header>

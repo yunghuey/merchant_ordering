@@ -29,7 +29,7 @@
 </head>
   <body>
     <!-- navigation -->
-    <?php include("leftmenu.php"); ?>
+    <?php include_once("leftmenu.php"); ?>
     <div class="content">
         <header><h2>details of <span style="text-transform: none;"><?php echo $rwss['username']; ?></span></h2></header>
         

@@ -73,8 +73,7 @@
 							// wrong password
 							$error['password'] = "Wrong password";
 						}
-					}
-					else{
+					} else {
 						$error['username'] = "Wrong username/email";
 					}
 				}

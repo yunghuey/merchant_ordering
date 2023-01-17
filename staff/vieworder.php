@@ -70,11 +70,11 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include("leftmenu.php"); ?>
+        <?php include_once("leftmenu.php"); ?>
         <div class="content">
             <header><h2>Order to settle</h2></header>
             <section class="container-fluid">
-            <table class="table table-hover" id="table-list" style="width:100%">
+            <table class="table table-hover" id="table-list" style="width:100%" summary="">
             <?php
                 unset($rget_order);
                 // header of table for each role

@@ -36,7 +36,7 @@
   </head>
   <body>
     <!-- navigation -->
-    <?php include("../staff/leftmenu.php"); ?>
+    <?php include_once("../staff/leftmenu.php"); ?>
     <div class="content">
         <header><h2>Edit product</h2></header>
         <section class="container-fluid">

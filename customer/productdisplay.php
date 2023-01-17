@@ -32,7 +32,7 @@
   </head>
   <body>
     <!-- navigation -->
-    <?php include("topmenu.php"); 
+    <?php include_once("topmenu.php"); 
     unset($rssp);
     if($rssp = mysqli_query($conn,$ssp)):
          $count = 0;
@@ -78,7 +78,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <center><img src="" id="productImg" height="200" width="200"></center>
+                    <center><img src="" id="productImg" height="200" width="200" alt=""></center>
                     <div class="row mb-1">
                     <form action="productdisplay.php" method="post">
 
