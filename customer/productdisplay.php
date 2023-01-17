@@ -201,9 +201,12 @@
         $rwsql = mysqli_fetch_assoc($rsql);
 
         if($rwsql)
-            $cart_sql = "UPDATE `cart_product` SET quantity = quantity + ".$quantity.",subtotal = subtotal + ".$subtotal." WHERE id = ".$rwsql['id'];
+            $cart_sql = "UPDATE `cart_product` "
+                       ."SET quantity = quantity + ".$quantity.",subtotal = subtotal + ".$subtotal
+                       ." WHERE id = ".$rwsql['id'];
         else
-            $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID,productName) VALUES ('$productid','$quantity','$subtotal','$cartid','$product_name') ";
+            $cart_sql = "INSERT INTO `cart_product` (productID,quantity,subtotal,cartID,productName) "
+                       ."VALUES ('$productid','$quantity','$subtotal','$cartid','$product_name') ";
         mysqli_query($conn,$cart_sql);     
         
         // update total amount in cart

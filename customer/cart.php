@@ -28,6 +28,8 @@
             $delete_cart_sql = "DELETE FROM `cart_product` WHERE id = ".$id."";
             mysqli_query($conn,$delete_cart_sql);
             die();
+        }
+        if (isset($_POST['updatecart'])){
             $update_cart_sql = "UPDATE `cart_product` SET quantity=".$_POST['quantity'].",subtotal=".($_POST['quantity']*$_POST['price'])." WHERE id=".$_POST['id'];        
             mysqli_query($conn,$update_cart_sql);
         }
