@@ -72,7 +72,7 @@
         <!-- navigation -->
         <?php include_once("leftmenu.php"); ?>
         <div class="content">
-            <header><h2>Order to settle</h2></header>
+            <header><h2>Order to process</h2></header>
             <section class="container-fluid">
             <table class="table table-hover" id="table-list" style="width:100%" summary="">
             <?php
@@ -185,6 +185,11 @@
                     </section>
                     <!-- <pre><?= $get_parcel_sql;?></pre> -->
                     <h3 class='page-header text-center mt-3'>Parcel delivered Reports </h3>
+                    <?php 
+                        if(!empty($overall_startdate)){
+                            echo "<h6 class='text-center'>From ".$overall_startdate." to ".$overall_enddate."</h6>";
+                        }
+                    ?>
                     <div class="container p-3" width="200" >
                         <canvas id='parcel_chart' height='150' width='200'></canvas>
                     </div>

@@ -13,7 +13,7 @@
     $rscart = "";
     $cartid = 0;
 
-    $view_cart_sql = "SELECT c.id AS CARTID,p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.id, cp.quantity "
+    $view_cart_sql = "SELECT c.id AS CARTID,p.productName, p.productPrice, p.productPicture, p.productCurrentQty, cp.subtotal, cp.id, cp.quantity "
                     ."FROM `product` p "
                     ."LEFT JOIN `cart_product` cp ON p.productID=cp.productID "
                     ."LEFT JOIN `cart` c ON c.id = cp.cartID "
@@ -61,7 +61,7 @@
                 var min = input_quantity_element.getAttribute("min");
                 var max = input_quantity_element.getAttribute("max");
                 var step = input_quantity_element.getAttribute("step");
-                var productPrice = document.getElementById("price").value;
+                var productPrice = document.getElementById("price-"+cart_id).value;
                 var qty = input_quantity_element.getAttribute("value");
                 let availQty = document.getElementById("productCurrentQty").value;
                 let calcStep = (id == "increment") ? (step * 1): (step * -1);
@@ -70,6 +70,9 @@
                 if (newValue >= min && newValue <= max){
                     input_quantity_element.setAttribute("value",newValue);
                     save_to_db(cart_id,newValue,productPrice);
+                    var newSubtotal = newValue*productPrice;
+                    newSubtotal = (Math.round(newSubtotal * 100) / 100).toFixed(2);
+                    document.getElementById("cart_subtotal-"+cart_id).textContent = newSubtotal;
                 }
 
                 if (newValue <= 1) document.getElementById("decrement").disabled = true;
@@ -132,8 +135,8 @@
                             <button class="btn" id="increment" onclick="stepper(this,<?= $row['id'] ?>)"><i class="fa fa-plus text-success"></i></button>
                         </div>
                             <input type="number" id="productCurrentQty" value="<?= $row['productCurrentQty']?>" hidden>
-                        <div><h5 class="text-grey">RM<?= number_format($row['productPrice'],2)?></h5></div>
-                        <input type="text" id="price" value="<?= number_format($row['productPrice'],2)?>" hidden>
+                        <div><h5 class="text-grey">RM<span id="cart_subtotal-<?= $row['id'] ?>"><?= number_format($row['subtotal'],2)?></span></h5></div>
+                        <input type="text" id="price-<?= $row['id'] ?>" value="<?= number_format($row['productPrice'],2)?>" hidden>
                             <div class="d-flex align-items-center"><button class="btn" onclick="delete_cart_db(<?= $row['id']?>)"><i class="fa fa-trash mb-1 text-danger"></i></button></div>
                     </div>
                     <?php endwhile; ?>

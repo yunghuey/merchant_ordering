@@ -26,7 +26,7 @@
                     ."FROM `product` p "
                     ."LEFT JOIN  `cart_product` cp ON cp.productID=p.productID "
                     ."LEFT JOIN `order` o ON o.cartID=cp.cartID ";
-    $get_parcel_sql = "SELECT CAST(orderDate AS DATE) AS `first`, COUNT(orderID) AS `second` "
+    $get_parcel_sql = "SELECT DATE_FORMAT(orderDate, '%M %Y') AS `first`, COUNT(orderID) AS `second` "
                      ."FROM `order` "
                      ."WHERE orderStatus='delivered' ";
     $get_amount_sql = "SELECT CAST(o.orderDate AS DATE) AS purchaseDate, SUM(cp.subtotal) AS subtotal "
@@ -105,7 +105,7 @@
         // unset($_POST['get_ranking']);
     }
     $get_sales_sql .= "GROUP BY p.productName";
-    $get_parcel_sql .= "GROUP BY CAST(orderDate AS DATE)";
+    $get_parcel_sql .= "GROUP BY first ORDER BY year(orderDate),month(orderDate)";
     $get_amount_sql .="GROUP BY purchaseDate ";
 
     if($rget = mysqli_query($conn,$get_sales_sql)){

@@ -13,7 +13,6 @@
             mysqli_query($conn,$update_record);
             $delete_sql = "DELETE FROM customer WHERE id = ".$id;
             if (mysqli_query($conn,$delete_sql)){
-                // $_SESSION['message'] = "Customer is deleted";
                 header("location:customerlist.php");
             }
         }

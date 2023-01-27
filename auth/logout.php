@@ -1,5 +1,4 @@
 <?php
-
     /*
         purpose: for user (STAFF / CUSTOMER) to logout
     */
